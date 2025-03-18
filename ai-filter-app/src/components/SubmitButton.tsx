@@ -5,12 +5,8 @@ interface SubmitButtonProps {
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick }) => (
-  <button
-    type="submit"
-    style={{ marginLeft: "10px", padding: "10px" }}
-    onClick={onClick}
-  >
-    Submit
+  <button type="submit" className="submit-button" onClick={onClick}>
+    Send
   </button>
 );
 

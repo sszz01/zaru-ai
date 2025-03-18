@@ -18,7 +18,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="input-container">
       <InputField value={input} onChange={setInput} />
       <SubmitButton onClick={() => handleSubmit({} as React.FormEvent)} />
     </form>

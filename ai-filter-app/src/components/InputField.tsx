@@ -9,8 +9,8 @@ const InputField: React.FC<InputFieldProps> = ({ value, onChange }) => (
   <input
     value={value}
     onChange={(e) => onChange(e.target.value)}
-    placeholder="Ask something..."
-    style={{ padding: "10px", textAlign: "center" }}
+    placeholder="Type your message..."
+    className="input-field"
   />
 );
 

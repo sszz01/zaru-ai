@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import Form from "./components/Form";
-import Response from "./components/Response";
+import "./App.css";
 
 const App: React.FC = () => {
-  const [response, setResponse] = useState("");
+  const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
+    []
+  );
   const [loading, setLoading] = useState(false);
 
   const handleInputSubmit = async (input: string) => {
     setLoading(true);
-    setResponse("");
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { text: input, sender: "user" },
+    ]);
 
     try {
       const res = await fetch("http://localhost:5001/api/chat", {
@@ -18,18 +23,31 @@ const App: React.FC = () => {
       });
 
       const data = await res.json();
-      setResponse(data.response);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: data.response, sender: "bot" },
+      ]);
     } catch {
-      setResponse("Error, please try again.");
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { text: "Error, please try again.", sender: "bot" },
+      ]);
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="centered-container">
+    <div className="chat-container">
+      <div className="chat-box">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.sender}`}>
+            {msg.text}
+          </div>
+        ))}
+        {loading && <div className="loading">Loading...</div>}
+      </div>
       <Form onSubmit={handleInputSubmit} />
-      <Response response={response} loading={loading} />
     </div>
   );
 };
