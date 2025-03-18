@@ -1,14 +1,12 @@
 import React, { useState } from "react";
+import Form from "./components/Form";
+import Response from "./components/Response";
 
 const App: React.FC = () => {
-  const [input, setInput] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input) return;
-
+  const handleInputSubmit = async (input: string) => {
     setLoading(true);
     setResponse("");
 
@@ -30,23 +28,8 @@ const App: React.FC = () => {
 
   return (
     <div className="centered-container">
-      <form onSubmit={handleSubmit}>
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask something..."
-          style={{ padding: "10px", textAlign: "center" }}
-        />
-        <button type="submit" style={{ marginLeft: "10px", padding: "10px" }}>
-          Submit
-        </button>
-      </form>
-      {loading && <p>Loading...</p>}
-      {response && (
-        <p>
-          <strong>Response:</strong> {response}
-        </p>
-      )}
+      <Form onSubmit={handleInputSubmit} />
+      <Response response={response} loading={loading} />
     </div>
   );
 };
