@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth, db } from "../firebase/firebase";
+import { auth, db } from "../firebase/firebase.ts";
 import { setDoc, doc } from "firebase/firestore";
 
 const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
