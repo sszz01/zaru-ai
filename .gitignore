@@ -37,3 +37,4 @@ sketch
 .ionide
 
 .env*
+.firebase
