@@ -5,7 +5,11 @@ interface SubmitButtonProps {
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ onClick }) => (
-  <button type="submit" className="submit-button" onClick={onClick}>
+  <button
+    type="submit"
+    className="cursor-pointer submit-button"
+    onClick={onClick}
+  >
     Send
   </button>
 );

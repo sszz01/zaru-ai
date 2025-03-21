@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Form from "./components/Form";
 import Login from "./components/Login";
-import "./App.css";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
