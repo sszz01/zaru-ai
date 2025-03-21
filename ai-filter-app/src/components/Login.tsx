@@ -83,7 +83,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             {isLogin ? "Don't have an account? " : "Already have an account? "}
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+              className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
             >
               {isLogin ? "Sign up" : "Sign in"}
             </button>
@@ -97,7 +97,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         <div className="flex flex-col gap-4">
           <button
             onClick={handleGoogleLogin}
-            className="flex items-center justify-center gap-3 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="cursor-pointer flex items-center justify-center gap-3 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             disabled={loading}
           >
             <img
@@ -175,7 +175,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             <div className="flex items-center justify-end">
               <button
                 type="button"
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                className="cursor-pointer text-sm font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Forgot your password?
               </button>
@@ -184,7 +184,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
           <button
             type="submit"
-            className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors gap-2"
+            className="cursor-pointer w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors gap-2"
             disabled={loading}
           >
             {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
