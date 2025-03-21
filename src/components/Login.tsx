@@ -7,7 +7,7 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { auth, db } from "../firebase/firebase.ts";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 
 const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -20,30 +20,52 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
     try {
       if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
+        // handle login
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log("Logged in:", userCredential.user);
+        onLogin();
       } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-      }
+        // handle sign up
+        const userRef = doc(db, "users", email);
+        const userSnap = await getDoc(userRef);
 
-      const user = auth.currentUser;
-      if (user) {
-        const userRef = doc(db, "users", user.uid);
-        await setDoc(userRef, {
+        if (userSnap.exists()) {
+          setError(
+            "An account with this email already exists. Please log in instead."
+          );
+          setLoading(false);
+          return;
+        }
+
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const user = userCredential.user;
+
+        await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           createdAt: new Date(),
         });
-      }
 
-      onLogin();
-    } catch (error: unknown) {
-      setError("Error during login or sign-up. Please try again.");
-      if (error instanceof Error) {
-        console.error("Error:", error.message);
+        onLogin();
       }
+    } catch (error: unknown) {
+      setError("Authentication failed. Please try again.");
+      if (error instanceof Error) {
+        console.error("Auth error:", error.message);
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleGoogleLogin = async () => {
@@ -55,10 +77,15 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
       const user = auth.currentUser;
       if (user) {
         const userRef = doc(db, "users", user.uid);
-        await setDoc(userRef, {
-          email: user.email,
-          createdAt: new Date(),
-        });
+        await setDoc(
+          userRef,
+          {
+            email: user.email,
+            createdAt: user.metadata.creationTime || new Date(),
+            lastLogin: new Date(),
+          },
+          { merge: true }
+        );
       }
 
       onLogin();

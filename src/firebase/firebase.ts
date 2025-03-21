@@ -24,7 +24,7 @@ if (
   );
 }
 
-// Your Firebase project configuration
+// Firebase configuration
 const firebaseConfig = {
   apiKey: firebaseApiKey,
   authDomain: authDomain,
