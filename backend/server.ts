@@ -16,7 +16,7 @@ if (!apiKey) {
   throw new Error("api key is missing");
 }
 
-const openai = new OpenAI(apiKey);
+const openai = new OpenAI({ apiKey });
 
 app.post("/api/chat", async (req, res) => {
   try {
