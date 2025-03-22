@@ -23,7 +23,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
     try {
       if (isLogin) {
-        // handle login
+        // Handle sign-in
         const userCredential = await signInWithEmailAndPassword(
           auth,
           email,
@@ -32,18 +32,17 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         console.log("Logged in:", userCredential.user);
         onLogin();
       } else {
-        // handle sign up
+        // Check if email already exists
         const userRef = doc(db, "users", email);
         const userSnap = await getDoc(userRef);
 
         if (userSnap.exists()) {
-          setError(
-            "An account with this email already exists. Please log in instead."
-          );
+          setError("Account already exists. Please sign in.");
           setLoading(false);
           return;
         }
 
+        // Proceed with sign-up
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
@@ -51,6 +50,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         );
         const user = userCredential.user;
 
+        // Store user info in Firestore
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           createdAt: new Date(),
@@ -59,10 +59,26 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         onLogin();
       }
     } catch (error: unknown) {
-      setError("Authentication failed. Please try again.");
-      if (error instanceof Error) {
-        console.error("Auth error:", error.message);
+      if (error instanceof Error && "code" in error) {
+        const firebaseError = error as { code: string; message: string };
+
+        switch (firebaseError.code) {
+          case "auth/email-already-in-use":
+            setError("This email is already in use. Please sign in instead.");
+            break;
+          case "auth/invalid-email":
+            setError("Invalid email address.");
+            break;
+          case "auth/weak-password":
+            setError("Password should be at least 6 characters.");
+            break;
+          default:
+            setError(firebaseError.message);
+        }
+      } else {
+        setError("An unknown error occurred.");
       }
+      console.error("Auth error:", error);
     } finally {
       setLoading(false);
     }
@@ -72,20 +88,23 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
     const provider = new GoogleAuthProvider();
     try {
       setLoading(true);
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
-      const user = auth.currentUser;
       if (user) {
         const userRef = doc(db, "users", user.uid);
-        await setDoc(
-          userRef,
-          {
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          // If user does not exist in Firestore, create a new record
+          await setDoc(userRef, {
             email: user.email,
-            createdAt: user.metadata.creationTime || new Date(),
-            lastLogin: new Date(),
-          },
-          { merge: true }
-        );
+            createdAt: new Date(),
+          });
+        } else {
+          // If user exists, update last login time
+          await setDoc(userRef, { lastLogin: new Date() }, { merge: true });
+        }
       }
 
       onLogin();
