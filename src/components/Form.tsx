@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
-import SubmitButton from "./SubmitButton";
+import { Mic, Paperclip, Camera, Smile, Send } from "lucide-react";
 
 interface FormProps {
   onSubmit: (input: string) => void;
@@ -11,16 +10,62 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (input) {
+    if (input.trim()) {
       onSubmit(input);
       setInput("");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="input-container">
-      <InputField value={input} onChange={setInput} />
-      <SubmitButton onClick={() => handleSubmit({} as React.FormEvent)} />
+    <form
+      onSubmit={handleSubmit}
+      className="border-t-2 border-gray-200 px-6 py-4 bg-white"
+    >
+      <div className="relative flex">
+        <span className="absolute inset-y-0 flex items-center">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
+          >
+            <Mic className="h-6 w-6 text-gray-600" />
+          </button>
+        </span>
+        <input
+          type="text"
+          placeholder="Type a message..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-lg py-3"
+        />
+        <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none cursor-pointer"
+          >
+            <Paperclip className="h-6 w-6 text-gray-600" />
+          </button>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none cursor-pointer"
+          >
+            <Camera className="h-6 w-6 text-gray-600" />
+          </button>
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none cursor-pointer"
+          >
+            <Smile className="h-6 w-6 text-gray-600" />
+          </button>
+          <button
+            type="submit"
+            disabled={!input.trim()}
+            className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none cursor-pointer"
+          >
+            <span className="font-bold">Send</span>
+            <Send className="h-6 w-6 ml-2" />
+          </button>
+        </div>
+      </div>
     </form>
   );
 };
