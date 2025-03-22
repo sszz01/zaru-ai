@@ -23,7 +23,16 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
     try {
       if (isLogin) {
-        // Handle sign-in
+        const userRef = doc(db, "users", email);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          setError("Account not found. Please sign up.");
+          setLoading(false);
+          return;
+        }
+
+        // handle sign-in
         const userCredential = await signInWithEmailAndPassword(
           auth,
           email,
@@ -32,7 +41,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         console.log("Logged in:", userCredential.user);
         onLogin();
       } else {
-        // Check if email already exists
+        // check if email already exists
         const userRef = doc(db, "users", email);
         const userSnap = await getDoc(userRef);
 
@@ -42,7 +51,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           return;
         }
 
-        // Proceed with sign-up
+        // handle sign-up
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
@@ -50,10 +59,11 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         );
         const user = userCredential.user;
 
-        // Store user info in Firestore
+        // store user info in Firestore
         await setDoc(doc(db, "users", user.uid), {
           email: user.email,
           createdAt: new Date(),
+          authMethod: "email",
         });
 
         onLogin();
@@ -71,6 +81,12 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
             break;
           case "auth/weak-password":
             setError("Password should be at least 6 characters.");
+            break;
+          case "auth/user-not-found":
+            setError("Account not found. Please sign up.");
+            break;
+          case "auth/wrong-password":
+            setError("Incorrect password. Please try again.");
             break;
           default:
             setError(firebaseError.message);
@@ -96,13 +112,12 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         const userSnap = await getDoc(userRef);
 
         if (!userSnap.exists()) {
-          // If user does not exist in Firestore, create a new record
           await setDoc(userRef, {
             email: user.email,
             createdAt: new Date(),
+            authMethod: "google",
           });
         } else {
-          // If user exists, update last login time
           await setDoc(userRef, { lastLogin: new Date() }, { merge: true });
         }
       }
