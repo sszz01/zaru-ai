@@ -69,7 +69,9 @@ const App: React.FC = () => {
               </div>
               <div className="flex flex-col leading-tight">
                 <div className="text-2xl mt-1 flex items-center">
-                  <span className="text-gray-700 mr-3">AI Assistant</span>
+                  <span className="text-gray-700 mr-3 font-semibold text-xl">
+                    AI Assistant
+                  </span>
                 </div>
                 <span className="text-sm text-gray-600">Always Online</span>
               </div>

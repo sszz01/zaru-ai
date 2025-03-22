@@ -92,6 +92,13 @@ button {
 }
 */
 
+body {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
 .scrollbar-w-2::-webkit-scrollbar {
   width: 0.25rem;
   height: 0.25rem;
