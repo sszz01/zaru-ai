@@ -129,7 +129,12 @@ const App: React.FC = () => {
                   className="w-6 h-6 rounded-full"
                 />
                 <div className="ml-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
-                  Thinking...
+                  <div className="newtons-cradle">
+                    <div className="newtons-cradle__dot"></div>
+                    <div className="newtons-cradle__dot"></div>
+                    <div className="newtons-cradle__dot"></div>
+                    <div className="newtons-cradle__dot"></div>
+                  </div>
                 </div>
               </div>
             )}
