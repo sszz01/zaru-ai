@@ -52,7 +52,7 @@ const App: React.FC = () => {
             };
             i++;
 
-            setTimeout(typeText, Math.random() * (60 - 30) + 30);
+            setTimeout(typeText, Math.random() * (120 - 80) + 80); // typing delay between 80-120ms
           }
           return newMessages;
         });
