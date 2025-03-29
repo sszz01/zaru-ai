@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import OpenAI from "openai";
 import axios from "axios";
+// import { GoogleGenAI } from "@google/genai";
 
 dotenv.config({ path: "../.env" });
 
@@ -12,12 +13,13 @@ const port = 5001;
 app.use(cors());
 app.use(express.json());
 
-const apiKey = process.env.OPENAI_API_KEY;
-if (!apiKey) {
+const openaiApiKey = process.env.OPENAI_API_KEY;
+if (!openaiApiKey) {
   throw new Error("API key is missing");
 }
 
-const openai = new OpenAI({ apiKey });
+const openai = new OpenAI({ apiKey: openaiApiKey });
+// const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); // gemini api key
 
 // JinaAI request
 async function makeRequest(query) {
@@ -59,6 +61,19 @@ app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
     const useWebSearch = await needsWebSearch(message);
+
+    // GEMINI IMPLEMENTATION
+
+    // const response = await gemini.models.generateContent({
+    //   model: "gemini-2.0-flash",
+    //   contents: [{ role: "user", text: message }],
+    //   config: {
+    //     tools: [{ googleSearch: {} }],
+    //   },
+    // });
+    // res.json({
+    //   response: response.text || "I'm unable to process this request.",
+    // });
 
     if (useWebSearch) {
       const jinaData = await makeRequest(message);
