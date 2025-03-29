@@ -40,7 +40,10 @@ const App: React.FC = () => {
     } catch {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: "Error, please try again.", sender: "bot" },
+        {
+          text: "Request failed. Is your backend server running?",
+          sender: "bot",
+        },
       ]);
     }
 
