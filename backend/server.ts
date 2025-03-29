@@ -23,8 +23,7 @@ const openai = new OpenAI({ apiKey });
 async function makeRequest(query) {
   const url = `https://s.jina.ai/?q=${query}`;
   const headers = {
-    Authorization:
-      "Bearer jina_c4f11f03e3024de699db5dc78388a616SykHnWs8JzmkThwRzet4S7k3ZIHo",
+    Authorization: `${process.env.JINA_AI_API_KEY}`,
     "X-Respond-With": "no-content",
   };
 
