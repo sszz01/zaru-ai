@@ -35,8 +35,30 @@ const App: React.FC = () => {
       const data = await res.json();
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: data.response, sender: "bot" },
+        { text: " ", sender: "bot" },
       ]);
+
+      let i = 0;
+
+      const typeText = () => {
+        setMessages((prevMessages) => {
+          const newMessages = [...prevMessages];
+          const lastIndex = newMessages.length - 1;
+
+          if (i < data.response.length) {
+            newMessages[lastIndex] = {
+              ...newMessages[lastIndex],
+              text: data.response.slice(0, i + 1),
+            };
+            i++;
+
+            setTimeout(typeText, Math.random() * (60 - 30) + 30);
+          }
+          return newMessages;
+        });
+      };
+
+      requestAnimationFrame(typeText);
     } catch {
       setMessages((prevMessages) => [
         ...prevMessages,
