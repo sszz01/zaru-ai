@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import OpenAI from "openai";
 import axios from "axios";
-// import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
 dotenv.config({ path: "../.env" });
 
@@ -19,7 +19,7 @@ if (!openaiApiKey) {
 }
 
 const openai = new OpenAI({ apiKey: openaiApiKey });
-// const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); // gemini api key
+const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); // gemini api key
 
 // JinaAI request
 async function makeRequest(query) {
@@ -57,56 +57,68 @@ async function needsWebSearch(message) {
   return response === "yes";
 }
 
+async function processGemini(res, message) {
+  // GEMINI IMPLEMENTATION
+  const response = await gemini.models.generateContent({
+    model: "gemini-2.0-flash",
+    contents: [{ role: "user", text: message }],
+    config: {
+      tools: [{ googleSearch: {} }],
+    },
+  });
+  res.json({
+    response: response.text || "I'm unable to process this request.",
+  });
+}
+
 app.post("/api/chat", async (req, res) => {
   try {
     const { message } = req.body;
+    const messageLowerCase = message.toLowerCase();
+    const useGemini = messageLowerCase.includes("gemini");
+    const useChatGPT = !useGemini;
+
     const useWebSearch = await needsWebSearch(message);
 
-    // GEMINI IMPLEMENTATION
+    if (useChatGPT) {
+      if (useWebSearch) {
+        const jinaData = await makeRequest(message);
+        const jinaResponse = jinaData
+          ? jinaData
+          : "No relevant data found from Jina AI.";
 
-    // const response = await gemini.models.generateContent({
-    //   model: "gemini-2.0-flash",
-    //   contents: [{ role: "user", text: message }],
-    //   config: {
-    //     tools: [{ googleSearch: {} }],
-    //   },
-    // });
-    // res.json({
-    //   response: response.text || "I'm unable to process this request.",
-    // });
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            {
+              role: "user",
+              content: `${message} Here's some additional info from Jina AI: ${jinaResponse}`,
+            },
+          ],
+        });
 
-    if (useWebSearch) {
-      const jinaData = await makeRequest(message);
+        return res.json({
+          response: completion.choices?.[0]?.message?.content,
+        });
+      } else {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are a helpful assistant." },
+            { role: "user", content: message },
+          ],
+        });
 
-      const jinaResponse = jinaData
-        ? jinaData
-        : "No relevant data found from Jina AI.";
-
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          {
-            role: "user",
-            content: `${message} Here's some additional info from Jina AI: ${jinaResponse}`,
-          },
-        ],
-      });
-
-      res.json({ response: completion.choices[0].message.content });
+        return res.json({
+          response: completion.choices?.[0]?.message?.content,
+        });
+      }
     } else {
-      const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: message },
-        ],
-      });
-
-      res.json({ response: completion.choices[0].message.content });
+      await processGemini(res, message);
     }
   } catch (error) {
-    console.error("OpenAI API Error:", error);
+    console.error("API Error:", error);
     res.status(500).json({ error: "Something went wrong!" });
   }
 });
