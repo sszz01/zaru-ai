@@ -59,16 +59,23 @@ async function needsWebSearch(message) {
 
 async function processGemini(res, message) {
   // GEMINI IMPLEMENTATION
-  const response = await gemini.models.generateContent({
-    model: "gemini-2.0-flash",
-    contents: [{ role: "user", text: message }],
-    config: {
-      tools: [{ googleSearch: {} }],
-    },
-  });
-  res.json({
-    response: response.text || "I'm unable to process this request.",
-  });
+  try {
+    const response = await gemini.models.generateContent({
+      model: "gemini-2.0-flash",
+      contents: [{ role: "user", text: message }],
+      config: {
+        tools: [{ googleSearch: {} }], // use google search for scraping
+      },
+    });
+    res.json({
+      response: response.text,
+    });
+  } catch (error) {
+    console.error("Error with GEMINI request:", error);
+    res.json({
+      response: "I'm unable to process this request.",
+    });
+  }
 }
 
 app.post("/api/chat", async (req, res) => {
