@@ -9,7 +9,9 @@ import {
 import { auth, db } from "../firebase/firebase.ts";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 
-const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
+const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
+  onLogin,
+}) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +41,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           password
         );
         console.log("Logged in:", userCredential.user);
-        onLogin();
+        onLogin(userCredential.user.photoURL || null);
       } else {
         // check if email already exists
         const userRef = doc(db, "users", email);
@@ -66,7 +68,7 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           authMethod: "email",
         });
 
-        onLogin();
+        onLogin(userCredential.user.photoURL || null);
       }
     } catch (error: unknown) {
       if (error instanceof Error && "code" in error) {
@@ -114,15 +116,21 @@ const Login: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
         if (!userSnap.exists()) {
           await setDoc(userRef, {
             email: user.email,
+            photoURL: user.photoURL,
+            displayName: user.displayName,
             createdAt: new Date(),
             authMethod: "google",
           });
         } else {
-          await setDoc(userRef, { lastLogin: new Date() }, { merge: true });
+          await setDoc(
+            userRef,
+            { lastLogin: new Date(), photoURL: user.photoURL },
+            { merge: true }
+          );
         }
       }
 
-      onLogin();
+      onLogin(user.photoURL || null);
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
       if (error instanceof Error) {

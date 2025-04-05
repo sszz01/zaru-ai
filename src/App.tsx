@@ -9,6 +9,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [userPhotoURL, setUserPhotoURL] = useState<string | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -72,8 +73,9 @@ const App: React.FC = () => {
     setLoading(false);
   };
 
-  const handleLogin = () => {
+  const handleLogin = (photoURL: string | null) => {
     setIsLoggedIn(true);
+    setUserPhotoURL(photoURL);
   };
 
   return (
@@ -139,7 +141,7 @@ const App: React.FC = () => {
                 </div>
                 {msg.sender === "user" && (
                   <img
-                    src="/img/user.png"
+                    src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
                     className="w-6 h-6 rounded-full order-2"
                   />
