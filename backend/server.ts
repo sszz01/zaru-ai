@@ -46,7 +46,7 @@ async function needsWebSearch(message) {
         role: "system",
         content: `**Objective:** Determine if accurately answering the user's query necessitates information created or changed *after* your knowledge cutoff date. Your goal is to trigger an external web search tool when needed to ensure factual, up-to-date responses.
 
-**Instructions:** Respond with 'yes' if *any* of the following conditions are met. Otherwise, respond 'no'.
+**Instructions:** Respond with 'yes' if *any* of the following conditions are met. It is not limited to those conditions only, you must take an objective decision of whether a query actually requires realtime data, but those are just an example of what a realtime query might look like. Otherwise, respond 'no'.
 
 1.  **Explicit Time Sensitivity:** Does the query explicitly use terms like 'current', 'latest', 'today', 'recent', 'now', 'this year/month/week', or ask about ongoing events?
 2.  **Implicit Time Sensitivity:** Could the accurate answer have realistically changed between your knowledge cutoff and the present moment? Consider:
