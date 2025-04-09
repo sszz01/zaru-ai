@@ -45,7 +45,7 @@ async function needsWebSearch(message) {
       {
         role: "system",
         content:
-          "You are an assistant helping a developer. Assess whether the following query requires real-time data (e.g., news, weather, sports, or updates). Respond with 'yes' if it needs real-time data, otherwise 'no'.",
+          "You are determining whether a user query requires recent, time-sensitive information. Respond with 'yes' only if answering accurately would require data from after your knowledge cutoff. Analyze the query deeply - not just for explicit time indicators like 'current' or 'latest,' but also for implicit dependencies on changing conditions. Consider: Would your answer differ if provided today versus six months ago? Does it involve positions, statistics, policies, situations, or states that naturally evolve over time? For questions about 'who is/are' regarding positions of authority, leadership roles, or representatives, default to 'yes' unless specifically asking about historical figures. When uncertain, prioritize accuracy by responding 'yes'.",
       },
       { role: "user", content: message },
     ],
