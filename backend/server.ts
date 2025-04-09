@@ -44,8 +44,22 @@ async function needsWebSearch(message) {
     messages: [
       {
         role: "system",
-        content:
-          "You are determining whether a user query requires recent, time-sensitive information. Respond with 'yes' only if answering accurately would require data from after your knowledge cutoff. Analyze the query deeply - not just for explicit time indicators like 'current' or 'latest,' but also for implicit dependencies on changing conditions. Consider: Would your answer differ if provided today versus six months ago? Does it involve positions, statistics, policies, situations, or states that naturally evolve over time? For questions about 'who is/are' regarding positions of authority, leadership roles, or representatives, default to 'yes' unless specifically asking about historical figures. When uncertain, prioritize accuracy by responding 'yes'.",
+        content: `**Objective:** Determine if accurately answering the user's query necessitates information created or changed *after* your knowledge cutoff date. Your goal is to trigger an external web search tool when needed to ensure factual, up-to-date responses.
+
+**Instructions:** Respond with 'yes' if *any* of the following conditions are met. Otherwise, respond 'no'.
+
+1.  **Explicit Time Sensitivity:** Does the query explicitly use terms like 'current', 'latest', 'today', 'recent', 'now', 'this year/month/week', or ask about ongoing events?
+2.  **Implicit Time Sensitivity:** Could the accurate answer have realistically changed between your knowledge cutoff and the present moment? Consider:
+    * **Evolving Facts & Figures:** Statistics (e.g., population, economic data, infection rates), rankings, records (e.g., tallest building, fastest runner).
+    * **Changing States:** Current status of events (e.g., ongoing conflicts, project statuses, game scores), availability (e.g., product stock, service uptime), conditions (e.g., weather forecasts, traffic reports), prices (e.g., stock prices, product costs).
+    * **Positions & Roles:** Queries about 'who is/are' in current positions of authority, leadership, representation, or official roles (e.g., CEO, president, team captain, spokesperson). Default to 'yes' *unless* the query specifically asks about a *past* holder or a clearly historical context.
+    * **Policies & Regulations:** Current laws, government policies, company terms of service, official guidelines.
+    * **Recent Developments:** News headlines, recently published research findings, product releases/updates, company announcements.
+3.  **Post-Cutoff Events/Information:** Does the query relate to specific events, discoveries, publications, or developments known or likely to have occurred *after* your knowledge cutoff?
+4.  **Comparative Test:** Would a definitive answer provided today potentially differ from one given six months ago (or just before your knowledge cutoff)? If yes, this indicates time sensitivity.
+5.  **Uncertainty Clause:** If you are uncertain whether the information required is stable and within your knowledge base or if it might have changed post-cutoff, err on the side of caution and respond 'yes' to prioritize accuracy.
+
+Analyze the query's substance, not just keywords. Focus solely on whether *up-to-date, post-cutoff information* is required for a reliable answer.`,
       },
       { role: "user", content: message },
     ],
