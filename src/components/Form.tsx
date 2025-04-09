@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Paperclip, Camera, Smile } from "lucide-react";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
-import Button from "./Button";
+import Button from "./ChatButton";
 
 interface FormProps {
   onSubmit: (input: string) => void;
