@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Form from "./components/Form";
 import Login from "./components/Login";
 import LoadingAnimation from "./components/LoadingAnimation";
+import DOMPurify from "dompurify";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -35,26 +36,30 @@ const App: React.FC = () => {
       });
 
       const data = await res.json();
+      const sanitizedResponse = DOMPurify.sanitize(data.response);
+
       setMessages((prevMessages) => [
         ...prevMessages,
-        { text: " ", sender: "bot" },
+        { text: "", sender: "bot" },
       ]);
 
       let i = 0;
-
       const typeText = () => {
         setMessages((prevMessages) => {
           const newMessages = [...prevMessages];
           const lastIndex = newMessages.length - 1;
 
-          if (i < data.response.length) {
+          if (
+            sanitizedResponse &&
+            i < sanitizedResponse.length &&
+            newMessages[lastIndex]?.sender === "bot"
+          ) {
             newMessages[lastIndex] = {
               ...newMessages[lastIndex],
-              text: data.response.slice(0, i + 1),
+              text: sanitizedResponse.slice(0, i + 1),
             };
             i++;
-
-            setTimeout(typeText, Math.random() * (120 - 80) + 80); // typing delay between 80-120ms
+            setTimeout(typeText, Math.random() * (120 - 80) + 80);
           }
           return newMessages;
         });
@@ -80,10 +85,10 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-gray-100">
+    <div className="flex-1 flex flex-col h-screen bg-gradient-to-b from-blue-50 to-blue-100">
       {isLoggedIn ? (
         <>
-          <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white px-6">
+          <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
             <div className="relative flex items-center space-x-4">
               <div className="relative">
                 <span className="absolute text-green-500 right-0 bottom-0">
@@ -106,11 +111,14 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-4" id="messages">
+          <div
+            className="flex-1 overflow-y-auto px-6 py-4 space-y-4"
+            id="messages"
+          >
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex items-end mb-4 ${
+                className={`flex items-end mb-4 transition-all duration-500 ease-in-out ${
                   msg.sender === "user" ? "justify-end" : "justify-start"
                 }`}
               >
@@ -118,7 +126,7 @@ const App: React.FC = () => {
                   <img
                     src="/img/bot.jpg"
                     alt="Assistant"
-                    className="w-6 h-6 rounded-full order-1"
+                    className="w-8 h-8 rounded-full order-1"
                   />
                 )}
                 <div
@@ -128,23 +136,20 @@ const App: React.FC = () => {
                       : "order-2 items-start"
                   }`}
                 >
-                  <div>
-                    <span
-                      className={`px-4 py-2 rounded-lg inline-block ${
-                        msg.sender === "user"
-                          ? "bg-blue-600 text-white rounded-br-none"
-                          : "bg-gray-300 text-gray-600 rounded-bl-none"
-                      }`}
-                    >
-                      {msg.text}
-                    </span>
-                  </div>
+                  <div
+                    className={`${
+                      msg.sender === "user"
+                        ? "bg-blue-600 text-white rounded-br-none"
+                        : "bg-gray-300 text-gray-600 rounded-bl-none"
+                    } px-4 py-2 rounded-lg inline-block transition-all duration-200 ease-in-out shadow-md`}
+                    dangerouslySetInnerHTML={{ __html: msg.text }}
+                  />
                 </div>
                 {msg.sender === "user" && (
                   <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
-                    className="w-6 h-6 rounded-full order-2"
+                    className="w-8 h-8 rounded-full order-2"
                   />
                 )}
               </div>
@@ -154,7 +159,7 @@ const App: React.FC = () => {
                 <img
                   src="/img/bot.jpg"
                   alt="Assistant"
-                  className="w-6 h-6 rounded-full"
+                  className="w-8 h-8 rounded-full"
                 />
                 <LoadingAnimation />
               </div>

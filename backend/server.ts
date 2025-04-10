@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import OpenAI from "openai";
 import axios from "axios";
+import { marked } from "marked";
 import { GoogleGenAI } from "@google/genai";
 
 dotenv.config({ path: "../.env" });
@@ -81,9 +82,12 @@ async function processGemini(res, message) {
         tools: [{ googleSearch: {} }], // use google search for scraping
       },
     });
-    res.json({
-      response: response.text,
-    });
+    const content = response.text;
+    if (content) {
+      res.json({
+        response: marked.parse(content),
+      });
+    }
   } catch (error) {
     console.error("Error with GEMINI request:", error);
     res.json({
@@ -119,9 +123,12 @@ app.post("/api/chat", async (req, res) => {
           ],
         });
 
-        return res.json({
-          response: completion.choices?.[0]?.message?.content,
-        });
+        const content = completion.choices?.[0]?.message?.content;
+        if (content) {
+          return res.json({
+            response: marked.parse(content),
+          });
+        }
       } else {
         const completion = await openai.chat.completions.create({
           model: "gpt-4o-mini",
@@ -131,9 +138,12 @@ app.post("/api/chat", async (req, res) => {
           ],
         });
 
-        return res.json({
-          response: completion.choices?.[0]?.message?.content,
-        });
+        const content = completion.choices?.[0]?.message?.content;
+        if (content) {
+          return res.json({
+            response: marked.parse(content),
+          });
+        }
       }
     } else {
       await processGemini(res, message);
