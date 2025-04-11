@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import BackgroundImage from "../../assets/background.svg";
+import BackgroundImage from "../../../assets/background.svg";
 
 // const screenWidth = window.innerWidth;
 // const screenHeight = window.innerHeight;
