@@ -81,19 +81,22 @@ npm install
 
 ### Running the Application
 
-Run backend:
+To run the application locally, follow these steps:
+
+1. Navigate to filtered-chatgpt/backend directory
+2. Run backend:
 
 ```bash
 node server.ts
 ```
 
-Run frontend:
+3.Run frontend:
 
 ```bash
 npm run dev
 ```
 
-3.  Open your browser and navigate to http://localhost:5173
+4. Use Live Server plugin to open your browser and navigate to http://localhost:5173
 
 ## 🧠 Request Processing Flow
 
@@ -122,14 +125,14 @@ Processes chat messages through the filtering system and returns AI responses.
 **Request Body:**
 
 ```bash 
-{ "message": "Your question or request here"  }
+{ "message": "Your question or request here" }
 
 ```
 
 **Response:**
 
 ```bash
-{    "response": "Formatted response from the AI"  }
+{ "response": "Formatted response from the AI" }
 
 ```
 
