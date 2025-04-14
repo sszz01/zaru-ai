@@ -69,8 +69,8 @@ Before you begin, ensure you have the following:
 
 ### Installation
 
-1.  git clone https://github.com/sszz01/filtered-chatgpt.git
-2.  \# Install dependencies
+1.  `bash git clone https://github.com/sszz01/filtered-chatgpt.git `
+2.  Install dependencies
 
 ```bash
 npm install
@@ -81,14 +81,17 @@ npm install
 
 ### Running the Application
 
-1.  ```bash
-    node server.ts
-    ```
+Run backend:
 
-````
-2.  ```bash
+```bash
+node server.ts
+```
+
+Run frontend:
+
+```bash
 npm run dev
-````
+```
 
 3.  Open your browser and navigate to http://localhost:5173
 
@@ -118,13 +121,15 @@ Processes chat messages through the filtering system and returns AI responses.
 
 **Request Body:**
 
-```bash { "message": "Your question or request here"  }
+```bash 
+{ "message": "Your question or request here"  }
 
 ```
 
 **Response:**
 
-```bash {    "response": "Formatted response from the AI"  }
+```bash
+{    "response": "Formatted response from the AI"  }
 
 ```
 
