@@ -68,17 +68,17 @@ npm run dev
 Request Processing Flow
 -----------------------
 
-1.  **Client Input**: User submits a message through the chat interface
-2.  **Express Server Receives Request**: The request is received by the Express.js server
-3.  **Input Filtering**: The custom filtering system analyzes the input to:
+1.  User submits a message through the chat interface
+2.  The request is received by the Express.js server
+3.  The custom filtering system analyzes the input to:
     -   Check if it violates any defined rules
     -   Apply any transformations or modifications if needed
     -   Decide whether to allow, modify, or block the request
-4.  **Model Selection** (if enabled):
+4.  Model Selection(if enabled):
     -   Routes to different AI models based on input analysis
-5.  **API Request**: Filtered input is sent to the appropriate AI model
-6.  **Response Processing**: Server processes and formats the AI response
-7.  **Delivery**: Sends the response back to the client with typing animation effect
+5.  Filtered input is sent to the appropriate AI model
+6.  Server processes and formats the AI response
+7.  Sends the response back to the client with typing animation effect
 
 🔧 Customizing the Filter
 -------------------------
