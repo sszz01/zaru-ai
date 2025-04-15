@@ -24,7 +24,7 @@ Before any user input is sent to the OpenAI API, it goes through a **custom fil
 You can find the filter logic in:
 
 ```
-/server/utils/filterInput.js
+tbd
 ```
 
 Want to customize it? Just add your own rules and conditions!
