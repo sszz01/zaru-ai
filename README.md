@@ -46,8 +46,7 @@ git clone https://github.com/sszz01/filtered-chatgpt.git
 npm install
 ```
 
-3.  Create a .env file in the root directory by following an example.
-4.  Create a firebase.ts file in the client/src directory with your Firebase configuration.
+3.  Rename .env_example to .env and insert your API keys by following the sample
 
 ### Running the Application
 
