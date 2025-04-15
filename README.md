@@ -1,10 +1,6 @@
 # AI Input Filter Assistant
 
-A specialized web application that provides intelligent chat assistance while applying custom filtering rules to user inputs. Built with Express.js on the backend and React on the frontend, this project focuses on safe, controlled interactions with large language models.
-
-## 🔍 Core Purpose
-
-This project's primary focus is implementing **customizable filtering rules** that process and validate user inputs before they reach AI models. It serves as both a practical chat application and a framework for controlling what kinds of requests can be sent to language models.
+A specialized web application that provides intelligent chat assistance while applying custom filtering rules to user inputs. This project's primary focus is implementing **customizable filtering rules** that process and validate user inputs before they reach AI models.
 
 ## ✨ Key Features
 
@@ -16,7 +12,7 @@ This project's primary focus is implementing **customizable filtering rules** 
 - **Modern React Frontend**: Clean, responsive user interface with typing animations
 - **Firebase Authentication**: Secure user management system
 
-## 🧼 How Filtering Works
+## How Filtering Works
 
 Before any user input is sent to the OpenAI API, it goes through a **custom filtering function**. This function is designed to:
 
@@ -101,7 +97,7 @@ npm run dev
 
 4. Use Live Server plugin to open your browser and navigate to http://localhost:5173
 
-## 🧠 Request Processing Flow
+## Request Processing Flow
 
 1.  **Client Input**: User submits a message through the chat interface
 2.  **Express Server Receives Request**: The request is received by the Express.js server
