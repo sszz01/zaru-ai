@@ -73,14 +73,14 @@ Before you begin, ensure you have the following:
 ```bash
 git clone https://github.com/sszz01/filtered-chatgpt.git
 ```
-3.  Install dependencies
+2. Install dependencies
 
 ```bash
 npm install
 ```
 
-3.  Create a .env file in the root directory by following an example.
-4.  Create a firebase.ts file in the client/src directory with your Firebase configuration.
+3. Create a .env file in the root directory by following an example.
+4. Create a firebase.ts file in the client/src directory with your Firebase configuration.
 
 ### Running the Application
 
