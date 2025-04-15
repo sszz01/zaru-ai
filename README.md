@@ -69,8 +69,11 @@ Before you begin, ensure you have the following:
 
 ### Installation
 
-1.  `bash git clone https://github.com/sszz01/filtered-chatgpt.git `
-2.  Install dependencies
+1. Clone the repository
+```bash
+git clone https://github.com/sszz01/filtered-chatgpt.git
+```
+3.  Install dependencies
 
 ```bash
 npm install
@@ -116,34 +119,6 @@ npm run dev
 6.  **Response Processing**: Server processes and formats the AI response
 7.  **Delivery**: Sends the response back to the client with typing animation effect
 
-## 📝 API Endpoints
-
-### POST /api/chat
-
-Processes chat messages through the filtering system and returns AI responses.
-
-**Request Body:**
-
-```bash 
-{ "message": "Your question or request here" }
-
-```
-
-**Response:**
-
-```bash
-{ "response": "Formatted response from the AI" }
-
-```
-
 ## 🔧 Customizing the Filter
 
 TBD
-
-## 🛣️ Roadmap
-
-- \[ \] Add more sophisticated filtering rules
-- \[ \] Implement filter customization through UI
-- \[ \] Add conversation history with filtering metadata
-- \[ \] Create admin dashboard for filter monitoring
-- \[ \] Support for fine-tuned models with safer outputs
