@@ -148,7 +148,7 @@ const App: React.FC = () => {
 
           <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
 
-            <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem" }}>
+            <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
 
                 <IconButton
                   onClick={toggleDrawer}
@@ -191,6 +191,36 @@ const App: React.FC = () => {
                     Always Online
                   </span>
                 </div>
+
+              </div>
+
+              <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
+
+                <button
+                onClick={() => setIsLoggedIn(false)}
+                style={{
+                  marginLeft: "auto",
+                  backgroundColor: "#d9d9d9",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "0.5rem",
+                  transition: "background-color 0.3s ease",
+                  cursor: "pointer", // Added cursor change on hover
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b3b3b3")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d9d9d9")}
+                >
+                Sign Out
+                </button>
+
+              <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", margin: "auto" }} />
+
+              <button style={{ marginLeft: "auto",}}>
+                <img
+                    src={userPhotoURL || "/img/user.png"}
+                    alt="My profile"
+                    className="w-10 h-10 rounded-full order-2"
+                />
+              </button>
               </div>
           </div>
 
