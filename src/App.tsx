@@ -5,7 +5,7 @@ import LoadingAnimation from "./components/LoadingAnimation";
 import DOMPurify from "dompurify";
 import { IconButton } from "@mui/material";
 import BurgerIcon from "@mui/icons-material/Menu";
-import Drawer from "@mui/material/Drawer";
+import SideBar from "./components/SideBar";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -97,18 +97,8 @@ const App: React.FC = () => {
     <div className="flex-1 flex flex-col h-screen bg-gradient-to-b from-blue-50 to-blue-100">
       {isLoggedIn ? (
         <>
-          <Drawer
-            anchor="left"
-            open={handleDrawer}
-            onClose={toggleDrawer}
-            sx={{
-              "& .MuiDrawer-paper": {
-                width: "250px",
-                backgroundColor: "#f8fafc",
-                borderRight: "none",
-              },
-            }}
-          />
+          
+          <SideBar toggleDrawer={toggleDrawer} handleDrawer={handleDrawer} />
 
           <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
 
