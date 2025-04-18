@@ -93,12 +93,45 @@ const App: React.FC = () => {
     setHandleDrawer((prev) => !prev);
   };
 
+  const [conversationArray, setConversationArray] = useState<
+    { id: number; name: string; messages: { text: string; sender: string }[] }[]
+  >([]);
+
+  const addConversation = () => {
+    if (messages.length === 0) {
+      alert("No messages to save as a conversation.");
+      return;
+    }
+
+    const newConversation = {
+      id: conversationArray.length + 1,
+      name: `Conversation ${conversationArray.length + 1}`,
+      messages: [...messages], // Save the current messages array
+    };
+
+    setConversationArray([...conversationArray, newConversation]);
+    setMessages([]); // Optionally clear the current messages array
+  };
+
+  const loadConversation = (id: number) => {
+    const conversation = conversationArray.find((conv) => conv.id === id);
+    if (conversation) {
+      setMessages(conversation.messages);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col h-screen bg-gradient-to-b from-blue-50 to-blue-100">
       {isLoggedIn ? (
         <>
-          
-          <SideBar toggleDrawer={toggleDrawer} handleDrawer={handleDrawer} />
+        
+        <SideBar
+            toggleDrawer={toggleDrawer}
+            handleDrawer={handleDrawer}
+            conversationArray={conversationArray}
+            loadConversation={loadConversation} 
+            addConversation={addConversation}
+          />
 
           <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
 
