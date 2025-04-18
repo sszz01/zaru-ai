@@ -96,27 +96,40 @@ const App: React.FC = () => {
   const [conversationArray, setConversationArray] = useState<
     { id: number; name: string; messages: { text: string; sender: string }[] }[]
   >([]);
+  const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
 
   const addConversation = () => {
-    if (messages.length === 0) {
-      alert("No messages to save as a conversation.");
-      return;
-    }
-
-    const newConversation = {
-      id: conversationArray.length + 1,
-      name: `Conversation ${conversationArray.length + 1}`,
-      messages: [...messages], // Save the current messages array
-    };
-
-    setConversationArray([...conversationArray, newConversation]);
-    setMessages([]); // Optionally clear the current messages array
+    // Clear the messages to start a blank discussion
+    setMessages([]);
+    setCurrentConversationId(null); // Reset the current conversation ID
   };
+
+  useEffect(() => {
+
+    if (messages.length === 1 && currentConversationId === null) {
+      const newConversation = {
+        id: conversationArray.length + 1,
+        name: "Conversation " + (conversationArray.length + 1),
+        messages: [...messages],
+      };
+      setConversationArray([...conversationArray, newConversation]);
+      setCurrentConversationId(newConversation.id); 
+    } else if (currentConversationId !== null) {
+
+      setConversationArray((prev) =>
+        prev.map((conv) =>
+          conv.id === currentConversationId ? { ...conv, messages: [...messages] } : conv
+        )
+      );
+    }
+  }, [messages, currentConversationId]);
 
   const loadConversation = (id: number) => {
     const conversation = conversationArray.find((conv) => conv.id === id);
     if (conversation) {
-      setMessages(conversation.messages);
+      setMessages(conversation.messages); // Load the selected conversation's messages
+      setCurrentConversationId(id); // Set the current conversation ID
+      console.log("Loaded conversation:", conversation);
     }
   };
 

@@ -11,7 +11,7 @@ interface SideBarProps {
     addConversation: () => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversationArray, loadConversation, addConversation }) => {
+const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversationArray, loadConversation, addConversation, }) => {
     return (
         <Drawer
             anchor="left"
@@ -56,27 +56,38 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
 
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "85%", height:"3px", borderRadius: 50, backgroundColor: "lightgrey" }} />
             <ul>
-                {conversationArray.map((conversation) => (
-                <li key={conversation.id}>
-                    <div>
-                        <button onClick={() => loadConversation(conversationArray[0]?.id)} style={{ 
-                            marginTop: "1rem", 
-                            width: "200px",
-                            height: "45px", 
-                            backgroundColor:"#f8fafc", 
-                            borderRadius: 5, 
-                            transition: "background-color 0.3s ease" }}
-                            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#d1d1d1")}
-                            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#f8fafc")}>
-                            
-                            <text style={{ fontSize: "1rem", color: "#4b5563", fontWeight: 600, position : "relative", left: "-2rem" }}>
-                                {conversation.name}
-                            </text>
-                        </button>
-                    </div>
-                </li>
-                ))}
-            </ul>
+            {conversationArray.map((conversation) => (
+              <li key={conversation.id}>
+                <div>
+                  <button
+                    onClick={() => loadConversation(conversation.id)} // Use conversation.id directly
+                    style={{
+                      marginTop: "1rem",
+                      width: "200px",
+                      height: "45px",
+                      backgroundColor: "#f8fafc",
+                      borderRadius: 5,
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#d1d1d1")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#f8fafc")}
+                  >
+                    <text
+                      style={{
+                        fontSize: "1rem",
+                        color: "#4b5563",
+                        fontWeight: 600,
+                        position: "relative",
+                        left: "-2rem",
+                      }}
+                    >
+                      {conversation.name}
+                    </text>
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
 
         </Drawer>
     );
