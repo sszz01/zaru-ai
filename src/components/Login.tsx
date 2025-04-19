@@ -325,6 +325,8 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
           style={{
             ...Styles.button,
             ...Styles.poppins,
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 700,
             fontSize: 24,
             marginBottom: 0,
           }}
@@ -338,6 +340,8 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
           style={{
             ...Styles.extendedFab,
             ...Styles.poppins,
+            fontFamily: "Montserrat, sans-serif",
+            fontWeight: 700,
             borderRadius: 50,
             padding: "10px 30px",
             fontSize: 16,

@@ -3,6 +3,9 @@ import Form from "./components/Form";
 import Login from "./components/Login";
 import LoadingAnimation from "./components/LoadingAnimation";
 import DOMPurify from "dompurify";
+import { IconButton } from "@mui/material";
+import BurgerIcon from "@mui/icons-material/Menu";
+import SideBar from "./components/SideBar";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -84,31 +87,141 @@ const App: React.FC = () => {
     setUserPhotoURL(photoURL);
   };
 
+  const [handleDrawer, setHandleDrawer] = useState(false);
+
+  const toggleDrawer = () => {
+    setHandleDrawer((prev) => !prev);
+  };
+
+  const [conversationArray, setConversationArray] = useState<
+    { id: number; name: string; messages: { text: string; sender: string }[] }[]
+  >([]);
+  const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
+
+  const addConversation = () => {
+    // Clear the messages to start a blank discussion
+    setMessages([]);
+    setCurrentConversationId(null); // Reset the current conversation ID
+  };
+
+  useEffect(() => {
+
+    if (messages.length === 1 && currentConversationId === null) {
+      const newConversation = {
+        id: conversationArray.length + 1,
+        name: "Conversation " + (conversationArray.length + 1),
+        messages: [...messages],
+      };
+      setConversationArray([...conversationArray, newConversation]);
+      setCurrentConversationId(newConversation.id); 
+    } else if (currentConversationId !== null) {
+
+      setConversationArray((prev) =>
+        prev.map((conv) =>
+          conv.id === currentConversationId ? { ...conv, messages: [...messages] } : conv
+        )
+      );
+    }
+  }, [messages, currentConversationId]);
+
+  const loadConversation = (id: number) => {
+    const conversation = conversationArray.find((conv) => conv.id === id);
+    if (conversation) {
+      setMessages(conversation.messages); // Load the selected conversation's messages
+      setCurrentConversationId(id); // Set the current conversation ID
+      console.log("Loaded conversation:", conversation);
+    }
+  };
+
   return (
     <div className="flex-1 flex flex-col h-screen bg-gradient-to-b from-blue-50 to-blue-100">
       {isLoggedIn ? (
         <>
+        
+        <SideBar
+            toggleDrawer={toggleDrawer}
+            handleDrawer={handleDrawer}
+            conversationArray={conversationArray}
+            loadConversation={loadConversation} 
+            addConversation={addConversation}
+          />
+
           <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
-            <div className="relative flex items-center space-x-4">
-              <div className="relative">
-                <span className="absolute text-green-500 right-0 bottom-0">
-                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                </span>
-                <img
-                  src="/img/bot.jpg"
-                  alt="bot-img"
-                  className="w-10 sm:w-16 h-10 sm:h-16 rounded-full"
-                />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <div className="text-2xl mt-1 flex items-center">
-                  <span className="text-gray-700 mr-3 font-semibold text-xl">
-                    AI Assistant
+
+            <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
+
+                <IconButton
+                  onClick={toggleDrawer}
+                  sx={{
+                    position: "absolute",
+                    left: -11.5,
+                    backgroundColor: "#d9d9d9",
+                    transition: "background-color 0.3s ease",
+                    "&:hover": { backgroundColor: "#b3b3b3" },
+                  }}
+                >
+                  <BurgerIcon />
+                </IconButton>
+
+                <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", position: "absolute", left: 40 }} />
+              
+                <div style={{ position: "relative", marginLeft: '3.6rem' }}>
+
+                  <span style={{ position: "absolute", color: "#22c55e", right: 0, bottom: 0 }}>
+                    <div style={{ width: "1rem", height: "1rem", backgroundColor: "#22c55e", borderRadius: "50%" }}/>
+                  </span>
+
+                  <img
+                    src="/img/bot.jpg"
+                    alt="bot-img"
+                    style={{ width: "2.5rem", height: "2.5rem", borderRadius: "50%" }}
+                  />
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", lineHeight: "tight" }}>
+
+                  <div style={{ fontSize: "1.25rem", marginTop: "0.25rem", display: "flex", alignItems: "center" }}>
+
+                    <span style={{ color: "#4b5563", marginRight: "0.75rem", fontWeight: 600, fontSize: "1.25rem" }}>
+                      AI Assistant
+                    </span>
+                  </div>
+                  
+                  <span style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                    Always Online
                   </span>
                 </div>
-                <span className="text-sm text-gray-600">Always Online</span>
+
               </div>
-            </div>
+
+              <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
+
+                <button
+                onClick={() => setIsLoggedIn(false)}
+                style={{
+                  marginLeft: "auto",
+                  backgroundColor: "#d9d9d9",
+                  padding: "0.5rem 1rem",
+                  borderRadius: "0.5rem",
+                  transition: "background-color 0.3s ease",
+                  cursor: "pointer", // Added cursor change on hover
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b3b3b3")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d9d9d9")}
+                >
+                Sign Out
+                </button>
+
+              <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", margin: "auto" }} />
+
+              <button style={{ marginLeft: "auto",}}>
+                <img
+                    src={userPhotoURL || "/img/user.png"}
+                    alt="My profile"
+                    className="w-10 h-10 rounded-full order-2"
+                />
+              </button>
+              </div>
           </div>
 
           <div
