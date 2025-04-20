@@ -35,43 +35,43 @@ const LineDraw: React.FC = () => {
       d: "M 300 0 L 300 600",
       custom: 1,
       delay: 0.5,
-      transform: "translateX(-96%)",
+      transform: "translateX(-90%)",
     },
     {
       d: "M 300 0 L 300 600",
       custom: 2,
       delay: 1,
-      transform: "translateX(-98%)",
+      transform: "translateX(-92%)",
     },
     {
       d: "M 300 0 L 300 600",
       custom: 3,
       delay: 1.5,
-      transform: "translateX(-100%)",
+      transform: "translateX(-94%)",
     },
     {
       d: "M 300 300 A 50 50 0 0 1 350 250",
       custom: 7,
       delay: 0,
-      transform: "translateX(-96%)",
+      transform: "translateX(-90%)",
     },
     {
       d: "M 73 250 L 200 250",
       custom: 9,
       delay: 3.5,
-      transform: "translateX(-50%)",
+      transform: "translateX(-44%)",
     },
     {
       d: "M 400 000 Q 350 200 400 300 T 400 600",
       custom: 10,
       delay: 4,
-      transform: "translateX(80%)",
+      transform: "translateX(75%)",
     },
     {
       d: "M 400 000 Q 350 200 400 300 T 400 600",
       custom: 10,
       delay: 4,
-      transform: "translateX(82%)",
+      transform: "translateX(77%)",
     },
   ];
 
@@ -118,7 +118,7 @@ const LineDraw: React.FC = () => {
           key={index}
           d={path.d}
           fill="transparent"
-          stroke="#3aa660"
+          stroke="#7ebd4a"
           strokeWidth="3"
           variants={draw}
           custom={path.custom}
@@ -135,7 +135,7 @@ const LineDraw: React.FC = () => {
           cx={circle.cx}
           cy={circle.cy}
           r={circle.r}
-          stroke="#3d96d1"
+          stroke="#4a98bd"
           variants={draw}
           custom={circle.custom}
           style={{ ...sharedCircleStyle, transform: circle.transform }}

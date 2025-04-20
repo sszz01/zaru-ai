@@ -320,7 +320,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
       <LineDraw />
 
-      <div style={{ ...Styles.buttonContainer, bottom: "29.5%" }}>
+      <div style={{ ...Styles.buttonContainer, bottom: "38%" }}>
         <SignButton
           style={{
             ...Styles.button,
@@ -341,6 +341,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
             ...Styles.extendedFab,
             ...Styles.poppins,
             fontFamily: "Montserrat, sans-serif",
+            color: "#4a98bd",
             fontWeight: 700,
             borderRadius: 50,
             padding: "10px 30px",

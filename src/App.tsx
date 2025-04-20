@@ -146,7 +146,7 @@ const App: React.FC = () => {
             addConversation={addConversation}
           />
 
-          <div className="flex items-center justify-between py-3 border-b-2 border-gray-200 bg-white shadow-md px-6">
+          <div style= {{ height: "4rem ", width: "100%", backgroundColor: "#fafcfd", display: "flex", position: "absolute", alignItems: "center", padding: "0 1rem" }}>
 
             <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
 
@@ -154,7 +154,7 @@ const App: React.FC = () => {
                   onClick={toggleDrawer}
                   sx={{
                     position: "absolute",
-                    left: -11.5,
+                    left: -4,
                     backgroundColor: "#d9d9d9",
                     transition: "background-color 0.3s ease",
                     "&:hover": { backgroundColor: "#b3b3b3" },
@@ -163,9 +163,9 @@ const App: React.FC = () => {
                   <BurgerIcon />
                 </IconButton>
 
-                <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", position: "absolute", left: 40 }} />
+                <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", position: "absolute", left: 48 }} />
               
-                <div style={{ position: "relative", marginLeft: '3.6rem' }}>
+                <div style={{ position: "relative", marginLeft: '3.9rem' }}>
 
                   <span style={{ position: "absolute", color: "#22c55e", right: 0, bottom: 0 }}>
                     <div style={{ width: "1rem", height: "1rem", backgroundColor: "#22c55e", borderRadius: "50%" }}/>
@@ -194,7 +194,7 @@ const App: React.FC = () => {
 
               </div>
 
-              <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
+              <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%", marginLeft: "auto" }}>
 
                 <button
                 onClick={() => setIsLoggedIn(false)}
@@ -214,7 +214,7 @@ const App: React.FC = () => {
 
               <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", margin: "auto" }} />
 
-              <button style={{ marginLeft: "auto",}}>
+              <button style={{ marginLeft: "auto", cursor: "pointer" }}>
                 <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
