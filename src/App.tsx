@@ -6,6 +6,9 @@ import DOMPurify from "dompurify";
 import { IconButton } from "@mui/material";
 import BurgerIcon from "@mui/icons-material/Menu";
 import SideBar from "./components/SideBar";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import styles from "./components/imported/styles/login";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -132,9 +135,16 @@ const App: React.FC = () => {
       console.log("Loaded conversation:", conversation);
     }
   };
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const openMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-gradient-to-b from-blue-50 to-blue-100">
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "linear-gradient(to bottom, #ebf8ff, #dbeafe)" }}>
       {isLoggedIn ? (
         <>
         
@@ -146,26 +156,24 @@ const App: React.FC = () => {
             addConversation={addConversation}
           />
 
-          <div style= {{ height: "4rem ", width: "100%", backgroundColor: "#fafcfd", display: "flex", position: "absolute", alignItems: "center", padding: "0 1rem" }}>
+          <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#397c9b", display: "flex", alignItems: "center", padding: "0 1rem" }}>
 
-            <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%" }}>
+            <div style={{ backgroundColor: '#d4e3ea', display: "flex", alignItems: "center", gap: "1rem", height: "80%", borderRadius:50, padding: "0 1rem", zIndex: 1, boxShadow: "3px 0px 4px rgba(0, 0, 0, 0.1)" }}>
 
                 <IconButton
                   onClick={toggleDrawer}
                   sx={{
-                    position: "absolute",
-                    left: -4,
-                    backgroundColor: "#d9d9d9",
+                    backgroundColor: "#397c9b",
                     transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#b3b3b3" },
+                    "&:hover": { backgroundColor: "#4a98bd" },
                   }}
                 >
-                  <BurgerIcon />
+                  <BurgerIcon sx={{ color: "#e0edf3" }} />
                 </IconButton>
 
-                <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", position: "absolute", left: 48 }} />
+                <div style={{ height: "65%", width: "3.5px", borderRadius:50, backgroundColor: "#397c9b", }} />
               
-                <div style={{ position: "relative", marginLeft: '3.9rem' }}>
+                <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem" }}>
 
                   <span style={{ position: "absolute", color: "#22c55e", right: 0, bottom: 0 }}>
                     <div style={{ width: "1rem", height: "1rem", backgroundColor: "#22c55e", borderRadius: "50%" }}/>
@@ -182,79 +190,102 @@ const App: React.FC = () => {
 
                   <div style={{ fontSize: "1.25rem", marginTop: "0.25rem", display: "flex", alignItems: "center" }}>
 
-                    <span style={{ color: "#4b5563", marginRight: "0.75rem", fontWeight: 600, fontSize: "1.25rem" }}>
+                    <span style={{ color: "#397c9b", marginRight: "0.75rem", fontWeight: 600, fontSize: "1.25rem" }}>
                       AI Assistant
                     </span>
                   </div>
                   
-                  <span style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                  <span style={{ fontSize: "0.875rem", color: "#397c9b" }}>
                     Always Online
                   </span>
                 </div>
 
               </div>
 
-              <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem", height: "100%", marginLeft: "auto" }}>
-
-                <button
-                onClick={() => setIsLoggedIn(false)}
-                style={{
-                  marginLeft: "auto",
-                  backgroundColor: "#d9d9d9",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "0.5rem",
-                  transition: "background-color 0.3s ease",
-                  cursor: "pointer", // Added cursor change on hover
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#b3b3b3")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d9d9d9")}
-                >
-                Sign Out
-                </button>
-
-              <div style={{ height: "75%", width: "3px", borderRadius:50, backgroundColor: "lightgrey", margin: "auto" }} />
-
-              <button style={{ marginLeft: "auto", cursor: "pointer" }}>
-                <img
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", height: "80%", position:'relative', left:'-4rem', zIndex: 0, padding: "0 3rem", borderRadius:50, backgroundColor: '#4a98bd' }}>
+                <button style={{ cursor: "pointer", position: "relative", right: -30 }} onClick={openMenu}>
+                  <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
                     className="w-10 h-10 rounded-full order-2"
-                />
-              </button>
+                  />
+                </button>
+
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={Boolean(anchorEl)}
+                  onClose={handleMenuClose}
+                  sx={{
+                    "& .MuiPaper-root": {
+                      backgroundColor: "#4a98bd",
+                      color: "#e0edf3",
+                      borderRadius: "10px",
+                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                    },
+                    "& .MuiMenuItem-root": {
+                      "&:hover": {
+                        transition: "background-color 0.3s ease-in-out",
+                        "&:hover": { backgroundColor: "#42738a" },
+                      },
+                    },
+                  }}
+                >
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Profile</MenuItem>
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Settings</MenuItem>
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                    handleMenuClose();
+                    setIsLoggedIn(false);
+                  }}>Logout</MenuItem>
+                </Menu>
               </div>
           </div>
 
           <div
-            className="flex-1 overflow-y-auto px-6 py-4 space-y-4"
+            style={{ flex: 1, overflowY: "auto", padding: "1.5rem", paddingTop: "1rem", paddingBottom: "1rem", gap: "1rem" }}
             id="messages"
           >
             {messages.map((msg, index) => (
               <div
                 key={index}
-                className={`flex items-end mb-4 transition-all duration-500 ease-in-out ${
-                  msg.sender === "user" ? "justify-end" : "justify-start"
-                }`}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  marginBottom: "1rem",
+                  transition: "all 0.5s ease-in-out",
+                  justifyContent: msg.sender === "user" ? "flex-end" : "flex-start",
+                }}
               >
                 {msg.sender !== "user" && (
                   <img
                     src="/img/bot.jpg"
                     alt="Assistant"
-                    className="w-8 h-8 rounded-full order-1"
+                    style={{
+                      width: "2rem",
+                      height: "2rem",
+                      borderRadius: "50%",
+                      order: 1,
+                    }}
                   />
                 )}
                 <div
-                  className={`flex flex-col space-y-2 text-sm max-w-xs mx-2 ${
-                    msg.sender === "user"
-                      ? "order-1 items-end"
-                      : "order-2 items-start"
-                  }`}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: msg.sender === "user" ? "flex-end" : "flex-start",
+                    maxWidth: "calc(100% - 4rem)",
+                    margin: "0 1rem",
+                    order: msg.sender === "user" ? 1 : 2,
+                  }}
                 >
                   <div
-                    className={`${
-                      msg.sender === "user"
-                        ? "bg-blue-600 text-white rounded-br-none"
-                        : "bg-gray-300 text-gray-600 rounded-bl-none"
-                    } px-4 py-2 rounded-lg inline-block transition-all duration-200 ease-in-out shadow-md`}
+                    style={{
+                      backgroundColor: msg.sender === "user" ? "#3182CE" : "#E2E8F0",
+                      color: msg.sender === "user" ? "#FFFFFF" : "#718096",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "0.5rem 0 0.5rem 0",
+                      overflowWrap: "break-word",
+                    }}
                     dangerouslySetInnerHTML={{ __html: msg.text }}
                   />
                 </div>
@@ -262,17 +293,22 @@ const App: React.FC = () => {
                   <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
-                    className="w-8 h-8 rounded-full order-2"
+                    style={{
+                      width: "2rem",
+                      height: "2rem",
+                      borderRadius: "50%",
+                      order: 2,
+                    }}
                   />
                 )}
               </div>
             ))}
             {loading && (
-              <div className="flex items-end mb-4">
+              <div style={{ display: "flex", alignItems: "flex-end", marginBottom: "1rem" }}>
                 <img
                   src="/img/bot.jpg"
                   alt="Assistant"
-                  className="w-8 h-8 rounded-full"
+                  style={{ width: "2rem", height: "2rem", borderRadius: "50%" }}
                 />
                 <LoadingAnimation />
               </div>

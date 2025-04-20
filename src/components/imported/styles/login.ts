@@ -68,7 +68,7 @@ const styles: { [key: string]: CSSProperties } = {
   },
 
   poppins: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "20px",
     color: "#e0edf3", // Blue text color for consistency
     fontWeight: "700", // Medium weight for better readability
