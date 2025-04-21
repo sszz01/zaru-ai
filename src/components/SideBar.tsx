@@ -20,41 +20,42 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
             sx={{
               "& .MuiDrawer-paper": {
                 width: "250px",
-                backgroundColor: "#397c9b",
+                backgroundColor: "#eaf2f5",
                 borderRight: "none",
                 alignItems: "center",
               },
             }} 
           >
-            <div style={{ display: "flex", flexDirection: "row" , borderRadius:50, backgroundColor: '#d4e3ea', width: "90%", height: "4rem", justifyContent: "space-between", alignItems: "center", marginTop: "0.75rem" }}>
-              <IconButton
-                  onClick={toggleDrawer}
-                  sx={{
-                    margin:  "1rem",
-                    backgroundColor: "#397c9b",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#4a98bd" },
-                  }}
-                >
-                  <BurgerIcon sx={{ color: "#e0edf3" }} />
-              </IconButton>
-
-              <ToolTip title="Add new conversation" placement="bottom" arrow>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#4a98bd", width: "100%"}}>
+              <div style={{ display: "flex", flexDirection: "row" , borderRadius:50, backgroundColor: '#fafcfd', width: "90%", height: "3.5rem", justifyContent: "space-between", alignItems: "center", border :"2px solid #d4e3ea"}}>
                 <IconButton
-                  onClick={() => {addConversation(); toggleDrawer();}}
-                  sx={{
-                    margin:  "1rem",
-                    backgroundColor: "#397c9b",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#4a98bd" },
-                  }}
-                >
-                  <AddIcon sx={{ color: "#e0edf3" }} />
+                    onClick={toggleDrawer}
+                    sx={{
+                      margin:  "0.73rem",
+                      backgroundColor: "#397c9b",
+                      transition: "background-color 0.3s ease",
+                      "&:hover": { backgroundColor: "#4a98bd" },
+                    }}
+                  >
+                    <BurgerIcon sx={{ color: "#e0edf3" }} />
                 </IconButton>
-              </ToolTip>
+
+                <ToolTip title="Add new conversation" placement="bottom" arrow>
+                  <IconButton
+                    onClick={() => {addConversation(); toggleDrawer();}}
+                    sx={{
+                      margin:  "0.65rem",
+                      backgroundColor: "#397c9b",
+                      transition: "background-color 0.3s ease",
+                      "&:hover": { backgroundColor: "#4a98bd" },
+                    }}
+                  >
+                    <AddIcon sx={{ color: "#e0edf3" }} />
+                  </IconButton>
+                </ToolTip>
+              </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "75%", height:"4px", borderRadius: 50, backgroundColor: "#397c9b" }} />
             <ul>
             {conversationArray.map((conversation) => (
               <li key={conversation.id}>
@@ -63,15 +64,16 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                     onClick={() => loadConversation(conversation.id)} // Use conversation.id directly
                     style={{
                       marginTop: "1rem",
-                      width: "200px",
+                      width: "220px",
                       height: "3rem",
-                      backgroundColor: "#d4e3ea",
+                      backgroundColor: "#fafcfd",
                       borderRadius: 10,
                       transition: "background-color 0.3s ease",
                       cursor: "pointer",
+                      border: "2px solid #d4e3ea",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#d1d1d1")}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#d4e3ea")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fafcfd")}
                   >
                     <text
                       style={{
@@ -79,7 +81,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                         color: "#397c9b",
                         fontWeight: 600,
                         position: "relative",
-                        left: "-2rem",
+                        left: "-1.8rem",
                       }}
                     >
                       {conversation.name}

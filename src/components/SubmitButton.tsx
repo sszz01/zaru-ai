@@ -10,10 +10,21 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled }) => {
     <button
       type="submit"
       disabled={disabled}
-      className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none cursor-pointer"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: "50px",
+        padding: "0.5rem 1.25rem",
+        backgroundColor: "#4a98bd",
+        height: "100%",
+        color: "#e0edf3",
+        transition: "all 0.5s ease-in-out",
+        cursor: "pointer",
+      }}
     >
       <span className="font-bold">Send</span>
-      <Send className="h-6 w-6 ml-2" />
+      <Send style={{ height: "1.5rem", width: "1.5rem", marginLeft: "0.5rem", color: "#e0edf3" }} />
     </button>
   );
 };

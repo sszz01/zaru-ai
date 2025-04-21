@@ -144,7 +144,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "linear-gradient(to bottom, #ebf8ff, #dbeafe)" }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "#e0edf3", }}> 
       {isLoggedIn ? (
         <>
         
@@ -156,9 +156,9 @@ const App: React.FC = () => {
             addConversation={addConversation}
           />
 
-          <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#397c9b", display: "flex", alignItems: "center", padding: "0 1rem" }}>
+          <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#4a98bd", display: "flex", alignItems: "center", padding: "0 1rem", }}>
 
-            <div style={{ backgroundColor: '#d4e3ea', display: "flex", alignItems: "center", gap: "1rem", height: "80%", borderRadius:50, padding: "0 1rem", zIndex: 1, boxShadow: "3px 0px 4px rgba(0, 0, 0, 0.1)" }}>
+            <div style={{ backgroundColor: '#fafcfd', display: "flex", alignItems: "center", gap: "1rem", height: "80%", borderRadius:50, padding: "0 1rem", zIndex: 1, boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)", border: "2px solid #d4e3ea" }}>
 
                 <IconButton
                   onClick={toggleDrawer}
@@ -202,7 +202,7 @@ const App: React.FC = () => {
 
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem", height: "80%", position:'relative', left:'-4rem', zIndex: 0, padding: "0 3rem", borderRadius:50, backgroundColor: '#4a98bd' }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "1rem", height: "80%", position:'relative', left:'-4rem', zIndex: 0, padding: "0 3rem", borderRadius:50, backgroundColor: '#e0edf3' }}>
                 <button style={{ cursor: "pointer", position: "relative", right: -30 }} onClick={openMenu}>
                   <img
                     src={userPhotoURL || "/img/user.png"}
@@ -252,6 +252,7 @@ const App: React.FC = () => {
                   display: "flex",
                   alignItems: "flex-end",
                   marginBottom: "1rem",
+                  fontWeight: "500",
                   transition: "all 0.5s ease-in-out",
                   justifyContent: msg.sender === "user" ? "flex-end" : "flex-start",
                 }}
@@ -280,11 +281,12 @@ const App: React.FC = () => {
                 >
                   <div
                     style={{
-                      backgroundColor: msg.sender === "user" ? "#3182CE" : "#E2E8F0",
-                      color: msg.sender === "user" ? "#FFFFFF" : "#718096",
+                      backgroundColor: msg.sender === "user" ? "#4a98bd" : "#f7fafc",
+                      color: msg.sender === "user" ? "#e0edf3" : "#42738a",
                       padding: "0.5rem 1rem",
                       borderRadius: "0.5rem 0 0.5rem 0",
                       overflowWrap: "break-word",
+                      border: "2px solid #d4e3ea",
                     }}
                     dangerouslySetInnerHTML={{ __html: msg.text }}
                   />
@@ -308,7 +310,7 @@ const App: React.FC = () => {
                 <img
                   src="/img/bot.jpg"
                   alt="Assistant"
-                  style={{ width: "2rem", height: "2rem", borderRadius: "50%" }}
+                  style={{ width: "2rem", height: "2rem", borderRadius: "50%", }}
                 />
                 <LoadingAnimation />
               </div>

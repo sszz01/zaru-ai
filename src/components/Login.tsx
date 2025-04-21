@@ -178,11 +178,11 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         }}
       >
         <div
-          className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg"
+          className="max-w-md w-full space-y-8 bg-[#eaf2f5] p-8 rounded-xl shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
+            <h2 style={{ fontSize: "1.875rem", fontWeight: "bold", color: "#1a202c", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
               {isLogin ? "Welcome back" : "Create account"}
             </h2>
             <p className="mt-2 text-sm text-gray-600">
@@ -191,7 +191,12 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                 : "Already have an account? "}
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "500",
+                  color: "#649bb4",
+                  transition: "color 0.2s ease",
+                }}
               >
                 {isLogin ? "Sign up" : "Sign in"}
               </button>
@@ -204,7 +209,21 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
           <button
             onClick={handleGoogleLogin}
-            className="cursor-pointer flex items-center justify-center gap-3 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.75rem",
+              width: "100%",
+              padding: "0.5rem 1rem",
+              borderRadius: "0.5rem",
+              backgroundColor: "#fafcfd",
+              border: "2px solid #d4e3ea",
+              color: "gray",
+              fontWeight: "500",
+              transition: "background-color 0.2s ease",
+            }}
             disabled={loading}
           >
             <img
@@ -220,7 +239,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
+              <span className="px-2 bg-[#eaf2f5] text-gray-500">
                 Or continue with
               </span>
             </div>
@@ -230,7 +249,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-[#42738a]"
               >
                 Email address
               </label>
@@ -246,7 +265,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] rounded-lg bg-[#fafcfd] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
                   placeholder="Enter your email"
                 />
               </div>
@@ -255,7 +274,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-[#42738a]"
               >
                 Password
               </label>
@@ -271,7 +290,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
                   placeholder="Enter your password"
                 />
               </div>
@@ -281,7 +300,13 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
               <div className="flex items-center justify-end">
                 <button
                   type="button"
-                  className="cursor-pointer text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    color: "#649bb4",
+                    transition: "color 0.2s ease",
+                  }}
                 >
                   Forgot your password?
                 </button>
@@ -296,21 +321,50 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   setError(null);
                   setOpenModal(false);
                 }}
-                className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.5rem 1rem",
+                  border: "2px solid",
+                  borderColor: "#d4e3ea",
+                  borderRadius: "0.5rem",
+                  color: "#649bb4",
+                  backgroundColor: "#fff",
+                  transition: "background-color 0.2s ease",
+                  gap: "0.5rem",
+                  outline: "none",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                }}
               >
                 Cancel
               </button>
 
               <button
                 type="submit"
-                className="cursor-pointer flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors gap-2"
+                className="submit-button"
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.5rem 1rem",
+                  border: "1px solid transparent",
+                  borderRadius: "0.5rem",
+                  boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+                  color: "#e0edf3",
+                  backgroundColor: "#4a98bd",
+                  transition: "background-color 0.2s ease",
+                  gap: "0.5rem",
+                  outline: "none",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                }}
                 disabled={loading}
               >
-                {loading
-                  ? "Loading..."
-                  : isLogin
-                  ? "Sign in"
-                  : "Create account"}
+                {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>

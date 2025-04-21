@@ -14,7 +14,17 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         placeholder="Type a message..."
         value={value}
         onChange={onChange}
-        className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-5 bg-gray-200 rounded-lg py-3"
+        style={{
+          width: "100%",
+          outline: "none",
+          padding: "0.75rem 0.75rem",
+          backgroundColor: "#fafcfd",
+          borderRadius: "50px",
+          color: "#718096",
+          position: "relative",
+          fontWeight: 600,
+          border: "2px solid #d4e3ea",
+        }}
       />
     );
   }

@@ -57,10 +57,10 @@ const styles: { [key: string]: CSSProperties } = {
     transition: "background-color 0.3s ease", // Smooth hover effect
   },
   extendedFab: {
-    backgroundColor: "transparent", // Transparent background for the extended FAB
+    backgroundColor: "#fafcfd", // Transparent background for the extended FAB
     color: "#5496b3ff",
     fontWeight: "bold",
-    border: "2px solid #4a98bd", // Blue border for contrast
+    border: "2px solid #d4e3ea", // Blue border for contrast
     fontFamily: "Quicksand, sans-serif",
     fontSize: "1rem", // Use relative units for better scaling
     cursor: "pointer", // Pointer cursor for interactivity
