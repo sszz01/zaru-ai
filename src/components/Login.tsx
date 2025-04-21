@@ -182,7 +182,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="text-center">
-            <h2 style={{ fontSize: "1.875rem", fontWeight: "bold", color: "#1a202c", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
+            <h2 style={{ fontSize: "1.875rem", fontWeight: "bold", color: "#192b34", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
               {isLogin ? "Welcome back" : "Create account"}
             </h2>
             <p className="mt-2 text-sm text-gray-600">

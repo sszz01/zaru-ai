@@ -10,6 +10,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import styles from "./components/imported/styles/login";
 import Profile from "./components/Profile";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -20,6 +22,29 @@ const App: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [userPhotoURL, setUserPhotoURL] = useState<string | null>(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = (menu : string) => {
+      setOpen(true);
+      if(menu === "profile") {
+        setTimeout(() => {
+          setShowProfile(true); // Reset the state when transitioning to another page
+          setOpen(false);
+        }, 850); // delay
+      }
+      else if(menu === "settings") {
+        setTimeout(() => {
+          setShowProfile(true); // Reset the state when transitioning to another page
+          setOpen(false);
+        }, 850); // delay
+      }
+      else if(menu === "logout") {
+        setTimeout(() => {
+          setIsLoggedIn(false); // Reset the state when transitioning to another page
+          setOpen(false);
+        }, 850); // delay
+      }
+    };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -166,6 +191,13 @@ const App: React.FC = () => {
             addConversation={addConversation}
           />
 
+          <Backdrop
+              sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+              open={open}
+          >
+            <CircularProgress size={60} color="inherit" />
+          </Backdrop>
+
           <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#4a98bd", display: "flex", alignItems: "center", padding: "0 1rem", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
 
             <div style={{ backgroundColor: '#fafcfd', display: "flex", alignItems: "center", gap: "1rem", height: "80%", borderRadius:50, padding: "0 1rem", zIndex: 1, boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)", border: "2px solid #d4e3ea" }}>
@@ -241,15 +273,20 @@ const App: React.FC = () => {
                     },
                   }}
                 >
-                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                  <MenuItem id="profile" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
                     handleMenuClose();
                     setShowProfile(true);
+                    setOpen(true);
+                    setTimeout(() => setOpen(false), 850);
                   }}>Profile</MenuItem>
-                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Settings</MenuItem>
-                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                  <MenuItem id="settings" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Settings</MenuItem>
+                  <MenuItem id="logout" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
                     handleMenuClose();
                     setIsLoggedIn(false);
+                    setOpen(true);
+                    setTimeout(() => setOpen(false), 850);
                   }}>Logout</MenuItem>
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}}>Admin Dashboard</MenuItem>
                 </Menu>
               </div>
           </div>

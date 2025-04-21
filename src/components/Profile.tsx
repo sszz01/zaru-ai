@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Styles from "./imported/styles/profile";
 import EditIcon from '@mui/icons-material/Edit';
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface ProfileProps {
     setLogin: (isLoggedIn: boolean) => void;
@@ -12,6 +14,18 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
 
     const [showDashboard, setShowDashboard] = useState(true);
     const [showSettings, setShowSettings] = useState(false);
+    const [open, setOpen] = useState(false);
+    
+    const handleOpen = () => {
+        setOpen(true);
+        setTimeout(() => {
+            onClose();
+            setLogin(false);
+            setShowDashboard(false);
+            setShowSettings(false);
+            setOpen(false); // Reset the state
+        }, 850); // delay
+    };
 
     const handleMenuClick = (menu: string) => () => {
         if (menu === "dashboard") {
@@ -25,6 +39,14 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
 
     return (
       <div style={{ ...Styles.container, gap: '2.5rem' }}>
+
+        <Backdrop
+            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+            open={open}
+        >
+            <CircularProgress size={60} color="inherit" />
+        </Backdrop>
+        
         <div style={{ ...Styles.profileContainer, flexDirection: 'column', position: 'relative', height: '40%' }}>
             <img 
                 src={userPhotoURL || "/img/user.png"} 
@@ -47,7 +69,7 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
             <button style={{...Styles.menuButton,position: 'relative', left:0, border: '2px solid #d4e3ea', backgroundColor: '#fafcfd', marginTop: '1rem'}} onClick={handleMenuClick("dashboard")}>Profile</button>
             <button style={{...Styles.menuButton,position: 'relative', left:0, border: '2px solid #d4e3ea', backgroundColor: '#fafcfd',}} onClick={handleMenuClick("settings")}>Settings</button>
             <button style={{...Styles.menuButton,position: 'relative', left:0, border: '2px solid #d4e3ea', backgroundColor: '#fafcfd',}} onClick={onClose}>Help</button>
-            <button style={{...Styles.menuButton,position: 'relative', left:0, border: '2px solid #d4e3ea', backgroundColor: '#fafcfd',}} onClick={() => { onClose(); setLogin(false)}}>Logout</button>
+            <button style={{...Styles.menuButton,position: 'relative', left:0, border: '2px solid #d4e3ea', backgroundColor: '#fafcfd',}} onClick={handleOpen}>Logout</button>
 
         </div>
 
