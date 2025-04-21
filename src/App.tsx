@@ -9,6 +9,7 @@ import SideBar from "./components/SideBar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import styles from "./components/imported/styles/login";
+import Profile from "./components/Profile";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [userPhotoURL, setUserPhotoURL] = useState<string | null>(null);
+  const [showProfile, setShowProfile] = useState(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -146,8 +148,16 @@ const App: React.FC = () => {
   return (
     <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "#e0edf3", }}> 
       {isLoggedIn ? (
+
+        showProfile ? (
+          <Profile 
+            setLogin={setIsLoggedIn} 
+            userPhotoURL={userPhotoURL} 
+            onClose={() => setShowProfile(false)} 
+          />
+        ) : (
+
         <>
-        
         <SideBar
             toggleDrawer={toggleDrawer}
             handleDrawer={handleDrawer}
@@ -156,7 +166,7 @@ const App: React.FC = () => {
             addConversation={addConversation}
           />
 
-          <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#4a98bd", display: "flex", alignItems: "center", padding: "0 1rem", }}>
+          <div style= {{ height: "5rem ", width: "100%", backgroundColor: "#4a98bd", display: "flex", alignItems: "center", padding: "0 1rem", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
 
             <div style={{ backgroundColor: '#fafcfd', display: "flex", alignItems: "center", gap: "1rem", height: "80%", borderRadius:50, padding: "0 1rem", zIndex: 1, boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)", border: "2px solid #d4e3ea" }}>
 
@@ -231,7 +241,10 @@ const App: React.FC = () => {
                     },
                   }}
                 >
-                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Profile</MenuItem>
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                    handleMenuClose();
+                    setShowProfile(true);
+                  }}>Profile</MenuItem>
                   <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Settings</MenuItem>
                   <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
                     handleMenuClose();
@@ -320,7 +333,7 @@ const App: React.FC = () => {
 
           <Form onSubmit={handleInputSubmit} />
         </>
-      ) : (
+      ) ) : (
         <Login onLogin={handleLogin} />
       )}
     </div>
