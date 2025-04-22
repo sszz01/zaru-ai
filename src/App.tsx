@@ -24,27 +24,13 @@ const App: React.FC = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const handleOpen = (menu : string) => {
-      setOpen(true);
-      if(menu === "profile") {
-        setTimeout(() => {
-          setShowProfile(true); // Reset the state when transitioning to another page
-          setOpen(false);
-        }, 850); // delay
-      }
-      else if(menu === "settings") {
-        setTimeout(() => {
-          setShowProfile(true); // Reset the state when transitioning to another page
-          setOpen(false);
-        }, 850); // delay
-      }
-      else if(menu === "logout") {
-        setTimeout(() => {
-          setIsLoggedIn(false); // Reset the state when transitioning to another page
-          setOpen(false);
-        }, 850); // delay
-      }
-    };
+  const handleTransition = (action: () => void) => {
+    setOpen(true); // Show backdrop
+    setTimeout(() => {
+      action(); // Execute the action after delay
+      setOpen(false); // Hide backdrop
+    }, 850); // Consistent delay
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -162,12 +148,15 @@ const App: React.FC = () => {
       console.log("Loaded conversation:", conversation);
     }
   };
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
+  
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  
   const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -249,7 +238,11 @@ const App: React.FC = () => {
                   <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
-                    className="w-10 h-10 rounded-full order-2"
+                    style={{
+                      width: "2.5rem",
+                      height: "2.5rem",
+                      borderRadius: "50%",
+                    }}
                   />
                 </button>
 
@@ -260,33 +253,36 @@ const App: React.FC = () => {
                   onClose={handleMenuClose}
                   sx={{
                     "& .MuiPaper-root": {
-                      backgroundColor: "#4a98bd",
-                      color: "#e0edf3",
+                      backgroundColor: '#e0edf3',
+                      color: "#4a98bd",
                       borderRadius: "10px",
                       boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                     },
                     "& .MuiMenuItem-root": {
                       "&:hover": {
                         transition: "background-color 0.3s ease-in-out",
-                        "&:hover": { backgroundColor: "#42738a" },
+                        "&:hover": { backgroundColor: "#d4e3ea" },
                       },
                     },
                   }}
                 >
-                  <MenuItem id="profile" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                  <MenuItem id="profile" sx={{...styles.poppins, fontSize:16, borderRadius: 2, color: "#4a98bd"}} onClick={() => {
                     handleMenuClose();
-                    setShowProfile(true);
-                    setOpen(true);
-                    setTimeout(() => setOpen(false), 850);
+                    handleTransition(() => setShowProfile(true));
                   }}>Profile</MenuItem>
-                  <MenuItem id="settings" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={handleMenuClose}>Settings</MenuItem>
-                  <MenuItem id="logout" sx={{...styles.poppins, fontSize:16, borderRadius: 2}} onClick={() => {
+                  <MenuItem id="settings" sx={{...styles.poppins, fontSize:16, borderRadius: 2, color: "#4a98bd"}} onClick={() => {
                     handleMenuClose();
-                    setIsLoggedIn(false);
-                    setOpen(true);
-                    setTimeout(() => setOpen(false), 850);
-                  }}>Logout</MenuItem>
-                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2}}>Admin Dashboard</MenuItem>
+                    // You can implement settings functionality here
+                    handleTransition(() => console.log("Settings clicked"));
+                  }}>Settings</MenuItem>
+                  <MenuItem id="logout" sx={{...styles.poppins, fontSize:16, borderRadius: 2, color: "#4a98bd"}} onClick={() => {
+                    handleMenuClose();
+                    handleTransition(() => setIsLoggedIn(false));
+                  }}>Sign Out</MenuItem>
+                  <MenuItem sx={{...styles.poppins, fontSize:16, borderRadius: 2, color: "#4a98bd"}} onClick={() => {
+                    handleMenuClose();
+                    handleTransition(() => console.log("Admin Dashboard clicked"));
+                  }}>Admin Dashboard</MenuItem>
                 </Menu>
               </div>
           </div>

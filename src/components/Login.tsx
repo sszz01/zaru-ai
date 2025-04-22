@@ -224,6 +224,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
               fontWeight: "500",
               transition: "background-color 0.2s ease",
             }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#fafcfd'}
             disabled={loading}
           >
             <img
@@ -331,13 +332,14 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   borderColor: "#d4e3ea",
                   borderRadius: "0.5rem",
                   color: "#649bb4",
-                  backgroundColor: "#fff",
+                  backgroundColor: "#fafcfd",
                   transition: "background-color 0.2s ease",
                   gap: "0.5rem",
                   outline: "none",
                   fontFamily: "Montserrat, sans-serif",
                   fontWeight: 700,
                 }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#fafcfd'}
               >
                 Cancel
               </button>
