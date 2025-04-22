@@ -376,7 +376,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
       <LineDraw />
 
-      <div style={{ ...Styles.buttonContainer, bottom: "38%" }}>
+      <div style={{ ...Styles.buttonContainer, bottom: "36%" }}>
         <SignButton
           style={{
             ...Styles.button,
