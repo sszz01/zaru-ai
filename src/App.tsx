@@ -197,6 +197,21 @@ const App: React.FC = () => {
                 overflow: "hidden",
               }}
             >
+
+              <IconButton
+                  onClick={toggleDrawer}
+                  sx={{
+                    backgroundColor: "#fafcfd",
+                    transition: "background-color 0.3s ease",
+                    "&:hover": { backgroundColor: "#d4e3ea" },
+                    position: 'relative',
+                    left: '-0.95vw',
+                    border: "2px solid #d4e3ea",
+                  }}
+                >
+                  <BurgerIcon sx={{ color: "#4a98bd" }} />
+                </IconButton>
+
               <div
                 style={{
                   backgroundColor: "#fafcfd",
@@ -208,31 +223,11 @@ const App: React.FC = () => {
                   padding: "0 1rem",
                   zIndex: 1,
                   position: "relative",
-                  left: "-1.5vw",
+                  left: "0vw",
                   boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)",
                   border: "2px solid #d4e3ea",
                 }}
               >
-                <IconButton
-                  onClick={toggleDrawer}
-                  sx={{
-                    backgroundColor: "#397c9b",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#4a98bd" },
-                  }}
-                >
-                  <BurgerIcon sx={{ color: "#e0edf3" }} />
-                </IconButton>
-  
-                <div
-                  style={{
-                    height: "70%",
-                    width: "0.3vw",
-                    minWidth: "3px",
-                    borderRadius: 50,
-                    backgroundColor: "#397c9b",
-                  }}
-                />
   
                 <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem" }}>
                   <span style={{ position: "absolute", color: "#22c55e", right: 0, bottom: 0 }}>
