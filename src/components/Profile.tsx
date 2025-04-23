@@ -93,117 +93,198 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
             setShowDashboard(false);
             setShowSettings(true);
         }
+        else if (menu === "back") {
+            handleBackOpen();
+        }
+        else if (menu === "sign out") {
+            handleOpen();
+        }
     }
 
     return (
       <div style={{ ...Styles.container, gap: '2.5rem' }}>
-
         <Backdrop
-            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-            open={open}
+          sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+          open={open}
         >
-            <CircularProgress size={60} color="inherit" />
+          <CircularProgress size={60} color="inherit" />
         </Backdrop>
-        
-        <div style={{ ...Styles.profileContainer, flexDirection: 'column', position: 'relative', height: '40%' }}>
-            <img 
-                src={userData.photoURL || "/img/user.png"} 
-                alt="Profile" 
-                style={{ 
-                width: "100px", 
-                height: "100px", 
-                borderRadius: "50%", 
-                marginBottom: "1rem",
-                border: "3px solid #42738a",
-                position: "absolute",
-                top: "-3rem",
-                }} 
-            />
-
-            <button style={{height: '2rem', width: '2rem', borderRadius: '50%', backgroundColor: '#42738a', position: 'absolute', top: '1rem', right: '5.5rem', cursor: 'pointer'}}>
-                <EditIcon sx={{ color: "#e0edf3", fontSize: '1.25rem' }} />
+    
+        <div
+          style={{
+            ...Styles.profileContainer,
+            flexDirection: 'column',
+            position: 'relative',
+            height: '45vh',
+          }}
+        >
+          <img
+            src={userData.photoURL || '/img/user.png'}
+            alt="Profile"
+            style={{
+              width: '8vw',
+              height: '8vw',
+              maxWidth: '85px',
+              maxHeight: '85px',
+              borderRadius: '50%',
+              marginBottom: '1rem',
+              border: '3px solid #42738a',
+              position: 'absolute',
+              top: '-3rem',
+            }}
+          />
+    
+          <button
+            style={{
+              height: '4vh',
+              width: '4vh',
+              maxHeight: '2.5rem',
+              maxWidth: '2.5rem',
+              borderRadius: '50%',
+              backgroundColor: '#42738a',
+              position: 'absolute',
+              top: '0.9rem',
+              right: '4vw',
+              cursor: 'pointer',
+            }}
+          >
+            <EditIcon sx={{ color: '#e0edf3', fontSize: '1.25rem' }} />
+          </button>
+    
+          {['Dashboard', 'Settings', 'Back', 'Sign Out'].map((label, index) => (
+            <button
+              key={label}
+              style={{
+                ...Styles.menuButton,
+                marginTop: index === 0 ? '1.25rem' : 0,
+                transition: 'background-color 0.3s ease',
+              }}
+              onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#d4e3ea')}
+              onMouseOut={(e) => (e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor)}
+              onClick={handleMenuClick(label.toLowerCase())}
+            >
+              <span style={{ ...Styles.menuButtonText }}>{label}</span>
             </button>
-
-            <button style={{...Styles.menuButton, marginTop: '1rem', transition: "background-color 0.3s ease"}} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor} onClick={handleMenuClick("dashboard")}>
-              <text style={{...Styles.menuButtonText}}>
-                Dashboard
-              </text>
-            </button>
-            <button style={{...Styles.menuButton, transition: "background-color 0.3s ease"}} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor} onClick={handleMenuClick("settings")}>
-              <text style={{...Styles.menuButtonText}}>
-                Settings
-              </text>
-            </button>
-            <button style={{...Styles.menuButton, transition: "background-color 0.3s ease"}} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor} onClick={handleBackOpen}>
-              <text style={{...Styles.menuButtonText}}>
-                Back
-              </text>
-            </button>
-            <button style={{...Styles.menuButton, transition: "background-color 0.3s ease"}} onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor} onClick={handleOpen}>
-              <text style={{...Styles.menuButtonText}}>
-                Sign Out
-              </text>
-            </button>
-
+          ))}
         </div>
-
+    
         {showDashboard && (
-          <div id="dashboard" style={{ ...Styles.profileContainer, width: "45%", height: "50%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-
-            <div style={{...Styles.title, position: 'relative', top: '-5rem', left: '-17.3rem' }}>
-              User Profile
+          <div
+            id="dashboard"
+            style={{
+              ...Styles.profileContainer,
+              width: '90vw',
+              maxWidth: '600px',
+              height: '50vh',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <div
+              style={{
+                ...Styles.title,
+                position: 'relative',
+                top: '-3rem',
+                left: 0,
+                textAlign: 'center',
+                fontSize: '1.5rem',
+              }}
+            >
+              Profile Dashboard
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', width: '80%', gap: '1rem' }}>
+    
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '80%',
+                gap: '1rem',
+              }}
+            >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label style={{...Styles.label }}>Name</label>
-                <div style={{...Styles.userInfo }}>
-                  {userData.displayName || "No name provided"}
+                <label style={{ ...Styles.label }}>Name</label>
+                <div style={{ ...Styles.userInfo }}>
+                  {userData.displayName || 'No name provided'}
                 </div>
               </div>
-
+    
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label style={{...Styles.label }}>Email</label>
-                <div style={{...Styles.userInfo }}>
-                  {userData.email || "No email provided"}
+                <label style={{ ...Styles.label }}>Email</label>
+                <div style={{ ...Styles.userInfo }}>
+                  {userData.email || 'No email provided'}
                 </div>
               </div>
             </div>
           </div>
         )}
+    
         {showSettings && (
-          <div id="settings" style={{ ...Styles.profileContainer, width: "45%", height: "50%", flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <h2 style={{ color: '#42738a', marginBottom: '1rem', fontFamily: 'Montserrat, sans-serif' }}>Settings</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', width: '80%', gap: '1rem' }}>
-              <button style={{
-                backgroundColor: '#4a98bd',
-                color: '#e0edf3',
-                border: 'none',
-                padding: '0.75rem',
-                borderRadius: '8px',
-                cursor: 'pointer',
+          <div
+            id="settings"
+            style={{
+              ...Styles.profileContainer,
+              width: '90vw',
+              maxWidth: '600px',
+              height: '50vh',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <h2
+              style={{
+                color: '#42738a',
+                marginBottom: '1rem',
                 fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 500
-              }}>
+                fontSize: '1.5rem',
+              }}
+            >
+              Settings
+            </h2>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '80%',
+                gap: '1rem',
+              }}
+            >
+              <button
+                style={{
+                  backgroundColor: '#4a98bd',
+                  color: '#e0edf3',
+                  border: 'none',
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '1rem',
+                }}
+              >
                 Change Password
               </button>
-              <button style={{
-                backgroundColor: '#4a98bd',
-                color: '#e0edf3',
-                border: 'none',
-                padding: '0.75rem',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 500
-              }}>
+              <button
+                style={{
+                  backgroundColor: '#4a98bd',
+                  color: '#e0edf3',
+                  border: 'none',
+                  padding: '0.75rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontWeight: 500,
+                  fontSize: '1rem',
+                }}
+              >
                 Update Profile
               </button>
             </div>
           </div>
         )}
       </div>
-    );
+    );    
   };
 
 export default Profile
