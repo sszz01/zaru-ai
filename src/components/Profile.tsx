@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { auth } from '../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
+import LineDraw from "./imported/linedraw";
 
 interface ProfileProps {
     setLogin: (isLoggedIn: boolean) => void;
@@ -109,6 +110,8 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
         >
           <CircularProgress size={60} color="inherit" />
         </Backdrop>
+
+        {/* <LineDraw/> */}
     
         <div
           style={{
@@ -240,9 +243,9 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
                 fontSize: '1.5rem',
               }}
             >
-              Settings
+              Coming Soon...
             </h2>
-            <div
+            {/* <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -280,7 +283,7 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
               >
                 Update Profile
               </button>
-            </div>
+            </div> */}
           </div>
         )}
       </div>
