@@ -35,6 +35,8 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                         backgroundColor: "#397c9b",
                         width: "2.5vw",
                         height: "2.5vw",
+                        maxHeight: "2.5rem",
+                        maxWidth: "2.5rem",
                         transition: "background-color 0.3s ease",
                         "&:hover": { backgroundColor: "#4a98bd" },
                       }}
@@ -51,6 +53,8 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                       backgroundColor: "#397c9b",
                       height: "2.5vw",
                       width: "2.5vw",
+                      maxHeight: "2.5rem",
+                      maxWidth: "2.5rem",
                       transition: "background-color 0.3s ease",
                       "&:hover": { backgroundColor: "#4a98bd" },
                     }}

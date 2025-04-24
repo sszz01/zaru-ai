@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 
 const LineDraw: React.FC = () => {
-  // Animation variants for paths and circles
   const draw = {
     hidden: { pathLength: 0, opacity: 0 },
     visible: (i: number) => {
@@ -17,7 +16,6 @@ const LineDraw: React.FC = () => {
     },
   };
 
-  // Shared styles for paths and circles
   const sharedPathStyle: React.CSSProperties = {
     width: "100%",
     height: "100%",
@@ -29,7 +27,6 @@ const LineDraw: React.FC = () => {
     fill: "transparent",
   };
 
-  // Data for motion paths
   const paths = [
     {
       d: "M 300 0 L 300 600",
@@ -69,13 +66,12 @@ const LineDraw: React.FC = () => {
     },
     {
       d: "M 400 000 Q 350 200 400 300 T 400 600",
-      custom: 10,
+      custom: 11,
       delay: 4,
       transform: "translateX(77%)",
     },
   ];
 
-  // Data for motion circles
   const circles = [
     {
       cx: 100,
@@ -105,14 +101,17 @@ const LineDraw: React.FC = () => {
 
   return (
     <motion.svg
-      width="600"
-      height="100%"
       viewBox="0 0 600 600"
+      preserveAspectRatio="xMidYMid meet"
       initial="hidden"
       animate="visible"
-      style={{ width: "100%", height: "100%" }}
+      style={{
+        width: "100%",
+        height: "auto",
+        maxWidth: "100vw",
+        display: "block",
+      }}
     >
-      {/* Render motion paths */}
       {paths.map((path, index) => (
         <motion.path
           key={index}
@@ -122,26 +121,42 @@ const LineDraw: React.FC = () => {
           strokeWidth="3"
           variants={draw}
           custom={path.custom}
-          style={{ ...sharedPathStyle, transform: path.transform }}
+          style={{
+            ...sharedPathStyle,
+            transform: path.transform,
+          }}
           transition={{ delay: path.delay }}
         />
       ))}
 
-      {/* Render motion circles */}
       {circles.map((circle, index) => (
         <motion.circle
           key={index}
-          className="circle-path"
           cx={circle.cx}
           cy={circle.cy}
           r={circle.r}
           stroke="#4a98bd"
           variants={draw}
           custom={circle.custom}
-          style={{ ...sharedCircleStyle, transform: circle.transform }}
+          style={{
+            ...sharedCircleStyle,
+            transform: circle.transform,
+          }}
           animate={{
-            cx: [circle.cx, circle.cx + 5, circle.cx, circle.cx - 5, circle.cx], // Subtle horizontal movement
-            cy: [circle.cy, circle.cy - 5, circle.cy, circle.cy + 5, circle.cy], // Subtle vertical movement
+            cx: [
+              circle.cx,
+              circle.cx + 5,
+              circle.cx,
+              circle.cx - 5,
+              circle.cx,
+            ],
+            cy: [
+              circle.cy,
+              circle.cy - 5,
+              circle.cy,
+              circle.cy + 5,
+              circle.cy,
+            ],
           }}
           transition={{
             delay: circle.delay,

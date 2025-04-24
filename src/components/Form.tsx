@@ -33,14 +33,16 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
   }, []);
 
   return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%" }}>
     <form
       onSubmit={handleSubmit}
       style={{
         padding: "1.5rem",
         backgroundColor: "#fafcfd",
+        width: '80%',
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)", // Subtle shadow
+        border: "2px solid #d4e3ea",
 
       }}
     >
@@ -58,6 +60,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 

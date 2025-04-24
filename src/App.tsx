@@ -14,6 +14,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import BackgroundImage from "./assets/background1.svg";
 
+
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
     []
@@ -208,6 +209,10 @@ const App: React.FC = () => {
                     "&:hover": { backgroundColor: "#d4e3ea" },
                     position: 'relative',
                     left: '-0.95vw',
+                    width: "2.5vw",
+                    height: "2.5vw",
+                    maxHeight: "3rem",
+                    maxWidth: "3rem",
                     border: "2px solid #d4e3ea",
                   }}
                 >
@@ -264,11 +269,12 @@ const App: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
-                  left: "73vw",
-                  position: "relative",
+                  right: "0vw",
+                  position: "absolute",
                   padding: "0.5rem",
-                  width: "10vw",
-                  borderRadius: 50,
+                  width: "8vw",
+                  borderTopLeftRadius: 50,
+                  borderBottomLeftRadius: 50,
                   backgroundColor: "#e0edf3",
                   border: "2px solid #d4e3ea",
                 }}

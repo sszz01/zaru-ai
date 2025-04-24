@@ -11,6 +11,7 @@ import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
 import LineDraw from "./imported/linedraw";
+import Monkey from "../assets/monkeygraphic.jpg";
 
 const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
   onLogin,
@@ -350,6 +351,23 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         </div>
 
       <LineDraw />
+
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: `url(${Monkey})`,
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "15rem",
+        height: "15rem",
+        position: "absolute",
+        marginTop: "6vh",
+        zIndex: 0,
+        left: "6vw",
+        transform: "scaleX(-1)",
+      }}/>
 
     </div>
   );
