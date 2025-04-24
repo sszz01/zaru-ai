@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -17,24 +16,12 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
   onLogin,
 }) => {
   // ui states
-  const [openModal, setOpenModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   // form states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // toggle modal state
-  const toggleModal = () => {
-    setOpenModal((prev) => {
-      if (prev === true) {
-        setLoading(false);
-        setError(null);
-      }
-      return !prev;
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,7 +47,6 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         );
         console.log("Logged in:", userCredential.user);
         onLogin(userCredential.user.photoURL || null);
-        toggleModal();
       } else {
         // check if email already exists
         const userRef = doc(db, "users", email);
@@ -88,7 +74,6 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         });
 
         onLogin(userCredential.user.photoURL || null);
-        toggleModal();
       }
     } catch (error: unknown) {
       if (error instanceof Error && "code" in error) {
@@ -151,7 +136,6 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
       }
 
       onLogin(user.photoURL || null);
-      toggleModal();
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
       if (error instanceof Error) {
@@ -352,7 +336,9 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
       <LineDraw />
 
-      <div style={{
+      {/*Monkey Graphic*/}
+
+      {/* <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -367,7 +353,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         zIndex: 0,
         left: "6vw",
         transform: "scaleX(-1)",
-      }}/>
+      }}/> */}
 
     </div>
   );
