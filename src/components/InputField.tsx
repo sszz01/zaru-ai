@@ -18,7 +18,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           width: "100%",
           outline: "none",
           padding: "0.75rem 0.75rem",
-          backgroundColor: "#fafcfd",
+          backgroundColor: "#eaf2f5",
           borderRadius: "50px",
           color: "#718096",
           position: "relative",

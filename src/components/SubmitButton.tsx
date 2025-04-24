@@ -15,12 +15,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled }) => {
         alignItems: "center",
         justifyContent: "center",
         borderRadius: "50px",
-        padding: "0.5rem 1.25rem",
+        padding: "0.5rem 0.75rem",
         backgroundColor: "#4a98bd",
-        height: "100%",
+        height: "75%",
         color: "#e0edf3",
         transition: "all 0.5s ease-in-out",
         cursor: "pointer",
+        marginRight: "0.5rem",
       }}
     >
       <span className="font-bold">Send</span>

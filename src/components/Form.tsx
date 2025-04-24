@@ -37,7 +37,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
       onSubmit={handleSubmit}
       style={{
         padding: "1.5rem",
-        backgroundColor: "#eaf2f5",
+        backgroundColor: "#fafcfd",
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)", // Subtle shadow

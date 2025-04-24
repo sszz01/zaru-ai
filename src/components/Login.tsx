@@ -10,7 +10,6 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
-import SignButton from "./imported/button";
 import LineDraw from "./imported/linedraw";
 
 const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
@@ -164,28 +163,24 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
   return (
     <div style={Styles.container}>
-      <Backdrop
-        sx={(theme) => ({
-          zIndex: theme.zIndex.drawer + 1,
-        })}
-        open={openModal}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setLoading(false);
-            setError(null);
-            setOpenModal(false);
-          }
-        }}
-      >
         <div
-          className="max-w-md w-full space-y-8 bg-[#eaf2f5] p-8 rounded-xl shadow-lg"
+          style={{
+            maxWidth: "28rem",
+            width: "100%",
+            padding: "2rem",
+            backgroundColor: "#eaf2f5",
+            borderRadius: "1rem",
+            boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
+            position: "absolute",
+
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="text-center">
-            <h2 style={{ fontSize: "1.875rem", fontWeight: "bold", color: "#192b34", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
+            <h2 style={{ fontSize: "1.875rem", marginBottom: "1rem", fontWeight: "bold", color: "#192b34", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
               {isLogin ? "Welcome back" : "Create account"}
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p style={{ marginTop: "0.5rem", marginBottom: "0.5rem", fontSize: "0.875rem", color: "#64748b" }}>
               {isLogin
                 ? "Don't have an account? "
                 : "Already have an account? "}
@@ -272,7 +267,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
               </div>
             </div>
 
-            <div>
+            <div className="mb-3">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-[#42738a]"
@@ -291,14 +286,18 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
                   placeholder="Enter your password"
                 />
               </div>
             </div>
 
             {isLogin && (
-              <div className="flex items-center justify-end">
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}>
                 <button
                   type="button"
                   style={{
@@ -314,35 +313,10 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
               </div>
             )}
 
-            <div className="flex justify-between">
-              <button
-                type="button"
-                onClick={() => {
-                  setLoading(false);
-                  setError(null);
-                  setOpenModal(false);
-                }}
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.5rem 1rem",
-                  border: "2px solid",
-                  borderColor: "#d4e3ea",
-                  borderRadius: "0.5rem",
-                  color: "#649bb4",
-                  backgroundColor: "#fafcfd",
-                  transition: "background-color 0.2s ease",
-                  gap: "0.5rem",
-                  outline: "none",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700,
-                }}
-                onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#fafcfd'}
-              >
-                Cancel
-              </button>
+            <div style={{
+              display: "flex",
+              width: "100%",
+            }}>
 
               <button
                 type="submit"
@@ -350,6 +324,8 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                 style={{
                   cursor: "pointer",
                   display: "flex",
+                  position: "relative",
+                  width: "100%",
                   alignItems: "center",
                   justifyContent: "center",
                   padding: "0.5rem 1rem",
@@ -372,42 +348,9 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
             </div>
           </form>
         </div>
-      </Backdrop>
 
       <LineDraw />
 
-      <div style={{ ...Styles.buttonContainer, bottom: "36%" }}>
-        <SignButton
-          style={{
-            ...Styles.button,
-            ...Styles.poppins,
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 700,
-            fontSize: 24,
-            marginBottom: 0,
-          }}
-          onClick={toggleModal}
-          aria-label="Sign In"
-        >
-          Sign In
-        </SignButton>
-
-        <SignButton
-          style={{
-            ...Styles.extendedFab,
-            ...Styles.poppins,
-            fontFamily: "Montserrat, sans-serif",
-            color: "#4a98bd",
-            fontWeight: 700,
-            borderRadius: 50,
-            padding: "10px 30px",
-            fontSize: 16,
-          }}
-          aria-label="Watch a Demo"
-        >
-          Watch a Demo
-        </SignButton>
-      </div>
     </div>
   );
 };

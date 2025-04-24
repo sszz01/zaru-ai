@@ -20,32 +20,37 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
             sx={{
               "& .MuiDrawer-paper": {
                 width: "250px",
-                backgroundColor: "#eaf2f5",
+                backgroundColor: "#e0edf3",
                 borderRight: "none",
                 alignItems: "center",
               },
             }} 
           >
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#4a98bd", width: "100%"}}>
-              <div style={{ display: "flex", flexDirection: "row" , borderRadius:50, backgroundColor: '#fafcfd', width: "90%", height: "3.5rem", justifyContent: "space-between", alignItems: "center", border :"2px solid #d4e3ea"}}>
-                <IconButton
-                    onClick={toggleDrawer}
-                    sx={{
-                      margin:  "0.73rem",
-                      backgroundColor: "#397c9b",
-                      transition: "background-color 0.3s ease",
-                      "&:hover": { backgroundColor: "#4a98bd" },
-                    }}
-                  >
-                    <BurgerIcon sx={{ color: "#e0edf3" }} />
-                </IconButton>
-
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#fafcfd", width: "100%"}}>
+              <div style={{ display: "flex", justifyContent: "flex-start", padding : "0.5rem", gap: "0rem", position: "absolute", left:0, borderTopRightRadius:50, borderBottomRightRadius:50, backgroundColor: '#e0edf3', border :"2px solid #d4e3ea"}}>
+                <ToolTip title="Close Sidebar" placement="bottom" arrow>
+                  <IconButton
+                      onClick={toggleDrawer}
+                      sx={{
+                        backgroundColor: "#397c9b",
+                        width: "2.5vw",
+                        height: "2.5vw",
+                        transition: "background-color 0.3s ease",
+                        "&:hover": { backgroundColor: "#4a98bd" },
+                      }}
+                    >
+                      <BurgerIcon sx={{ color: "#e0edf3" }} />
+                  </IconButton>
+                </ToolTip>
+              </div>
+              <div style={{display: "flex", justifyContent: "flex-end", padding : "0.5rem", gap: "1rem", position: "absolute", right:0, borderTopLeftRadius:50, borderBottomLeftRadius:50, backgroundColor: '#e0edf3', border :"2px solid #d4e3ea"}}>
                 <ToolTip title="Add new conversation" placement="bottom" arrow>
                   <IconButton
                     onClick={() => {addConversation(); toggleDrawer();}}
                     sx={{
-                      margin:  "0.65rem",
                       backgroundColor: "#397c9b",
+                      height: "2.5vw",
+                      width: "2.5vw",
                       transition: "background-color 0.3s ease",
                       "&:hover": { backgroundColor: "#4a98bd" },
                     }}

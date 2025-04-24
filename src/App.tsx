@@ -12,6 +12,7 @@ import styles from "./components/imported/styles/login";
 import Profile from "./components/Profile";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import BackgroundImage from "./assets/background1.svg";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -189,19 +190,20 @@ const App: React.FC = () => {
               style={{
                 height: "10vh",
                 width: "100%",
-                backgroundColor: "#4a98bd",
+                backgroundColor: "#fafcfd",
                 display: "flex",
                 alignItems: "center",
                 padding: "0 2vw",
                 boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 overflow: "hidden",
+                borderBottom: "1px solid #d4e3ea",
               }}
             >
 
               <IconButton
                   onClick={toggleDrawer}
                   sx={{
-                    backgroundColor: "#fafcfd",
+                    backgroundColor: "#e0edf3",
                     transition: "background-color 0.3s ease",
                     "&:hover": { backgroundColor: "#d4e3ea" },
                     position: 'relative',
@@ -214,7 +216,7 @@ const App: React.FC = () => {
 
               <div
                 style={{
-                  backgroundColor: "#fafcfd",
+                  backgroundColor: "#e0edf3",
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
@@ -267,7 +269,7 @@ const App: React.FC = () => {
                   padding: "0.5rem",
                   width: "10vw",
                   borderRadius: 50,
-                  backgroundColor: "#fafcfd",
+                  backgroundColor: "#e0edf3",
                   border: "2px solid #d4e3ea",
                 }}
               >
