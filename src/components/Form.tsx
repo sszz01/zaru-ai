@@ -43,7 +43,8 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
         border: "2px solid #d4e3ea",
-
+        position: "absolute",
+        bottom: 0,
       }}
     >
       <div className="relative flex">
