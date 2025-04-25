@@ -33,9 +33,19 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
   }, []);
 
   return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
     <form
       onSubmit={handleSubmit}
-      className="border-t-2 border-gray-200 px-6 py-4 bg-white"
+      style={{
+        padding: "1.5rem",
+        backgroundColor: "#fafcfd",
+        width: '80%',
+        borderTopRightRadius: "50px",
+        borderTopLeftRadius: "50px",
+        border: "2px solid #d4e3ea",
+        position: "absolute",
+        bottom: 0,
+      }}
     >
       <div className="relative flex">
         <InputField
@@ -51,6 +61,7 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         </div>
       </div>
     </form>
+    </div>
   );
 };
 

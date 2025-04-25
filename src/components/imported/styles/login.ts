@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import BackgroundImage from "../../../assets/background.svg";
+import BackgroundImage from "../../../assets/background2.svg";
 
 // const screenWidth = window.innerWidth;
 // const screenHeight = window.innerHeight;
@@ -45,33 +45,32 @@ const styles: { [key: string]: CSSProperties } = {
   },
   button: {
     width: "250px",
-    backgroundColor: "#a8d4a0", // Green background for consistency
+    backgroundColor: "#4a98bd", // Green background for consistency
     height: "65px",
     color: "#5496b3ff", // Blue text color for contrast
     fontWeight: "bold",
     fontFamily: "Quicksand, sans-serif",
     fontSize: "1.5rem", // Use relative units for better scaling
     textAlign: "center",
-    borderRadius: "8px", // Add rounded corners for a modern look
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add subtle shadow
+    borderRadius: "10px", // Add rounded corners for a modern look
     cursor: "pointer", // Pointer cursor for interactivity
     transition: "background-color 0.3s ease", // Smooth hover effect
   },
   extendedFab: {
-    backgroundColor: "#a8d4a0",
+    backgroundColor: "#fafcfd", // Transparent background for the extended FAB
     color: "#5496b3ff",
     fontWeight: "bold",
+    border: "2px solid #d4e3ea", // Blue border for contrast
     fontFamily: "Quicksand, sans-serif",
     fontSize: "1rem", // Use relative units for better scaling
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Add subtle shadow
     cursor: "pointer", // Pointer cursor for interactivity
     transition: "background-color 0.3s ease", // Smooth hover effect
   },
 
   poppins: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "Montserrat, sans-serif",
     fontSize: "20px",
-    color: "#5496b3ff", // Blue text color for consistency
+    color: "#e0edf3", // Blue text color for consistency
     fontWeight: "700", // Medium weight for better readability
     lineHeight: "1.5", // Improved line spacing
     textAlign: "center", // Center-align the text

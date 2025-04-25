@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
@@ -10,14 +9,13 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
-import SignButton from "./imported/button";
 import LineDraw from "./imported/linedraw";
+import Monkey from "../assets/monkeygraphic.jpg";
 
 const Login: React.FC<{
   onLogin: (photoURL: string | null, role: string) => void;
 }> = ({ onLogin }) => {
   // ui states
-  const [openModal, setOpenModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   // form states
   const [email, setEmail] = useState("");
@@ -26,17 +24,6 @@ const Login: React.FC<{
   const [error, setError] = useState<string | null>(null);
   // role selection states
   const [selectedRole, setSelectedRole] = useState<string>("default");
-
-  // toggle modal state
-  const toggleModal = () => {
-    setOpenModal((prev) => {
-      if (prev === true) {
-        setLoading(false);
-        setError(null);
-      }
-      return !prev;
-    });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,8 +48,7 @@ const Login: React.FC<{
           password
         );
         console.log("Logged in:", userCredential.user);
-        onLogin(userCredential.user.photoURL, selectedRole);
-        toggleModal();
+        onLogin(userCredential.user.photoURL || null);
       } else {
         // check if email already exists
         const userRef = doc(db, "users", email);
@@ -89,9 +75,9 @@ const Login: React.FC<{
           authMethod: "email",
           role: selectedRole,
         });
+        
+        onLogin(userCredential.user.photoURL || null);
 
-        onLogin(user.photoURL, selectedRole);
-        toggleModal();
       }
     } catch (error: unknown) {
       if (error instanceof Error && "code" in error) {
@@ -157,9 +143,8 @@ const Login: React.FC<{
           );
         }
       }
-
-      onLogin(user.photoURL, selectedRole);
-      toggleModal();
+      onLogin(user.photoURL || null);
+        
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
       if (error instanceof Error) {
@@ -172,34 +157,35 @@ const Login: React.FC<{
 
   return (
     <div style={Styles.container}>
-      <Backdrop
-        sx={(theme) => ({
-          zIndex: theme.zIndex.drawer + 1,
-        })}
-        open={openModal}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setLoading(false);
-            setError(null);
-            setOpenModal(false);
-          }
-        }}
-      >
         <div
-          className="max-w-md w-full space-y-8 bg-white p-8 rounded-xl shadow-lg"
+          style={{
+            maxWidth: "28rem",
+            width: "100%",
+            padding: "2rem",
+            backgroundColor: "#eaf2f5",
+            borderRadius: "1rem",
+            boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
+            position: "absolute",
+
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">
+            <h2 style={{ fontSize: "1.875rem", marginBottom: "1rem", fontWeight: "bold", color: "#192b34", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
               {isLogin ? "Welcome back" : "Create account"}
             </h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <p style={{ marginTop: "0.5rem", marginBottom: "0.5rem", fontSize: "0.875rem", color: "#64748b" }}>
               {isLogin
                 ? "Don't have an account? "
                 : "Already have an account? "}
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="cursor-pointer font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                style={{
+                  cursor: "pointer",
+                  fontWeight: "500",
+                  color: "#649bb4",
+                  transition: "color 0.2s ease",
+                }}
               >
                 {isLogin ? "Sign up" : "Sign in"}
               </button>
@@ -212,7 +198,22 @@ const Login: React.FC<{
 
           <button
             onClick={handleGoogleLogin}
-            className="cursor-pointer flex items-center justify-center gap-3 w-full px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.75rem",
+              width: "100%",
+              padding: "0.5rem 1rem",
+              borderRadius: "0.5rem",
+              backgroundColor: "#fafcfd",
+              border: "2px solid #d4e3ea",
+              color: "gray",
+              fontWeight: "500",
+              transition: "background-color 0.2s ease",
+            }}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#fafcfd'}
             disabled={loading}
           >
             <img
@@ -228,7 +229,7 @@ const Login: React.FC<{
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
+              <span className="px-2 bg-[#eaf2f5] text-gray-500">
                 Or continue with
               </span>
             </div>
@@ -238,7 +239,7 @@ const Login: React.FC<{
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-[#42738a]"
               >
                 Email address
               </label>
@@ -254,16 +255,16 @@ const Login: React.FC<{
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] rounded-lg bg-[#fafcfd] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
                   placeholder="Enter your email"
                 />
               </div>
             </div>
 
-            <div>
+            <div className="mb-3">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-[#42738a]"
               >
                 Password
               </label>
@@ -279,7 +280,7 @@ const Login: React.FC<{
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
                   placeholder="Enter your password"
                 />
               </div>
@@ -307,79 +308,83 @@ const Login: React.FC<{
             </div>
 
             {isLogin && (
-              <div className="flex items-center justify-end">
+              <div style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}>
                 <button
                   type="button"
-                  className="cursor-pointer text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "0.875rem",
+                    fontWeight: 500,
+                    color: "#649bb4",
+                    transition: "color 0.2s ease",
+                  }}
                 >
                   Forgot your password?
                 </button>
               </div>
             )}
 
-            <div className="flex justify-between">
-              <button
-                type="button"
-                onClick={() => {
-                  setLoading(false);
-                  setError(null);
-                  setOpenModal(false);
-                }}
-                className="cursor-pointer px-4 py-2 border border-gray-300 rounded-lg text-gray-700 bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
-              >
-                Cancel
-              </button>
+            <div style={{
+              display: "flex",
+              width: "100%",
+            }}>
 
               <button
                 type="submit"
-                className="cursor-pointer flex items-center justify-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors gap-2"
+                className="submit-button"
+                style={{
+                  cursor: "pointer",
+                  display: "flex",
+                  position: "relative",
+                  width: "100%",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "0.5rem 1rem",
+                  border: "1px solid transparent",
+                  borderRadius: "0.5rem",
+                  boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+                  color: "#e0edf3",
+                  backgroundColor: "#4a98bd",
+                  transition: "background-color 0.2s ease",
+                  gap: "0.5rem",
+                  outline: "none",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontWeight: 700,
+                }}
                 disabled={loading}
               >
-                {loading
-                  ? "Loading..."
-                  : isLogin
-                  ? "Sign in"
-                  : "Create account"}
+                {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
                 <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           </form>
         </div>
-      </Backdrop>
 
       <LineDraw />
 
-      <div style={{ ...Styles.buttonContainer, bottom: "29.5%" }}>
-        <SignButton
-          style={{
-            ...Styles.button,
-            ...Styles.poppins,
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 700,
-            fontSize: 24,
-            marginBottom: 0,
-          }}
-          onClick={toggleModal}
-          aria-label="Sign In"
-        >
-          Sign In
-        </SignButton>
+      {/*Monkey Graphic*/}
 
-        <SignButton
-          style={{
-            ...Styles.extendedFab,
-            ...Styles.poppins,
-            fontFamily: "Montserrat, sans-serif",
-            fontWeight: 700,
-            borderRadius: 50,
-            padding: "10px 30px",
-            fontSize: 16,
-          }}
-          aria-label="Watch a Demo"
-        >
-          Watch a Demo
-        </SignButton>
-      </div>
+      {/* <div style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundImage: `url(${Monkey})`,
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "15rem",
+        height: "15rem",
+        position: "absolute",
+        marginTop: "6vh",
+        zIndex: 0,
+        left: "6vw",
+        transform: "scaleX(-1)",
+      }}/> */}
+
     </div>
   );
 };
