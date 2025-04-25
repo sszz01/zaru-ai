@@ -21,9 +21,8 @@ Before any user input is sent to the OpenAI API, it goes through a **custom fil
 - Detect prompt patterns that violate ethical guidelines
 - Return a warning or block the prompt entirely if it doesn't meet standards
 
-You can find the filter logic in ``` tbd ```
+You can find the filter logic in ``` contentFilter.ts ``` which is a middleware for the main backend server.
 
-Want to customize it? Just add your own rules and conditions!
 
 🚀 Getting Started
 ------------------
@@ -49,10 +48,10 @@ npm install
 To run the application locally, follow these steps:
 
 1. Navigate to filtered-chatgpt/backend directory
-2. Run backend:
+2. Run backend server:
 
 ```
-npx ts-node server.ts
+npx tsx server.ts
 ```
 
 3. Create a new terminal
@@ -79,5 +78,9 @@ Request Processing Flow
 
 🔧 Customizing the Filter
 -------------------------
+Want to customize it? Just add your own rules and conditions!
+Here's how to do it:
+COMING SOON
 
-TBD
+
+

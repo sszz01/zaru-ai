@@ -36,15 +36,16 @@ Be permissive with general knowledge questions, explanations, and learning assis
       ],
     });
 
-    const response = completion.choices[0].message.content.trim();
-
-    if (response.startsWith("ALLOWED")) {
-      return { allowed: true, reason: null };
-    } else if (response.startsWith("BLOCKED:")) {
-      const reason = response.substring(8).trim();
-      return { allowed: false, reason };
-    } else {
-      return { allowed: true, reason: null };
+    const response = completion.choices[0]?.message?.content?.trim();
+    if (response) {
+      if (response.startsWith("ALLOWED")) {
+        return { allowed: true, reason: null };
+      } else if (response.startsWith("BLOCKED:")) {
+        const reason = response.substring(8).trim();
+        return { allowed: false, reason };
+      } else {
+        return { allowed: true, reason: null };
+      }
     }
   } catch (error) {
     console.error("Error in content filtering:", error);
