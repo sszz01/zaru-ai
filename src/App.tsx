@@ -375,6 +375,7 @@ const App: React.FC = () => {
               }}
               id="messages"
             >
+
               {messages.map((msg, index) => (
                 <div
                   key={index}

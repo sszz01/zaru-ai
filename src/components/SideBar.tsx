@@ -26,7 +26,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
               },
             }} 
           >
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#fafcfd", width: "100%"}}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#fafcfd", width: "100%",}}>
               <div style={{ display: "flex", justifyContent: "flex-start", padding : "0.5rem", gap: "0rem", position: "absolute", left:0, borderTopRightRadius:50, borderBottomRightRadius:50, backgroundColor: '#e0edf3', border :"2px solid #d4e3ea"}}>
                 <ToolTip title="Close Sidebar" placement="bottom" arrow>
                   <IconButton
