@@ -376,7 +376,7 @@ const App: React.FC = () => {
                 overflowY: "auto",
                 padding: "1.5vw",
                 paddingTop: "1vh",
-                paddingBottom: "1vh",
+                paddingBottom: "15vh",
                 gap: "1rem",
               }}
               id="messages"
