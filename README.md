@@ -52,7 +52,7 @@ To run the application locally, follow these steps:
 2. Run backend:
 
 ```
-node server.ts
+npx ts-node server.ts
 ```
 
 3. Create a new terminal

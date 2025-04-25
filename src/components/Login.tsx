@@ -12,9 +12,9 @@ import Styles from "./imported/styles/login";
 import LineDraw from "./imported/linedraw";
 import Monkey from "../assets/monkeygraphic.jpg";
 
-const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
-  onLogin,
-}) => {
+const Login: React.FC<{
+  onLogin: (photoURL: string | null, role: string) => void;
+}> = ({ onLogin }) => {
   // ui states
   const [isLogin, setIsLogin] = useState(true);
   // form states
@@ -22,6 +22,8 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // role selection states
+  const [selectedRole, setSelectedRole] = useState<string>("default");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +73,11 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
           email: user.email,
           createdAt: new Date(),
           authMethod: "email",
+          role: selectedRole,
         });
-
+        
         onLogin(userCredential.user.photoURL || null);
+
       }
     } catch (error: unknown) {
       if (error instanceof Error && "code" in error) {
@@ -125,17 +129,22 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
             displayName: user.displayName,
             createdAt: new Date(),
             authMethod: "google",
+            role: selectedRole,
           });
         } else {
           await setDoc(
             userRef,
-            { lastLogin: new Date(), photoURL: user.photoURL },
+            {
+              lastLogin: new Date(),
+              photoURL: user.photoURL,
+              role: selectedRole,
+            },
             { merge: true }
           );
         }
       }
-
       onLogin(user.photoURL || null);
+        
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
       if (error instanceof Error) {
@@ -275,6 +284,27 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
                   placeholder="Enter your password"
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Select Your Role
+              </label>
+              <select
+                value={selectedRole}
+                onChange={(e) => setSelectedRole(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="default">Default User</option>
+                <option value="student">Student</option>
+                <option value="admin">Administrator</option>
+              </select>
+              {selectedRole === "student" && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Note: Student accounts have certain content restrictions in
+                  accordance with academic integrity policies.
+                </p>
+              )}
             </div>
 
             {isLogin && (

@@ -21,6 +21,7 @@ const App: React.FC = () => {
   );
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string>("default");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [userPhotoURL, setUserPhotoURL] = useState<string | null>(null);
   const [showProfile, setShowProfile] = useState(false);
@@ -53,7 +54,10 @@ const App: React.FC = () => {
       const res = await fetch("http://localhost:5001/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({
+          message: input,
+          userRole: userRole,
+        }),
       });
 
       const data = await res.json();
@@ -100,9 +104,10 @@ const App: React.FC = () => {
     setLoading(false);
   };
 
-  const handleLogin = (photoURL: string | null) => {
+  const handleLogin = (photoURL: string | null, role: string) => {
     setIsLoggedIn(true);
     setUserPhotoURL(photoURL);
+    setUserRole(role);
   };
 
   const [handleDrawer, setHandleDrawer] = useState(false);
@@ -114,7 +119,9 @@ const App: React.FC = () => {
   const [conversationArray, setConversationArray] = useState<
     { id: number; name: string; messages: { text: string; sender: string }[] }[]
   >([]);
-  const [currentConversationId, setCurrentConversationId] = useState<number | null>(null);
+  const [currentConversationId, setCurrentConversationId] = useState<
+    number | null
+  >(null);
 
   const addConversation = () => {
     // Clear the messages to start a blank discussion
@@ -123,7 +130,6 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-
     if (messages.length === 1 && currentConversationId === null) {
       const newConversation = {
         id: conversationArray.length + 1,
@@ -131,12 +137,13 @@ const App: React.FC = () => {
         messages: [...messages],
       };
       setConversationArray([...conversationArray, newConversation]);
-      setCurrentConversationId(newConversation.id); 
+      setCurrentConversationId(newConversation.id);
     } else if (currentConversationId !== null) {
-
       setConversationArray((prev) =>
         prev.map((conv) =>
-          conv.id === currentConversationId ? { ...conv, messages: [...messages] } : conv
+          conv.id === currentConversationId
+            ? { ...conv, messages: [...messages] }
+            : conv
         )
       );
     }
@@ -277,8 +284,7 @@ const App: React.FC = () => {
                   borderBottomLeftRadius: 50,
                   backgroundColor: "#e0edf3",
                   border: "2px solid #d4e3ea",
-                }}
-              >
+                }}>
                 <button style={{ cursor: "pointer", display: "flex", alignItems: "center", }} onClick={openMenu}>
                   <img
                     src={userPhotoURL || "/img/user.png"}

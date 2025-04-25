@@ -5,6 +5,7 @@ import OpenAI from "openai";
 import axios from "axios";
 import { marked } from "marked";
 import { GoogleGenAI } from "@google/genai";
+import { filterMessage } from "./middleware/contentFilter";
 
 dotenv.config({ path: "../.env" });
 
@@ -20,7 +21,7 @@ if (!openaiApiKey) {
 }
 
 const openai = new OpenAI({ apiKey: openaiApiKey });
-const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY }); // gemini api key
+const gemini = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // JinaAI request
 async function makeRequest(query) {
@@ -98,7 +99,17 @@ async function processGemini(res, message) {
 
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, userRole = "default" } = req.body;
+    const filterResult = await filterMessage(message, userRole); // apply content filter based on user role
+
+    if (!filterResult.allowed) {
+      return res.json({
+        response: marked.parse(
+          `I'm unable to assist with this request. ${filterResult.reason}`
+        ),
+      });
+    }
+
     const messageLowerCase = message.toLowerCase();
     const useGemini = messageLowerCase.includes("gemini");
     const useChatGPT = !useGemini;
@@ -115,7 +126,10 @@ app.post("/api/chat", async (req, res) => {
         const completion = await openai.chat.completions.create({
           model: "gpt-4o-mini",
           messages: [
-            { role: "system", content: "You are a helpful assistant." },
+            {
+              role: "system",
+              content: `You are a helpful assistant. The user has the role: ${userRole}.`,
+            },
             {
               role: "user",
               content: `${message} Here's some additional info from Jina AI: ${jinaResponse}`,
@@ -133,7 +147,10 @@ app.post("/api/chat", async (req, res) => {
         const completion = await openai.chat.completions.create({
           model: "gpt-4o-mini",
           messages: [
-            { role: "system", content: "You are a helpful assistant." },
+            {
+              role: "system",
+              content: `You are a helpful assistant. The user has the role: ${userRole}.`,
+            },
             { role: "user", content: message },
           ],
         });
