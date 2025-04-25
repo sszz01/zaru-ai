@@ -378,6 +378,7 @@ const App: React.FC = () => {
                 paddingTop: "1vh",
                 paddingBottom: "1vh",
                 gap: "1rem",
+                marginBottom: '30vh',
               }}
               id="messages"
             >

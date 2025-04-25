@@ -198,7 +198,7 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
                 style={{
                   ...Styles.title,
                   position: 'relative',
-                  top: '-3rem',
+                  top: '-3vh',
                   left: 0,
                   textAlign: 'center',
                   fontSize: '1.5rem',
