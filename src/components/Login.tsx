@@ -48,7 +48,7 @@ const Login: React.FC<{
           password
         );
         console.log("Logged in:", userCredential.user);
-        onLogin(userCredential.user.photoURL || null);
+        onLogin(userCredential.user.photoURL || null, selectedRole);
       } else {
         // check if email already exists
         const userRef = doc(db, "users", email);
@@ -76,7 +76,7 @@ const Login: React.FC<{
           role: selectedRole,
         });
         
-        onLogin(userCredential.user.photoURL || null);
+        onLogin(userCredential.user.photoURL || null, selectedRole);
 
       }
     } catch (error: unknown) {
@@ -143,7 +143,7 @@ const Login: React.FC<{
           );
         }
       }
-      onLogin(user.photoURL || null);
+      onLogin(user.photoURL || null, selectedRole);
         
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
