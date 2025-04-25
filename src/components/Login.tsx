@@ -352,7 +352,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
 
       <LineDraw />
 
-      <div style={{
+      {/* <div style={{
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -367,7 +367,7 @@ const Login: React.FC<{ onLogin: (photoURL: string | null) => void }> = ({
         zIndex: 0,
         left: "6vw",
         transform: "scaleX(-1)",
-      }}/>
+      }}/> */}
 
     </div>
   );
