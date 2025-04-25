@@ -112,180 +112,145 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
         </Backdrop>
 
         {/* <LineDraw/> */}
-    
+      
         <div
           style={{
             ...Styles.profileContainer,
-            flexDirection: 'column',
-            position: 'relative',
-            height: '45vh',
+            width: '110vw',
+            maxWidth: '800px',
+            height: '40vh',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
-          <img
-            src={userData.photoURL || '/img/user.png'}
-            alt="Profile"
-            style={{
-              width: '8vw',
-              height: '8vw',
-              maxWidth: '85px',
-              maxHeight: '85px',
-              borderRadius: '50%',
-              marginBottom: '1rem',
-              border: '3px solid #42738a',
-              position: 'absolute',
-              top: '-3rem',
-            }}
-          />
-    
-          <button
-            style={{
-              height: '4vh',
-              width: '4vh',
-              maxHeight: '2.5rem',
-              maxWidth: '2.5rem',
-              borderRadius: '50%',
-              backgroundColor: '#42738a',
-              position: 'absolute',
-              top: '0.9rem',
-              right: '4vw',
-              cursor: 'pointer',
-            }}
-          >
-            <EditIcon sx={{ color: '#e0edf3', fontSize: '1.25rem' }} />
-          </button>
-    
-          {['Dashboard', 'Settings', 'Back', 'Sign Out'].map((label, index) => (
-            <button
-              key={label}
-              style={{
-                ...Styles.menuButton,
-                marginTop: index === 0 ? '1.25rem' : 0,
-                transition: 'background-color 0.3s ease',
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#d4e3ea')}
-              onMouseOut={(e) => (e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor)}
-              onClick={handleMenuClick(label.toLowerCase())}
-            >
-              <span style={{ ...Styles.menuButtonText }}>{label}</span>
-            </button>
-          ))}
-        </div>
-    
-        {showDashboard && (
           <div
-            id="dashboard"
             style={{
               ...Styles.profileContainer,
-              width: '90vw',
-              maxWidth: '600px',
-              height: '50vh',
               flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
+              position: 'relative',
+              height: '40vh',
+              width: '30%',
+              backgroundColor: '#e0edf3',
+              border: '2px solid #d4e3ea',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
             }}
           >
-            <div
+            <img
+              src={userData.photoURL || '/img/user.png'}
+              alt="Profile"
               style={{
-                ...Styles.title,
-                position: 'relative',
-                top: '-3rem',
-                left: 0,
-                textAlign: 'center',
-                fontSize: '1.5rem',
-              }}
-            >
-              Profile Dashboard
-            </div>
-    
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '80%',
-                gap: '1rem',
-              }}
-            >
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label style={{ ...Styles.label }}>Name</label>
-                <div style={{ ...Styles.userInfo }}>
-                  {userData.displayName || 'No name provided'}
-                </div>
-              </div>
-    
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <label style={{ ...Styles.label }}>Email</label>
-                <div style={{ ...Styles.userInfo }}>
-                  {userData.email || 'No email provided'}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-    
-        {showSettings && (
-          <div
-            id="settings"
-            style={{
-              ...Styles.profileContainer,
-              width: '90vw',
-              maxWidth: '600px',
-              height: '50vh',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <h2
-              style={{
-                color: '#42738a',
+                width: '8vw',
+                height: '8vw',
+                maxWidth: '85px',
+                maxHeight: '85px',
+                borderRadius: '50%',
                 marginBottom: '1rem',
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: '1.5rem',
+                border: '3px solid #42738a',
+                position: 'absolute',
+                top: '-3rem',
               }}
-            >
-              Coming Soon...
-            </h2>
-            {/* <div
+            />
+            <button
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '80%',
-                gap: '1rem',
+                height: '4vh',
+                width: '4vh',
+                maxHeight: '2.5rem',
+                maxWidth: '2.5rem',
+                borderRadius: '50%',
+                backgroundColor: '#42738a',
+                position: 'absolute',
+                top: '0.9rem',
+                right: '4vw',
+                cursor: 'pointer',
               }}
             >
+              <EditIcon sx={{ color: '#e0edf3', fontSize: '1.25rem' }} />
+            </button>
+      
+            {['Dashboard', 'Settings', 'Back', 'Sign Out'].map((label, index) => (
               <button
+                key={label}
                 style={{
-                  backgroundColor: '#4a98bd',
-                  color: '#e0edf3',
-                  border: 'none',
-                  padding: '0.75rem',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '1rem',
+                  ...Styles.menuButton,
+                  marginTop: index === 0 ? '1.25rem' : 0,
+                  transition: 'background-color 0.3s ease',
                 }}
+                onMouseOver={(e) => (e.currentTarget.style.backgroundColor = '#d4e3ea')}
+                onMouseOut={(e) => (e.currentTarget.style.backgroundColor = Styles.menuButton.backgroundColor)}
+                onClick={handleMenuClick(label.toLowerCase())}
               >
-                Change Password
+                <span style={{ ...Styles.menuButtonText }}>{label}</span>
               </button>
-              <button
-                style={{
-                  backgroundColor: '#4a98bd',
-                  color: '#e0edf3',
-                  border: 'none',
-                  padding: '0.75rem',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '1rem',
-                }}
-              >
-                Update Profile
-              </button>
-            </div> */}
+            ))}
+
           </div>
-        )}
+
+          {showDashboard && (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '80%',
+              gap: '1rem',
+            }} id='dashboard'>
+              <div
+                style={{
+                  ...Styles.title,
+                  position: 'relative',
+                  top: '-3rem',
+                  left: 0,
+                  textAlign: 'center',
+                  fontSize: '1.5rem',
+                }}
+              >
+                Profile Dashboard
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  width: '80%',
+                  gap: '1rem',
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{ ...Styles.label }}>Name</label>
+                  <div style={{ ...Styles.userInfo }}>
+                    {userData.displayName || 'No name provided'}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <label style={{ ...Styles.label }}>Email</label>
+                  <div style={{ ...Styles.userInfo }}>
+                    {userData.email || 'No email provided'}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {showSettings && (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              width: '80%',
+              gap: '1rem',
+            }} id='dashboard'>
+              <h2
+                style={{
+                  color: '#42738a',
+                  marginBottom: '1rem',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '1.5rem',
+                }}
+              >
+                Coming Soon...
+              </h2>
+            </div>
+          )}
+        </div>       
       </div>
     );    
   };
