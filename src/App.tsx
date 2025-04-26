@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
+import DOMPurify from "dompurify";
+import { IconButton, Divider } from "@mui/material";
+import BurgerIcon from "@mui/icons-material/Menu";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import PersonIcon from "@mui/icons-material/Person";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+// import BackgroundImage from "./assets/background1.svg";
+import styles from "./components/imported/styles/login";
+import Profile from "./components/Profile";
+import SideBar from "./components/SideBar";
 import Form from "./components/Form";
 import Login from "./components/Login";
 import LoadingAnimation from "./components/LoadingAnimation";
-import DOMPurify from "dompurify";
-import { IconButton } from "@mui/material";
-import BurgerIcon from "@mui/icons-material/Menu";
-import SideBar from "./components/SideBar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import styles from "./components/imported/styles/login";
-import Profile from "./components/Profile";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-// import BackgroundImage from "./assets/background1.svg";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -396,62 +401,73 @@ const App: React.FC = () => {
                     id="profile"
                     sx={{
                       ...styles.poppins,
-                      fontSize: 16,
+                      fontSize: 15,
                       borderRadius: 2,
                       color: "#4a98bd",
+                      gap: 0.8,
                     }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => setShowProfile(true));
                     }}
                   >
+                    <PersonIcon fontSize="large" />
                     Profile
                   </MenuItem>
                   <MenuItem
                     id="settings"
                     sx={{
                       ...styles.poppins,
-                      fontSize: 16,
+                      fontSize: 15,
                       borderRadius: 2,
                       color: "#4a98bd",
+                      gap: 0.8,
                     }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => console.log("Settings clicked"));
                     }}
                   >
+                    <SettingsIcon fontSize="large" />
                     Settings
                   </MenuItem>
+                  {userRole === "admin" && (
+                    <MenuItem
+                      sx={{
+                        ...styles.poppins,
+                        fontSize: 15,
+                        borderRadius: 2,
+                        color: "#4a98bd",
+                        gap: 0.8,
+                      }}
+                      onClick={() => {
+                        handleMenuClose();
+                        handleTransition(() =>
+                          console.log("Admin Dashboard clicked")
+                        );
+                      }}
+                    >
+                      <DashboardIcon fontSize="large" />
+                      Admin Dashboard
+                    </MenuItem>
+                  )}
+                  <Divider sx={{ my: 1, bgcolor: "#e0e0e0" }} />
                   <MenuItem
                     id="logout"
                     sx={{
                       ...styles.poppins,
-                      fontSize: 16,
+                      fontSize: 15,
                       borderRadius: 2,
-                      color: "#4a98bd",
+                      color: "#F7374F",
+                      gap: 0.8,
                     }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => setIsLoggedIn(false));
                     }}
                   >
-                    Sign Out
-                  </MenuItem>
-                  <MenuItem
-                    sx={{
-                      ...styles.poppins,
-                      fontSize: 16,
-                      borderRadius: 2,
-                      color: "#4a98bd",
-                    }}
-                    onClick={() => {
-                      handleMenuClose();
-                      handleTransition(() =>
-                        console.log("Admin Dashboard clicked")
-                      );
-                    }}
-                  >
-                    Admin Dashboard
+                    <LogoutIcon fontSize="large" />
+                    Log Out
                   </MenuItem>
                 </Menu>
               </div>
