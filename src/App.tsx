@@ -12,8 +12,7 @@ import styles from "./components/imported/styles/login";
 import Profile from "./components/Profile";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import BackgroundImage from "./assets/background1.svg";
-
+// import BackgroundImage from "./assets/background1.svg";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -147,7 +146,7 @@ const App: React.FC = () => {
         )
       );
     }
-  }, [messages, currentConversationId]);
+  }, [messages, currentConversationId, conversationArray]);
 
   const loadConversation = (id: number) => {
     const conversation = conversationArray.find((conv) => conv.id === id);
@@ -157,19 +156,27 @@ const App: React.FC = () => {
       console.log("Loaded conversation:", conversation);
     }
   };
-  
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  
+
   const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "#e0edf3" }}>
+    <div
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        height: "100vh",
+        background: "#e0edf3",
+      }}
+    >
       {isLoggedIn ? (
         showProfile ? (
           <Profile
@@ -186,14 +193,17 @@ const App: React.FC = () => {
               loadConversation={loadConversation}
               addConversation={addConversation}
             />
-  
+
             <Backdrop
-              sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
+              sx={(theme) => ({
+                color: "#fff",
+                zIndex: theme.zIndex.drawer + 1,
+              })}
               open={open}
             >
               <CircularProgress size={60} color="inherit" />
             </Backdrop>
-  
+
             <div
               style={{
                 height: "10vh",
@@ -207,24 +217,23 @@ const App: React.FC = () => {
                 borderBottom: "1px solid #d4e3ea",
               }}
             >
-
               <IconButton
-                  onClick={toggleDrawer}
-                  sx={{
-                    backgroundColor: "#e0edf3",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#d4e3ea" },
-                    position: 'relative',
-                    left: '-0.95vw',
-                    width: "2.5vw",
-                    height: "2.5vw",
-                    maxHeight: "3rem",
-                    maxWidth: "3rem",
-                    border: "2px solid #d4e3ea",
-                  }}
-                >
-                  <BurgerIcon sx={{ color: "#4a98bd" }} />
-                </IconButton>
+                onClick={toggleDrawer}
+                sx={{
+                  backgroundColor: "#e0edf3",
+                  transition: "background-color 0.3s ease",
+                  "&:hover": { backgroundColor: "#d4e3ea" },
+                  position: "relative",
+                  left: "-0.95vw",
+                  width: "2.5vw",
+                  height: "2.5vw",
+                  maxHeight: "3rem",
+                  maxWidth: "3rem",
+                  border: "2px solid #d4e3ea",
+                }}
+              >
+                <BurgerIcon sx={{ color: "#4a98bd" }} />
+              </IconButton>
 
               <div
                 style={{
@@ -242,12 +251,32 @@ const App: React.FC = () => {
                   border: "2px solid #d4e3ea",
                 }}
               >
-  
-                <div style={{ position: "relative", display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <span style={{ position: "absolute", color: "#22c55e", right: 0, bottom: 0 }}>
-                    <div style={{ width: "1rem", height: "1rem", backgroundColor: "#22c55e", borderRadius: "50%" }} />
+                <div
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                  }}
+                >
+                  <span
+                    style={{
+                      position: "absolute",
+                      color: "#22c55e",
+                      right: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "1rem",
+                        height: "1rem",
+                        backgroundColor: "#22c55e",
+                        borderRadius: "50%",
+                      }}
+                    />
                   </span>
-  
+
                   <img
                     src="/img/bot.jpg"
                     alt="bot-img"
@@ -260,17 +289,45 @@ const App: React.FC = () => {
                     }}
                   />
                 </div>
-  
-                <div style={{ display: "flex", flexDirection: "column", lineHeight: "tight" }}>
-                  <div style={{ fontSize: "1.15rem", marginTop: "0.25rem", display: "flex", alignItems: "center" }}>
-                    <span style={{ color: "#397c9b", marginRight: "0.75rem", fontWeight: 700 }}>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    lineHeight: "tight",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "1.15rem",
+                      marginTop: "0.25rem",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span
+                      style={{
+                        color: "#397c9b",
+                        marginRight: "0.75rem",
+                        fontWeight: 700,
+                      }}
+                    >
                       AI Assistant
                     </span>
                   </div>
-                  <span style={{ fontSize: "0.775rem", color: "#397c9b", fontWeight: 600, marginTop: "-0.15rem" }}>Always Online</span>
+                  <span
+                    style={{
+                      fontSize: "0.775rem",
+                      color: "#397c9b",
+                      fontWeight: 600,
+                      marginTop: "-0.15rem",
+                    }}
+                  >
+                    Always Online
+                  </span>
                 </div>
               </div>
-  
+
               <div
                 style={{
                   display: "flex",
@@ -284,8 +341,16 @@ const App: React.FC = () => {
                   borderBottomLeftRadius: 50,
                   backgroundColor: "#e0edf3",
                   border: "2px solid #d4e3ea",
-                }}>
-                <button style={{ cursor: "pointer", display: "flex", alignItems: "center", }} onClick={openMenu}>
+                }}
+              >
+                <button
+                  style={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                  onClick={openMenu}
+                >
                   <img
                     src={userPhotoURL || "/img/user.png"}
                     alt="My profile"
@@ -298,7 +363,7 @@ const App: React.FC = () => {
                     }}
                   />
                 </button>
-  
+
                 <Menu
                   id="basic-menu"
                   anchorEl={anchorEl}
@@ -329,7 +394,12 @@ const App: React.FC = () => {
                 >
                   <MenuItem
                     id="profile"
-                    sx={{ ...styles.poppins, fontSize: 16, borderRadius: 2, color: "#4a98bd" }}
+                    sx={{
+                      ...styles.poppins,
+                      fontSize: 16,
+                      borderRadius: 2,
+                      color: "#4a98bd",
+                    }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => setShowProfile(true));
@@ -339,7 +409,12 @@ const App: React.FC = () => {
                   </MenuItem>
                   <MenuItem
                     id="settings"
-                    sx={{ ...styles.poppins, fontSize: 16, borderRadius: 2, color: "#4a98bd" }}
+                    sx={{
+                      ...styles.poppins,
+                      fontSize: 16,
+                      borderRadius: 2,
+                      color: "#4a98bd",
+                    }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => console.log("Settings clicked"));
@@ -349,7 +424,12 @@ const App: React.FC = () => {
                   </MenuItem>
                   <MenuItem
                     id="logout"
-                    sx={{ ...styles.poppins, fontSize: 16, borderRadius: 2, color: "#4a98bd" }}
+                    sx={{
+                      ...styles.poppins,
+                      fontSize: 16,
+                      borderRadius: 2,
+                      color: "#4a98bd",
+                    }}
                     onClick={() => {
                       handleMenuClose();
                       handleTransition(() => setIsLoggedIn(false));
@@ -358,10 +438,17 @@ const App: React.FC = () => {
                     Sign Out
                   </MenuItem>
                   <MenuItem
-                    sx={{ ...styles.poppins, fontSize: 16, borderRadius: 2, color: "#4a98bd" }}
+                    sx={{
+                      ...styles.poppins,
+                      fontSize: 16,
+                      borderRadius: 2,
+                      color: "#4a98bd",
+                    }}
                     onClick={() => {
                       handleMenuClose();
-                      handleTransition(() => console.log("Admin Dashboard clicked"));
+                      handleTransition(() =>
+                        console.log("Admin Dashboard clicked")
+                      );
                     }}
                   >
                     Admin Dashboard
@@ -369,7 +456,7 @@ const App: React.FC = () => {
                 </Menu>
               </div>
             </div>
-  
+
             <div
               style={{
                 flex: 1,
@@ -381,7 +468,6 @@ const App: React.FC = () => {
               }}
               id="messages"
             >
-
               {messages.map((msg, index) => (
                 <div
                   key={index}
@@ -391,7 +477,8 @@ const App: React.FC = () => {
                     marginBottom: "1rem",
                     fontWeight: "500",
                     transition: "all 0.5s ease-in-out",
-                    justifyContent: msg.sender === "user" ? "flex-end" : "flex-start",
+                    justifyContent:
+                      msg.sender === "user" ? "flex-end" : "flex-start",
                   }}
                 >
                   {msg.sender !== "user" && (
@@ -412,7 +499,8 @@ const App: React.FC = () => {
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      alignItems: msg.sender === "user" ? "flex-end" : "flex-start",
+                      alignItems:
+                        msg.sender === "user" ? "flex-end" : "flex-start",
                       maxWidth: "70vw",
                       margin: "0 1rem",
                       order: msg.sender === "user" ? 1 : 2,
@@ -420,7 +508,8 @@ const App: React.FC = () => {
                   >
                     <div
                       style={{
-                        backgroundColor: msg.sender === "user" ? "#4a98bd" : "#f7fafc",
+                        backgroundColor:
+                          msg.sender === "user" ? "#4a98bd" : "#f7fafc",
                         color: msg.sender === "user" ? "#e0edf3" : "#42738a",
                         padding: "0.5rem 1rem",
                         borderRadius: "0.5rem 0 0.5rem 0",
@@ -447,18 +536,30 @@ const App: React.FC = () => {
                 </div>
               ))}
               {loading && (
-                <div style={{ display: "flex", alignItems: "flex-end", marginBottom: "1rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "flex-end",
+                    marginBottom: "1rem",
+                  }}
+                >
                   <img
                     src="/img/bot.jpg"
                     alt="Assistant"
-                    style={{ width: "4vw", height: "4vw", maxWidth: "2.5rem", maxHeight: "2.5rem", borderRadius: "50%" }}
+                    style={{
+                      width: "4vw",
+                      height: "4vw",
+                      maxWidth: "2.5rem",
+                      maxHeight: "2.5rem",
+                      borderRadius: "50%",
+                    }}
                   />
                   <LoadingAnimation />
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
-  
+
             <Form onSubmit={handleInputSubmit} />
           </>
         )
@@ -467,7 +568,6 @@ const App: React.FC = () => {
       )}
     </div>
   );
-  
 };
 
 export default App;
