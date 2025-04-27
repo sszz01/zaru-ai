@@ -10,6 +10,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
+import BackgroundImage from "./assets/light_background.svg"; // Ensure this path is correct and the file exists
 
 // import BackgroundImage from "./assets/background1.svg";
 import styles from "./components/imported/styles/login";
@@ -173,15 +174,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        background: "#e0edf3",
-      }}
-    >
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", backgroundImage: `url(${BackgroundImage})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", }}>
       {isLoggedIn ? (
         showProfile ? (
           <Profile
