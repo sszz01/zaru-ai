@@ -152,7 +152,7 @@ const App: React.FC = () => {
         )
       );
     }
-  }, [messages, currentConversationId, conversationArray]);
+  }, [messages, currentConversationId]); // Removed conversationArray from dependencies
 
   const loadConversation = (id: number) => {
     const conversation = conversationArray.find((conv) => conv.id === id);
@@ -174,7 +174,16 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", backgroundImage: `url(${BackgroundImage})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", }}>
+    <div style={{ 
+      flex: 1, 
+      display: "flex", 
+      flexDirection: "column", 
+      height: "100vh", 
+      backgroundImage: `url(${BackgroundImage})`, 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover", 
+      backgroundPosition: "center", 
+    }}>
       {isLoggedIn ? (
         showProfile ? (
           <Profile
@@ -206,19 +215,18 @@ const App: React.FC = () => {
               style={{
                 height: "10vh",
                 width: "100%",
-                backgroundColor: "#fafcfd",
+                backgroundColor: "transparent",
                 display: "flex",
                 alignItems: "center",
                 padding: "0 2vw",
-                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 overflow: "hidden",
-                borderBottom: "1px solid #d4e3ea",
+                // borderBottom: "2px solid #d4e3ea",
               }}
             >
               <IconButton
                 onClick={toggleDrawer}
                 sx={{
-                  backgroundColor: "#e0edf3",
+                  backgroundColor: "#fafcfd",
                   transition: "background-color 0.3s ease",
                   "&:hover": { backgroundColor: "#d4e3ea" },
                   position: "relative",
@@ -235,12 +243,12 @@ const App: React.FC = () => {
 
               <div
                 style={{
-                  backgroundColor: "#e0edf3",
+                  backgroundColor: "#fafcfd",
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
                   height: "80%",
-                  borderRadius: 50,
+                  borderRadius: 25,
                   padding: "0 1rem",
                   zIndex: 1,
                   position: "relative",
@@ -337,7 +345,7 @@ const App: React.FC = () => {
                   width: "8vw",
                   borderTopLeftRadius: 50,
                   borderBottomLeftRadius: 50,
-                  backgroundColor: "#e0edf3",
+                  backgroundColor: "#fafcfd",
                   border: "2px solid #d4e3ea",
                 }}
               >
@@ -380,7 +388,8 @@ const App: React.FC = () => {
                       backgroundColor: "#e0edf3",
                       color: "#4a98bd",
                       borderRadius: "10px",
-                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                      border: "2px solid #d4e3ea",
+                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.05)",
                     },
                     "& .MuiMenuItem-root": {
                       "&:hover": {
@@ -444,7 +453,7 @@ const App: React.FC = () => {
                       Admin Dashboard
                     </MenuItem>
                   )}
-                  <Divider sx={{ my: 1, bgcolor: "#e0e0e0" }} />
+                  <Divider sx={{ my: 1, bgcolor: "#d4e3ea", }} />
                   <MenuItem
                     id="logout"
                     sx={{
@@ -518,7 +527,7 @@ const App: React.FC = () => {
                     <div
                       style={{
                         backgroundColor:
-                          msg.sender === "user" ? "#4a98bd" : "#f7fafc",
+                          msg.sender === "user" ? "#4a98bd" : "#e0edf3",
                         color: msg.sender === "user" ? "#e0edf3" : "#42738a",
                         padding: "0.5rem 1rem",
                         borderRadius: "0.5rem 0 0.5rem 0",

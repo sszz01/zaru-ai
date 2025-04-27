@@ -133,7 +133,7 @@ const Profile: React.FC<ProfileProps> = ({ setLogin, userPhotoURL, onClose }) =>
               width: '30%',
               backgroundColor: '#e0edf3',
               border: '2px solid #d4e3ea',
-              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0)',
             }}
           >
             <img
