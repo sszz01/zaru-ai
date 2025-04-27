@@ -58,7 +58,7 @@ app.post("/api/chat", async (req, res) => {
     const { message, userRole = "default" } = req.body;
     const filterResult = await filterMessage(message, userRole); // apply content filter based on user role
 
-    if (!filterResult.allowed) {
+    if (filterResult != null && !filterResult.allowed) {
       return res.json({
         response: marked.parse(
           `I'm unable to assist with this request. ${filterResult.reason}`

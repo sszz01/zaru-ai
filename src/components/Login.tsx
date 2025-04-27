@@ -10,7 +10,7 @@ import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
 import LineDraw from "./imported/linedraw";
-import Monkey from "../assets/monkeygraphic.jpg";
+// import Monkey from "../assets/monkeygraphic.jpg";
 
 const Login: React.FC<{
   onLogin: (photoURL: string | null, role: string) => void;
@@ -75,9 +75,8 @@ const Login: React.FC<{
           authMethod: "email",
           role: selectedRole,
         });
-        
-        onLogin(userCredential.user.photoURL || null, selectedRole);
 
+        onLogin(userCredential.user.photoURL || null, selectedRole);
       }
     } catch (error: unknown) {
       if (error instanceof Error && "code" in error) {
@@ -144,7 +143,6 @@ const Login: React.FC<{
         }
       }
       onLogin(user.photoURL || null, selectedRole);
-        
     } catch (error: unknown) {
       setError("Google login failed. Please try again.");
       if (error instanceof Error) {
@@ -157,212 +155,233 @@ const Login: React.FC<{
 
   return (
     <div style={Styles.container}>
-        <div
-          style={{
-            maxWidth: "28rem",
-            width: "100%",
-            padding: "2rem",
-            backgroundColor: "#eaf2f5",
-            borderRadius: "1rem",
-            boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
-            position: "absolute",
+      <div
+        style={{
+          maxWidth: "28rem",
+          width: "100%",
+          padding: "2rem",
+          backgroundColor: "#eaf2f5",
+          borderRadius: "1rem",
+          boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
+          position: "absolute",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="text-center">
+          <h2
+            style={{
+              fontSize: "1.875rem",
+              marginBottom: "1rem",
+              fontWeight: "bold",
+              color: "#192b34",
+              letterSpacing: "-0.01562em",
+              fontFamily: "Montserrat, sans-serif",
+            }}
+          >
+            {isLogin ? "Welcome back" : "Create account"}
+          </h2>
+          <p
+            style={{
+              marginTop: "0.5rem",
+              marginBottom: "0.5rem",
+              fontSize: "0.875rem",
+              color: "#64748b",
+            }}
+          >
+            {isLogin ? "Don't have an account? " : "Already have an account? "}
+            <button
+              onClick={() => setIsLogin(!isLogin)}
+              style={{
+                cursor: "pointer",
+                fontWeight: "500",
+                color: "#649bb4",
+                transition: "color 0.2s ease",
+              }}
+            >
+              {isLogin ? "Sign up" : "Sign in"}
+            </button>
+          </p>
+        </div>
 
+        {error && (
+          <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+        )}
+
+        <button
+          onClick={handleGoogleLogin}
+          style={{
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.75rem",
+            width: "100%",
+            padding: "0.5rem 1rem",
+            borderRadius: "0.5rem",
+            backgroundColor: "#fafcfd",
+            border: "2px solid #d4e3ea",
+            color: "gray",
+            fontWeight: "500",
+            transition: "background-color 0.2s ease",
           }}
-          onClick={(e) => e.stopPropagation()}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundColor = "#d4e3ea")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundColor = "#fafcfd")
+          }
+          disabled={loading}
         >
-          <div className="text-center">
-            <h2 style={{ fontSize: "1.875rem", marginBottom: "1rem", fontWeight: "bold", color: "#192b34", letterSpacing: "-0.01562em", fontFamily: "Montserrat, sans-serif" }}>
-              {isLogin ? "Welcome back" : "Create account"}
-            </h2>
-            <p style={{ marginTop: "0.5rem", marginBottom: "0.5rem", fontSize: "0.875rem", color: "#64748b" }}>
-              {isLogin
-                ? "Don't have an account? "
-                : "Already have an account? "}
+          <img
+            src="https://www.google.com/favicon.ico"
+            alt="Google"
+            className="w-5 h-5"
+          />
+          {loading ? "Loading..." : "Continue with Google"}
+        </button>
+
+        <div className="relative my-6">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-[#eaf2f5] text-gray-500">
+              Or continue with
+            </span>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-[#42738a]"
+            >
+              Email address
+            </label>
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Mail className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] rounded-lg bg-[#fafcfd] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
+                placeholder="Enter your email"
+              />
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-[#42738a]"
+            >
+              Password
+            </label>
+            <div className="mt-1 relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Lock className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Select Your Role
+            </label>
+            <select
+              value={selectedRole}
+              onChange={(e) => setSelectedRole(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              <option value="default">Default User</option>
+              <option value="student">Student</option>
+              <option value="admin">Administrator</option>
+            </select>
+            {selectedRole === "student" && (
+              <p className="text-xs text-gray-500 mt-1">
+                Note: Student accounts have certain content restrictions in
+                accordance with academic integrity policies.
+              </p>
+            )}
+          </div>
+
+          {isLogin && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            >
               <button
-                onClick={() => setIsLogin(!isLogin)}
+                type="button"
                 style={{
                   cursor: "pointer",
-                  fontWeight: "500",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
                   color: "#649bb4",
                   transition: "color 0.2s ease",
                 }}
               >
-                {isLogin ? "Sign up" : "Sign in"}
+                Forgot your password?
               </button>
-            </p>
-          </div>
-
-          {error && (
-            <div className="text-red-500 text-sm text-center mb-4">{error}</div>
+            </div>
           )}
 
-          <button
-            onClick={handleGoogleLogin}
+          <div
             style={{
-              cursor: "pointer",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.75rem",
               width: "100%",
-              padding: "0.5rem 1rem",
-              borderRadius: "0.5rem",
-              backgroundColor: "#fafcfd",
-              border: "2px solid #d4e3ea",
-              color: "gray",
-              fontWeight: "500",
-              transition: "background-color 0.2s ease",
             }}
-            onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#d4e3ea'} onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#fafcfd'}
-            disabled={loading}
           >
-            <img
-              src="https://www.google.com/favicon.ico"
-              alt="Google"
-              className="w-5 h-5"
-            />
-            {loading ? "Loading..." : "Continue with Google"}
-          </button>
-
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-[#eaf2f5] text-gray-500">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-[#42738a]"
-              >
-                Email address
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] rounded-lg bg-[#fafcfd] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
-                  placeholder="Enter your email"
-                />
-              </div>
-            </div>
-
-            <div className="mb-3">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-[#42738a]"
-              >
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
-                  placeholder="Enter your password"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Select Your Role
-              </label>
-              <select
-                value={selectedRole}
-                onChange={(e) => setSelectedRole(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              >
-                <option value="default">Default User</option>
-                <option value="student">Student</option>
-                <option value="admin">Administrator</option>
-              </select>
-              {selectedRole === "student" && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Note: Student accounts have certain content restrictions in
-                  accordance with academic integrity policies.
-                </p>
-              )}
-            </div>
-
-            {isLogin && (
-              <div style={{
+            <button
+              type="submit"
+              className="submit-button"
+              style={{
+                cursor: "pointer",
                 display: "flex",
+                position: "relative",
+                width: "100%",
                 alignItems: "center",
-                justifyContent: "flex-end",
-              }}>
-                <button
-                  type="button"
-                  style={{
-                    cursor: "pointer",
-                    fontSize: "0.875rem",
-                    fontWeight: 500,
-                    color: "#649bb4",
-                    transition: "color 0.2s ease",
-                  }}
-                >
-                  Forgot your password?
-                </button>
-              </div>
-            )}
-
-            <div style={{
-              display: "flex",
-              width: "100%",
-            }}>
-
-              <button
-                type="submit"
-                className="submit-button"
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  position: "relative",
-                  width: "100%",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: "0.5rem 1rem",
-                  border: "1px solid transparent",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
-                  color: "#e0edf3",
-                  backgroundColor: "#4a98bd",
-                  transition: "background-color 0.2s ease",
-                  gap: "0.5rem",
-                  outline: "none",
-                  fontFamily: "Montserrat, sans-serif",
-                  fontWeight: 700,
-                }}
-                disabled={loading}
-              >
-                {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-          </form>
-        </div>
+                justifyContent: "center",
+                padding: "0.5rem 1rem",
+                border: "1px solid transparent",
+                borderRadius: "0.5rem",
+                boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
+                color: "#e0edf3",
+                backgroundColor: "#4a98bd",
+                transition: "background-color 0.2s ease",
+                gap: "0.5rem",
+                outline: "none",
+                fontFamily: "Montserrat, sans-serif",
+                fontWeight: 700,
+              }}
+              disabled={loading}
+            >
+              {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </form>
+      </div>
 
       <LineDraw />
 
@@ -384,7 +403,6 @@ const Login: React.FC<{
         left: "6vw",
         transform: "scaleX(-1)",
       }}/> */}
-
     </div>
   );
 };
