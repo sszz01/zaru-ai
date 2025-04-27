@@ -12,7 +12,7 @@ import styles from "./components/imported/styles/login";
 import Profile from "./components/Profile";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import BackgroundImage from "./assets/background1.svg";
+import BackgroundImage from "./assets/light_background.svg"; // Ensure this path is correct and the file exists
 
 
 const App: React.FC = () => {
@@ -169,7 +169,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", background: "#e0edf3" }}>
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", height: "100vh", backgroundImage: `url(${BackgroundImage})`, backgroundRepeat: "no-repeat", backgroundSize: "cover", backgroundPosition: "center", }}>
       {isLoggedIn ? (
         showProfile ? (
           <Profile
