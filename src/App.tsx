@@ -238,7 +238,7 @@ const App: React.FC = () => {
                   border: "2px solid #d4e3ea",
                 }}
               >
-                <BurgerIcon sx={{ color: "#4a98bd" }} />
+                <BurgerIcon sx={{ color: "#a5b2b8" }} />
               </IconButton>
 
               <div
