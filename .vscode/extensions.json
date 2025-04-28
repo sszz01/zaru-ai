@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "aaron-bond.better-comments",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "github.vscode-pull-request-github",
+    "pranaygp.vscode-css-peek"
+  ]
+}
