@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "./firebase/firebase";
+
+// external components
 import { IconButton, Divider } from "@mui/material";
 import BurgerIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
@@ -10,19 +15,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import BackgroundImage from "./assets/light_background.svg"; // Ensure this path is correct and the file exists
 
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase/firebase";
-
-// import BackgroundImage from "./assets/background1.svg";
+// internal components
 import styles from "./components/imported/styles/login";
 import Profile from "./components/Profile";
 import SideBar from "./components/SideBar";
 import Form from "./components/Form";
 import Login from "./components/Login";
 import LoadingAnimation from "./components/LoadingAnimation";
+import BackgroundImage from "./assets/light_background.svg";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
