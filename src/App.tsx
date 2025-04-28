@@ -10,11 +10,12 @@ import BurgerIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+// import CircularProgress from "@mui/material/CircularProgress";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { RotateLoader } from "react-spinners";
 
 // internal components
 import styles from "./components/imported/styles/login";
@@ -251,7 +252,7 @@ const App: React.FC = () => {
             height: "100vh",
           }}
         >
-          <CircularProgress size={60} />
+          <RotateLoader color="#547792" />
         </div>
       ) : !isLoggedIn ? (
         <Login onLogin={handleLogin} />
@@ -278,7 +279,7 @@ const App: React.FC = () => {
             })}
             open={open}
           >
-            <CircularProgress size={60} color="inherit" />
+            <RotateLoader color="#547792" />
           </Backdrop>
 
           <div
@@ -389,7 +390,7 @@ const App: React.FC = () => {
                       fontWeight: 700,
                     }}
                   >
-                    AI Assistant
+                    ZaruAI
                   </span>
                 </div>
                 <span
