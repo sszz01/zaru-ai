@@ -209,7 +209,7 @@ const App: React.FC = () => {
         )
       );
     }
-  }, [messages, currentConversationId, conversationArray]);
+  }, [messages, currentConversationId]); // Removed conversationArray from dependencies
 
   const loadConversation = (id: number) => {
     const conversation = conversationArray.find((conv) => conv.id === id);
@@ -335,6 +335,48 @@ const App: React.FC = () => {
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
+                height: "10vh",
+                width: "100%",
+                backgroundColor: "transparent",
+                display: "flex",
+                alignItems: "center",
+                padding: "0 2vw",
+                overflow: "hidden",
+                // borderBottom: "2px solid #d4e3ea",
+              }}
+            >
+              <IconButton
+                onClick={toggleDrawer}
+                sx={{
+                  backgroundColor: "#fafcfd",
+                  transition: "background-color 0.3s ease",
+                  "&:hover": { backgroundColor: "#d4e3ea" },
+                  position: "relative",
+                  left: "-0.95vw",
+                  width: "2.5vw",
+                  height: "2.5vw",
+                  maxHeight: "3rem",
+                  maxWidth: "3rem",
+                  border: "2px solid #d4e3ea",
+                }}
+              >
+                <BurgerIcon sx={{ color: "#a5b2b8" }} />
+              </IconButton>
+
+              <div
+                style={{
+                  backgroundColor: "#fafcfd",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  height: "80%",
+                  borderRadius: 25,
+                  padding: "0 1rem",
+                  zIndex: 1,
+                  position: "relative",
+                  left: "0vw",
+                  boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)",
+                  border: "2px solid #d4e3ea",
                 }}
               >
                 <span
@@ -426,6 +468,15 @@ const App: React.FC = () => {
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
+                  gap: "1rem",
+                  right: "0vw",
+                  position: "absolute",
+                  padding: "0.5rem",
+                  width: "8vw",
+                  borderTopLeftRadius: 50,
+                  borderBottomLeftRadius: 50,
+                  backgroundColor: "#fafcfd",
+                  border: "2px solid #d4e3ea",
                 }}
                 onClick={openMenu}
               >
