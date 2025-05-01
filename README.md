@@ -1,6 +1,6 @@
-# ZaruAI Input Filter Assistant
+# Overview
 
-ZaruAI is a web app that filters user input based on custom rules before sending to AI models. Built with Express.js backend and React frontend.
+ZaruAI is an AI chatbot web app that filters user input based on custom rules before sending to AI models. Built with Express.js backend and React frontend.
 
 ✨ Key Features
 --------------
