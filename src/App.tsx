@@ -54,7 +54,7 @@ const App: React.FC = () => {
             setUserRole("default");
             setUserPhotoURL(user.photoURL || null);
           }
-        } catch (error) {
+        } catch {
           setUserRole("default");
           setUserPhotoURL(user.photoURL || null);
         } finally {
