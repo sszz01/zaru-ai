@@ -32,6 +32,46 @@ const App: React.FC = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, async (user) => {
+      setIsLoadingAuth(true);
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        try {
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            setUserRole(userData.role || "default");
+            setUserPhotoURL(user.photoURL || null);
+          } else {
+            setUserRole("default");
+            setUserPhotoURL(user.photoURL || null);
+          }
+        } catch {
+          setUserRole("default");
+          setUserPhotoURL(user.photoURL || null);
+        } finally {
+          setIsLoggedIn(true);
+        }
+      } else {
+        setIsLoggedIn(false);
+        setUserRole("default");
+        setUserPhotoURL(null);
+        setMessages([]);
+        setConversationArray([]);
+        setCurrentConversationId(null);
+      }
+      setIsLoadingAuth(false);
+      setLoading(false);
+    });
+
+    return () => {
+      unsub();
+    };
+  }, []);
+
   const handleTransition = (action: () => void) => {
     setOpen(true); // Show backdrop
     setTimeout(() => {
