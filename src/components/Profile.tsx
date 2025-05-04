@@ -7,7 +7,6 @@ import { RotateLoader } from "react-spinners";
 import { auth } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-import LineDraw from "./imported/linedraw";
 
 interface ProfileProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -114,8 +113,6 @@ const Profile: React.FC<ProfileProps> = ({
         <RotateLoader color="#FFF8F8" />
       </Backdrop>
 
-      {/* <LineDraw/> */}
-
       <div
         style={{
           ...Styles.profileContainer,
@@ -136,7 +133,6 @@ const Profile: React.FC<ProfileProps> = ({
             width: "30%",
             backgroundColor: "#e0edf3",
             border: "2px solid #d4e3ea",
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
           <img
