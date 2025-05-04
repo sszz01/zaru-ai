@@ -284,19 +284,17 @@ const App: React.FC = () => {
             style={{
               height: "10vh",
               width: "100%",
-              backgroundColor: "#fafcfd",
+              backgroundColor: "transparent",
               display: "flex",
               alignItems: "center",
               padding: "0 2vw",
-              boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
               overflow: "hidden",
-              borderBottom: "1px solid #d4e3ea",
             }}
           >
             <IconButton
               onClick={toggleDrawer}
               sx={{
-                backgroundColor: "#e0edf3",
+                backgroundColor: "#fafcfd",
                 transition: "background-color 0.3s ease",
                 "&:hover": { backgroundColor: "#d4e3ea" },
                 position: "relative",
@@ -313,7 +311,7 @@ const App: React.FC = () => {
 
             <div
               style={{
-                backgroundColor: "#e0edf3",
+                backgroundColor: "#fafcfd",
                 display: "flex",
                 alignItems: "center",
                 gap: "1rem",
@@ -388,7 +386,7 @@ const App: React.FC = () => {
                       fontWeight: 700,
                     }}
                   >
-                    AI Assistant
+                    ZaruAI
                   </span>
                 </div>
                 <span
@@ -415,7 +413,7 @@ const App: React.FC = () => {
                 width: "8vw",
                 borderTopLeftRadius: 50,
                 borderBottomLeftRadius: 50,
-                backgroundColor: "#e0edf3",
+                backgroundColor: "#fafcfd",
                 border: "2px solid #d4e3ea",
               }}
             >
