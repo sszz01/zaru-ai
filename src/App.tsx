@@ -6,6 +6,7 @@ import BurgerIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Backdrop from "@mui/material/Backdrop";
+
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -55,7 +56,7 @@ const App: React.FC = () => {
             setUserRole("default");
             setUserPhotoURL(user.photoURL || null);
           }
-        } catch (error) {
+        } catch {
           setUserRole("default");
           setUserPhotoURL(user.photoURL || null);
         } finally {
