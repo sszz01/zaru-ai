@@ -69,6 +69,7 @@ const Profile: React.FC<ProfileProps> = ({
     fetchUserData();
   }, [userPhotoURL]);
 
+
   const handleOpen = () => {
     setOpen(true);
     setTimeout(() => {

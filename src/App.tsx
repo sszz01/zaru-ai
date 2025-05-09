@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DOMPurify from "dompurify";
 import { IconButton, Divider } from "@mui/material";
 import BurgerIcon from "@mui/icons-material/Menu";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
-import { RotateLoader } from "react-spinners";
+
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -24,6 +24,8 @@ import SideBar from "./components/SideBar";
 import Form from "./components/Form";
 import Login from "./components/Login";
 import LoadingAnimation from "./components/LoadingAnimation";
+import { RotateLoader } from "react-spinners";
+import Dashboard from "./components/Dashboard";
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<{ text: string; sender: string }[]>(
@@ -37,6 +39,7 @@ const App: React.FC = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [open, setOpen] = useState(false);
   const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
@@ -230,425 +233,437 @@ const App: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        backgroundImage: `url(${BackgroundImage})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {isLoadingAuth ? (
         <div
           style={{
+            flex: 1,
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            flexDirection: "column",
             height: "100vh",
+            backgroundImage: `url(${BackgroundImage})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          <RotateLoader color="inherit" />
-        </div>
-      ) : !isLoggedIn ? (
-        <Login onLogin={handleLogin} />
-      ) : showProfile ? (
-        <Profile
-          setLogin={setIsLoggedIn}
-          userPhotoURL={userPhotoURL}
-          onClose={() => setShowProfile(false)}
-        />
-      ) : (
-        <>
-          <SideBar
-            toggleDrawer={toggleDrawer}
-            handleDrawer={handleDrawer}
-            conversationArray={conversationArray}
-            loadConversation={loadConversation}
-            addConversation={addConversation}
-          />
-
-          <Backdrop
-            sx={(theme) => ({
-              color: "#fff",
-              zIndex: theme.zIndex.drawer + 1,
-            })}
-            open={open}
-          >
-            <RotateLoader color="inherit" />
-          </Backdrop>
-
-          <div
-            style={{
-              height: "10vh",
-              width: "100%",
-              backgroundColor: "transparent",
-              display: "flex",
-              alignItems: "center",
-              padding: "0 2vw",
-              overflow: "hidden",
-            }}
-          >
-            <IconButton
-              onClick={toggleDrawer}
-              sx={{
-                backgroundColor: "#fafcfd",
-                transition: "background-color 0.3s ease",
-                "&:hover": { backgroundColor: "#d4e3ea" },
-                position: "relative",
-                left: "-0.95vw",
-                width: "2.5vw",
-                height: "2.5vw",
-                maxHeight: "3rem",
-                maxWidth: "3rem",
-                border: "2px solid #d4e3ea",
-              }}
-            >
-              <BurgerIcon sx={{ color: "#4a98bd" }} />
-            </IconButton>
-
+          {isLoadingAuth ? (
             <div
               style={{
-                backgroundColor: "#fafcfd",
                 display: "flex",
+                justifyContent: "center",
                 alignItems: "center",
-                gap: "1rem",
-                height: "80%",
-                borderRadius: 50,
-                padding: "0 1rem",
-                zIndex: 1,
-                position: "relative",
-                left: "0vw",
-                boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)",
-                border: "2px solid #d4e3ea",
+                height: "100vh",
               }}
             >
+              <RotateLoader color="#999999" />
+            </div>
+          ) : !isLoggedIn ? (
+
+              <Login onLogin={handleLogin} />
+
+          ) : showProfile ? (
+
+              <Profile
+                setLogin={setIsLoggedIn}
+                userPhotoURL={userPhotoURL}
+                onClose={() => setShowProfile(false)}
+              />
+
+          ) : showDashboard ? (
+
+              <Dashboard
+                setLogin={setIsLoggedIn} 
+                userPhotoURL={userPhotoURL}
+                onClose={() => setShowDashboard(false)}
+              />
+
+          ) : (
+            <>
+              <SideBar
+                toggleDrawer={toggleDrawer}
+                handleDrawer={handleDrawer}
+                conversationArray={conversationArray}
+                loadConversation={loadConversation}
+                addConversation={addConversation}
+              />
+
+              <Backdrop
+                sx={(theme) => ({
+                  color: "#fff",
+                  zIndex: theme.zIndex.drawer + 1,
+                })}
+                open={open}
+              >
+                <RotateLoader color="#FFF8F8" />
+              </Backdrop>
+
               <div
                 style={{
-                  position: "relative",
+                  height: "10vh",
+                  width: "100%",
+                  backgroundColor: "transparent",
                   display: "flex",
                   alignItems: "center",
-                  gap: "1rem",
+                  padding: "0 2vw",
+                  overflow: "hidden",
                 }}
               >
-                <span
-                  style={{
-                    position: "absolute",
-                    color: "#22c55e",
-                    right: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "1rem",
-                      height: "1rem",
-                      backgroundColor: "#22c55e",
-                      borderRadius: "50%",
-                    }}
-                  />
-                </span>
-
-                <img
-                  src="/img/bot.jpg"
-                  alt="bot-img"
-                  style={{
+                <IconButton
+                  onClick={toggleDrawer}
+                  sx={{
+                    backgroundColor: "#fafcfd",
+                    transition: "background-color 0.3s ease",
+                    "&:hover": { backgroundColor: "#d4e3ea" },
+                    position: "relative",
+                    left: "-0.95vw",
                     width: "2.5vw",
                     height: "2.5vw",
-                    maxWidth: "3rem",
                     maxHeight: "3rem",
-                    borderRadius: "50%",
+                    maxWidth: "3rem",
+                    border: "2px solid #d4e3ea",
                   }}
-                />
-              </div>
+                >
+                  <BurgerIcon sx={{ color: "#4a98bd" }} />
+                </IconButton>
 
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  lineHeight: "tight",
-                }}
-              >
                 <div
                   style={{
-                    fontSize: "1.15rem",
-                    marginTop: "0.25rem",
+                    backgroundColor: "#fafcfd",
                     display: "flex",
                     alignItems: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#397c9b",
-                      marginRight: "0.75rem",
-                      fontWeight: 700,
-                    }}
-                  >
-                    ZaruAI
-                  </span>
-                </div>
-                <span
-                  style={{
-                    fontSize: "0.775rem",
-                    color: "#397c9b",
-                    fontWeight: 600,
-                    marginTop: "-0.15rem",
-                  }}
-                >
-                  Always Online
-                </span>
-              </div>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-                right: "0vw",
-                position: "absolute",
-                padding: "0.5rem",
-                width: "8vw",
-                borderTopLeftRadius: 50,
-                borderBottomLeftRadius: 50,
-                backgroundColor: "#fafcfd",
-                border: "2px solid #d4e3ea",
-              }}
-            >
-              <button
-                style={{
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                onClick={openMenu}
-              >
-                <img
-                  src={userPhotoURL || "/img/user.png"}
-                  alt="My profile"
-                  style={{
-                    width: "2.5vw",
-                    height: "2.5vw",
-                    maxWidth: "3rem",
-                    maxHeight: "3rem",
-                    borderRadius: "50%",
-                  }}
-                />
-              </button>
-
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                sx={{
-                  "& .MuiPaper-root": {
-                    backgroundColor: "#e0edf3",
-                    color: "#4a98bd",
-                    borderRadius: "10px",
-                    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  },
-                  "& .MuiMenuItem-root": {
-                    "&:hover": {
-                      transition: "background-color 0.3s ease-in-out",
-                      "&:hover": { backgroundColor: "#d4e3ea" },
-                    },
-                  },
-                }}
-              >
-                <MenuItem
-                  id="profile"
-                  sx={{
-                    ...styles.poppins,
-                    fontSize: 15,
-                    borderRadius: 2,
-                    color: "#4a98bd",
-                    gap: 0.8,
-                  }}
-                  onClick={() => {
-                    handleMenuClose();
-                    handleTransition(() => setShowProfile(true));
-                  }}
-                >
-                  <PersonIcon fontSize="large" />
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  id="settings"
-                  sx={{
-                    ...styles.poppins,
-                    fontSize: 15,
-                    borderRadius: 2,
-                    color: "#4a98bd",
-                    gap: 0.8,
-                  }}
-                  onClick={() => {
-                    handleMenuClose();
-                    handleTransition(() => console.log("Settings clicked"));
-                  }}
-                >
-                  <SettingsIcon fontSize="large" />
-                  Settings
-                </MenuItem>
-                {userRole === "admin" && (
-                  <MenuItem
-                    sx={{
-                      ...styles.poppins,
-                      fontSize: 15,
-                      borderRadius: 2,
-                      color: "#4a98bd",
-                      gap: 0.8,
-                    }}
-                    onClick={() => {
-                      handleMenuClose();
-                      handleTransition(() =>
-                        console.log("Admin Dashboard clicked")
-                      );
-                    }}
-                  >
-                    <DashboardIcon fontSize="large" />
-                    Admin Dashboard
-                  </MenuItem>
-                )}
-                <Divider sx={{ my: 1, bgcolor: "#e0e0e0" }} />
-                <MenuItem
-                  id="logout"
-                  sx={{
-                    ...styles.poppins,
-                    fontSize: 15,
-                    borderRadius: 2,
-                    color: "#F7374F",
-                    gap: 0.8,
-                  }}
-                  onClick={() => {
-                    handleLogout();
-                  }}
-                >
-                  <LogoutIcon fontSize="large" />
-                  Log Out
-                </MenuItem>
-              </Menu>
-            </div>
-          </div>
-
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "1.5vw",
-              paddingTop: "1vh",
-              paddingBottom: "15vh",
-              gap: "1rem",
-            }}
-            id="messages"
-          >
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  marginBottom: "1rem",
-                  fontWeight: "500",
-                  transition: "all 0.5s ease-in-out",
-                  justifyContent:
-                    msg.sender === "user" ? "flex-end" : "flex-start",
-                }}
-              >
-                {msg.sender !== "user" && (
-                  <img
-                    src="/img/bot.jpg"
-                    alt="Assistant"
-                    style={{
-                      width: "4vw",
-                      height: "4vw",
-                      maxWidth: "2.5rem",
-                      maxHeight: "2.5rem",
-                      borderRadius: "50%",
-                      order: 1,
-                    }}
-                  />
-                )}
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems:
-                      msg.sender === "user" ? "flex-end" : "flex-start",
-                    maxWidth: "70vw",
-                    margin: "0 1rem",
-                    order: msg.sender === "user" ? 1 : 2,
+                    gap: "1rem",
+                    height: "80%",
+                    borderRadius: 50,
+                    padding: "0 1rem",
+                    zIndex: 1,
+                    position: "relative",
+                    left: "0vw",
+                    boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)",
+                    border: "2px solid #d4e3ea",
                   }}
                 >
                   <div
                     style={{
-                      backgroundColor:
-                        msg.sender === "user" ? "#4a98bd" : "#f7fafc",
-                      color: msg.sender === "user" ? "#e0edf3" : "#42738a",
-                      padding: "0.5rem 1rem",
-                      borderRadius: "0.5rem 0 0.5rem 0",
-                      overflowWrap: "break-word",
-                      border: "2px solid #d4e3ea",
+                      position: "relative",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1rem",
                     }}
-                    dangerouslySetInnerHTML={{ __html: msg.text }}
-                  />
-                </div>
-                {msg.sender === "user" && (
-                  <img
-                    src={userPhotoURL || "/img/user.png"}
-                    alt="My profile"
+                  >
+                    <span
+                      style={{
+                        position: "absolute",
+                        color: "#22c55e",
+                        right: 0,
+                        bottom: 0,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "1rem",
+                          height: "1rem",
+                          backgroundColor: "#22c55e",
+                          borderRadius: "50%",
+                        }}
+                      />
+                    </span>
+
+                    <img
+                      src="/img/bot.jpg"
+                      alt="bot-img"
+                      style={{
+                        width: "2.5vw",
+                        height: "2.5vw",
+                        maxWidth: "3rem",
+                        maxHeight: "3rem",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </div>
+
+                  <div
                     style={{
-                      width: "4vw",
-                      height: "4vw",
-                      maxWidth: "2.5rem",
-                      maxHeight: "2.5rem",
-                      borderRadius: "50%",
-                      order: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      lineHeight: "tight",
                     }}
-                  />
-                )}
+                  >
+                    <div
+                      style={{
+                        fontSize: "1.15rem",
+                        marginTop: "0.25rem",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "#397c9b",
+                          marginRight: "0.75rem",
+                          fontWeight: 700,
+                        }}
+                      >
+                        ZaruAI
+                      </span>
+                    </div>
+                    <span
+                      style={{
+                        fontSize: "0.775rem",
+                        color: "#397c9b",
+                        fontWeight: 600,
+                        marginTop: "-0.15rem",
+                      }}
+                    >
+                      Always Online
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "1rem",
+                    right: "0vw",
+                    position: "absolute",
+                    padding: "0.5rem",
+                    width: "8vw",
+                    borderTopLeftRadius: 50,
+                    borderBottomLeftRadius: 50,
+                    backgroundColor: "#fafcfd",
+                    border: "2px solid #d4e3ea",
+                  }}
+                >
+                  <button
+                    style={{
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                    onClick={openMenu}
+                  >
+                    <img
+                      src={userPhotoURL || "/img/user.png"}
+                      alt="My profile"
+                      style={{
+                        width: "2.5vw",
+                        height: "2.5vw",
+                        maxWidth: "3rem",
+                        maxHeight: "3rem",
+                        borderRadius: "50%",
+                      }}
+                    />
+                  </button>
+
+                  <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    sx={{
+                      "& .MuiPaper-root": {
+                        backgroundColor: "#e0edf3",
+                        color: "#4a98bd",
+                        borderRadius: "10px",
+                        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                      },
+                      "& .MuiMenuItem-root": {
+                        "&:hover": {
+                          transition: "background-color 0.3s ease-in-out",
+                          "&:hover": { backgroundColor: "#d4e3ea" },
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem
+                      id="profile"
+                      sx={{
+                        ...styles.poppins,
+                        fontSize: 15,
+                        borderRadius: 2,
+                        color: "#4a98bd",
+                        gap: 0.8,
+                      }}
+                      onClick={() => {
+                        handleMenuClose();
+                        handleTransition(() => setShowProfile(true));
+                      }}
+                    >
+                      <PersonIcon fontSize="large" />
+                      Profile
+                    </MenuItem>
+                    <MenuItem
+                      id="settings"
+                      sx={{
+                        ...styles.poppins,
+                        fontSize: 15,
+                        borderRadius: 2,
+                        color: "#4a98bd",
+                        gap: 0.8,
+                      }}
+                      onClick={() => {
+                        handleMenuClose();
+                        handleTransition(() => console.log("Settings clicked"));
+                      }}
+                    >
+                      <SettingsIcon fontSize="large" />
+                      Settings
+                    </MenuItem>
+                    {userRole === "admin" && (
+                      <MenuItem
+                        sx={{
+                          ...styles.poppins,
+                          fontSize: 15,
+                          borderRadius: 2,
+                          color: "#4a98bd",
+                          gap: 0.8,
+                        }}
+                        onClick={() => {
+                          handleMenuClose();
+                          handleTransition(() =>
+                            setShowDashboard(true)
+                          );
+                        }}
+                      >
+                        <DashboardIcon fontSize="large" />
+                        Admin Dashboard
+                      </MenuItem>
+                    )}
+                    <Divider sx={{ my: 1, bgcolor: "#e0e0e0" }} />
+                    <MenuItem
+                      id="logout"
+                      sx={{
+                        ...styles.poppins,
+                        fontSize: 15,
+                        borderRadius: 2,
+                        color: "#F7374F",
+                        gap: 0.8,
+                      }}
+                      onClick={() => {
+                        handleLogout();
+                      }}
+                    >
+                      <LogoutIcon fontSize="large" />
+                      Log Out
+                    </MenuItem>
+                  </Menu>
+                </div>
               </div>
-            ))}
-            {loading && (
+
               <div
                 style={{
-                  display: "flex",
-                  alignItems: "flex-end",
-                  marginBottom: "1rem",
+                  flex: 1,
+                  overflowY: "auto",
+                  padding: "1.5vw",
+                  paddingTop: "1vh",
+                  paddingBottom: "15vh",
+                  gap: "1rem",
                 }}
+                id="messages"
               >
-                <img
-                  src="/img/bot.jpg"
-                  alt="Assistant"
-                  style={{
-                    width: "4vw",
-                    height: "4vw",
-                    maxWidth: "2.5rem",
-                    maxHeight: "2.5rem",
-                    borderRadius: "50%",
-                  }}
-                />
-                <LoadingAnimation />
+                {messages.map((msg, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-end",
+                      marginBottom: "1rem",
+                      fontWeight: "500",
+                      transition: "all 0.5s ease-in-out",
+                      justifyContent:
+                        msg.sender === "user" ? "flex-end" : "flex-start",
+                    }}
+                  >
+                    {msg.sender !== "user" && (
+                      <img
+                        src="/img/bot.jpg"
+                        alt="Assistant"
+                        style={{
+                          width: "4vw",
+                          height: "4vw",
+                          maxWidth: "2.5rem",
+                          maxHeight: "2.5rem",
+                          borderRadius: "50%",
+                          order: 1,
+                        }}
+                      />
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems:
+                          msg.sender === "user" ? "flex-end" : "flex-start",
+                        maxWidth: "70vw",
+                        margin: "0 1rem",
+                        order: msg.sender === "user" ? 1 : 2,
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor:
+                            msg.sender === "user" ? "#4a98bd" : "#f7fafc",
+                          color: msg.sender === "user" ? "#e0edf3" : "#42738a",
+                          padding: "0.5rem 1rem",
+                          borderRadius: "0.5rem 0 0.5rem 0",
+                          overflowWrap: "break-word",
+                          border: "2px solid #d4e3ea",
+                        }}
+                        dangerouslySetInnerHTML={{ __html: msg.text }}
+                      />
+                    </div>
+                    {msg.sender === "user" && (
+                      <img
+                        src={userPhotoURL || "/img/user.png"}
+                        alt="My profile"
+                        style={{
+                          width: "4vw",
+                          height: "4vw",
+                          maxWidth: "2.5rem",
+                          maxHeight: "2.5rem",
+                          borderRadius: "50%",
+                          order: 2,
+                        }}
+                      />
+                    )}
+                  </div>
+                ))}
+                {loading && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-end",
+                      marginBottom: "1rem",
+                    }}
+                  >
+                    <img
+                      src="/img/bot.jpg"
+                      alt="Assistant"
+                      style={{
+                        width: "4vw",
+                        height: "4vw",
+                        maxWidth: "2.5rem",
+                        maxHeight: "2.5rem",
+                        borderRadius: "50%",
+                      }}
+                    />
+                    <LoadingAnimation />
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
               </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
 
-          <Form onSubmit={handleInputSubmit} />
-        </>
-      )}
-    </div>
+              <Form onSubmit={handleInputSubmit} />
+            </>
+          )}
+        </div>
   );
 };
 
