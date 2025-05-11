@@ -1,10 +1,8 @@
-import BackgroundImage from '../../../assets/background2.svg';
+
 
 const Styles = {
     container:{
-        backgroundImage: `url(${BackgroundImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundColor: '#fafcfd',
         height: '100vh',
         display: 'flex',
         justifyContent: 'center',
