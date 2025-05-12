@@ -8,6 +8,16 @@ import { Menu } from "antd";
 import { AppstoreOutlined, SettingOutlined, LogoutOutlined, ProfileOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import Styles from "./imported/styles/profile";
+import ConfigProvider from "antd/es/config-provider";
+import Logo from "../assets/templogo.svg";
+import Button from "antd/es/button";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Brightness4Icon from '@mui/icons-material/Brightness4'; // Dark mode icon
+import Brightness7Icon from '@mui/icons-material/Brightness7'; // Light mode icon
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 interface DashProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -21,6 +31,32 @@ interface UserData {
   photoURL: string | null;
 }
 
+// Color palette based on existing colors
+const colorPalette = {
+  light: {
+    background: '#e0edf3',
+    surface: '#fafcfd',
+    surfaceAlt: '#eaf2f5',
+    border: '#d4e3ea',
+    primary: '#42738a',
+    primaryLight: '#4a98bd',
+    primaryDark: '#2b5e76',
+    text: '#192b34',
+    textSecondary: '#70818a',
+  },
+  dark: {
+    background: '#1e2a32',
+    surface: '#2d3b45',
+    surfaceAlt: '#3d4c57',
+    border: '#3d4c57',
+    primary: '#e0edf3',
+    primaryLight: '#e0edf3',
+    primaryDark: '#a5b2b8',
+    text: '#e0edf3',
+    textSecondary: '#a5b2b8',
+  }
+};
+
 const Dashboard: React.FC<DashProps> = ({
   userPhotoURL,
   onClose,
@@ -30,6 +66,12 @@ const Dashboard: React.FC<DashProps> = ({
     email: null,
     photoURL: userPhotoURL,
   });
+  
+  // Theme state
+  const [darkMode, setDarkMode] = useState<boolean>(false);
+  
+  // Get current theme colors
+  const colors = darkMode ? colorPalette.dark : colorPalette.light;
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -88,22 +130,60 @@ const Dashboard: React.FC<DashProps> = ({
       handleTransition(() => {
         setShowDashboard(true);
         setShowSettings(false);
+        setShowPeriod(false);
       });
     } else if (key === "2") {
       handleTransition(() => {
         setShowDashboard(false);
         setShowSettings(true);
+        setShowPeriod(false);
+      });
+    }
+    else if (key === "p1" || key === "p2") {
+      handleTransition(() => {
+        setShowPeriod(true);
+        setShowDashboard(false);
+        setShowSettings(false);
       });
     }
   };
 
   const [showDashboard, setShowDashboard] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
+  const [showPeriod, setShowPeriod] = useState(false);
+
+  // Create theme based on darkMode state
+  const theme = createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+      primary: {
+        main: darkMode ? colorPalette.dark.primary : colorPalette.light.primary,
+      },
+      background: {
+        default: darkMode ? colorPalette.dark.background : colorPalette.light.background,
+        paper: darkMode ? colorPalette.dark.surface : colorPalette.light.surface,
+      },
+      text: {
+        primary: darkMode ? colorPalette.dark.text : colorPalette.light.text,
+        secondary: darkMode ? colorPalette.dark.textSecondary : colorPalette.light.textSecondary,
+      },
+    },
+  });
+
+  // Toggle theme function
+  const toggleTheme = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const handlePeriodClick = () => {
+    setShowPeriod(!showPeriod);
+  };
+  
   const items: MenuProps["items"] = [
     {
       key: 'sub1',
       label: 'Profile',
-      icon: <ProfileOutlined />,
+      type: 'group',
       children: [
         { key: '1', label: 'Dashboard', icon: <AppstoreOutlined /> },
         { key: '2', label: 'Settings', icon: <SettingOutlined /> },
@@ -111,16 +191,27 @@ const Dashboard: React.FC<DashProps> = ({
     },
     {
       key: 'sub2',
-      label: 'Class Periods',
+      label: 'Your Classes',
+      style: {font: colors.primary},
       children: [
-        { key: '4', label: 'Period 1' },
-        { key: '5', label: 'Period 2' },
-        { key: '6', label: 'Period 3' },
-        { key: '7', label: 'Period 4' },
-        { key: '8', label: 'Period 5' },
-        { key: '9', label: 'Period 6' },
-        { key: '10', label: 'Period 7' },
-        { key: '11', label: 'Period 8' },
+        {
+          key: 'g1',
+          label: 'Odd',
+          type: 'group',
+          children: [
+            { key: 'p1', label: 'Period 1' },
+            { key: 'p3', label: 'Period 3' },
+          ],
+        },
+        {
+          key: 'g2',
+          label: 'Even',
+          type: 'group',
+          children: [
+            { key: 'p2', label: 'Period 2' },
+            { key: 'p4', label: 'Period 4' },
+          ],
+        },
       ],
     },
     {
@@ -136,148 +227,354 @@ const Dashboard: React.FC<DashProps> = ({
     }
   ];
 
+  // Common styles for content panels
+  const contentPanelStyle = {
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    gap: "1rem",
+    borderRadius: 20,
+    padding: "1rem",
+    backgroundColor: colors.surface,
+    border: `2px solid ${colors.border}`,
+  };
+
   return (
-    <div style={{ 
-        display : "flex", 
-        flexDirection: "row", 
-        alignItems: "center", 
-        justifyContent: "center",
-        width: "100vw",
-        height: "100vh",
-    }}>
-
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-      >
-        <RotateLoader color="#FFF8F8" />
-      </Backdrop>
-
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
       <div style={{ 
-          width: '15%', 
-          height: '100%', 
-          backgroundColor: '#fafcfd', 
-          borderRight: "2px solid #d4e3ea", 
-          position: "relative", 
+          display: "flex", 
+          flexDirection: "row", 
+          alignItems: "center", 
+          backgroundColor: colors.background,
+          width: "100vw",
+          height: "100vh",
+          justifyContent: "stretch",
+      }}>
+
+        {/* User info and theme toggle bar */}
+        <div style={{
+          width: '12vw',
+          height: '7vh',
+          backgroundColor: colors.surface,
+          borderRadius: '20px',
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row",
           alignItems: "center",
-          overflowY: "auto",
+          justifyContent: "center",
+          padding: "0.75rem",
+          border: `2px solid ${colors.border}`,
+          position: "absolute",
+          top: "1rem",
+          right: "1rem",
+          gap: "1rem",
         }}>
-            <div style={{ 
-                width: '100%',
-                height: '12%',
-                backgroundColor: '#eaf2f5',
-                borderBottom: "2px solid #d4e3ea",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <img
-                    src={userData.photoURL || ""}
-                    alt="User"
-                    style={{
-                        width: "3.5vw",
-                        height: "3.5vw",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        border: "2px solid #d4e3ea",
-                    }}
-                />  
-            </div>
-        
-              <Menu
-                style={{ width: '100%', height: "88%", backgroundColor: '#fafcfd', position: "absolute", bottom: 0, left: 0, fontFamily: "Montserrat, sans-serif", fontSize: "14" }}
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
-                mode="inline"
-                items={items}
-                onSelect={({ key }) => handleMenuClick(key)}
-              />
+          {/* Theme toggle button */}
+          <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+            <IconButton 
+              onClick={toggleTheme} 
+              color="inherit" 
+              style={{ color: colors.textSecondary }}
+            >
+              {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
+
+          <NotificationsOutlinedIcon style={{ 
+            fontSize: '1.5rem', 
+            color: colors.textSecondary 
+          }} />
+
+          <img
+            src={userData.photoURL || ""}
+            alt="User"
+            style={{
+              width: "2.5vw",
+              height: "2.5vw",
+              borderRadius: "50%",
+            }}
+          />  
         </div>
 
-        {showDashboard && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "80%",
-              height: "80%",
-              gap: "1rem",
-              borderRadius: 10,
-              padding: "1rem",
-              backgroundColor: '#eaf2f5',
-              border: "2px solid #d4e3ea",
-            }}
-            id="dashboard"
-          >
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <RotateLoader color="#FFF8F8" />
+        </Backdrop>
+
+        {/* Sidebar */}
+        <div style={{ 
+            width: '15%', 
+            height: '100%', 
+            backgroundColor: colors.surface,
+            position: "relative", 
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            overflowY: "auto",
+            fontFamily: "Montserrat, sans-serif",
+            borderBottomRightRadius: "30px",
+            borderTopRightRadius: "30px",
+            borderTop: `2px solid ${colors.border}`,
+            borderRight: `2px solid ${colors.border}`,
+            borderBottom: `2px solid ${colors.border}`,
+          }}>
+              {/* Logo and title */}
+              <div style={{ 
+                  width: '100%',
+                  height: '7%',
+                  backgroundColor: colors.surface,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "left",
+                  gap: "0.6rem",
+                  fontSize: "22px",
+                  color: colors.primary,
+              }}>
+                <div style={{
+                  width: "2.5vw",
+                  height: "2.5vw",
+                  borderRadius: "50%",
+                  objectFit: "cover",
+                  backgroundImage: `url(${Logo})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  marginLeft: "1rem",
+                }}/>
+                ZaruAI
+              </div>
+
+              {/* Menu */}
+              <ConfigProvider
+                  theme={{
+                    components: {
+                      Menu: {
+                        itemSelectedBg: colors.surfaceAlt,
+                        itemSelectedColor: colors.text,
+                        colorText: colors.text,
+                        itemHoverColor: colors.text,
+                        itemHoverBg: colors.surfaceAlt,
+                        colorBgElevated: colors.surface,
+                        darkSubMenuItemBg: '#36434d',
+                        darkItemHoverBg: colors.surfaceAlt,
+                        darkItemSelectedBg: colors.surfaceAlt,
+                        darkItemSelectedColor: colors.text,
+                        darkItemHoverColor: colors.text,
+                        
+                      },
+                    },
+                  }}
+                >
+
+                <Menu
+                  style={{ 
+                    width: '100%', 
+                    height: "93%", 
+                    backgroundColor: 'transparent', 
+                    position: "absolute", 
+                    bottom: 0, 
+                    left: 0, 
+                    fontFamily: "Montserrat, sans-serif",  
+                    fontSize: "14", 
+                    borderBottomRightRadius: "30px", 
+                    borderRight: 'none', 
+                    borderTop: `2px solid ${colors.border}`,
+                    color: colors.text,
+                  }}
+                  defaultSelectedKeys={['1']}
+                  defaultOpenKeys={['sub2']}
+                  mode="inline"
+                  items={items}
+                  onSelect={({ key }) => handleMenuClick(key)}
+                  theme={darkMode ? "dark" : "light"}
+                />
+
+                </ConfigProvider>
+          </div>
+
+          {/* Dashboard content */}
+          {showDashboard && (
             <div
               style={{
-                ...Styles.title,
-                position: "relative",
-                top: "-3vh",
-                left: 0,
-                textAlign: "center",
-                fontSize: "1.5rem",
+                ...contentPanelStyle,
+                width: "60%",
+                height: "60%",
+                justifyContent: "center",
               }}
+              id="dashboard"
             >
-              Profile Dashboard
+              <div
+                style={{
+                  ...Styles.title,
+                  position: "relative",
+                  top: "-3vh",
+                  left: 0,
+                  textAlign: "center",
+                  fontSize: "1.75rem",
+                  fontFamily: "Montserrat, sans-serif",
+                  color: colors.primary,
+                }}
+              >
+                Profile Dashboard
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "80%",
+                  gap: "1rem",
+                }}
+              >
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label style={{ ...Styles.label, color: colors.primary }}>Name</label>
+                  <div style={{ 
+                    ...Styles.userInfo, 
+                    fontFamily: "Montserrat, sans-serif", 
+                    backgroundColor: colors.surfaceAlt,
+                    color: colors.text,
+                    border: `1px solid ${colors.border}`,
+                  }}>
+                    {userData.displayName || "No name provided"}
+                  </div>
+                </div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <label style={{ ...Styles.label, color: colors.primary }}>Email</label>
+                  <div style={{ 
+                    ...Styles.userInfo, 
+                    fontFamily: "Montserrat, sans-serif", 
+                    backgroundColor: colors.surfaceAlt,
+                    color: colors.text,
+                    border: `1px solid ${colors.border}`,
+                  }}>
+                    {userData.email || "No email provided"}
+                  </div>
+                </div>
+              </div>
             </div>
+          )}
+
+          {/* Settings content */}
+          {showSettings && (
+            <div
+              style={{
+                ...contentPanelStyle,
+                width: "80%",
+                height: "80%",
+              }}
+              id="dashboard"
+            >
+              <h2
+                style={{
+                  color: colors.primary,
+                  marginBottom: "1rem",
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "1.5rem",
+                }}
+              >
+                Coming Soon...
+              </h2>
+            </div>
+          )}
+
+          {/* Period content */}
+          {showPeriod && (
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
+                flexDirection: "row",
+                alignItems: "center",
                 width: "80%",
+                height: "80%",
                 gap: "1rem",
+                position: "relative",
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <label style={{ ...Styles.label }}>Name</label>
-                <div style={{ ...Styles.userInfo }}>
-                  {userData.displayName || "No name provided"}
-                </div>
-              </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                <label style={{ ...Styles.label }}>Email</label>
-                <div style={{ ...Styles.userInfo }}>
-                  {userData.email || "No email provided"}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+              {/* Student list panel */}
+              <div
+                style={{
+                  ...contentPanelStyle,
+                  width: "50%",
+                  height: "100%",
+                }}
+              >
+                <h2
+                  style={{
+                    color: colors.primary,
+                    marginBottom: "1rem",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "1.5rem",
+                    position: "relative",
+                  }}>
+                    Student List
+                </h2>
 
-        {showSettings && (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              width: "80%",
-              height: "80%",
-              gap: "1rem",
-              borderRadius: 10,
-              padding: "1rem",
-              backgroundColor: "#fafcfd",
-              border: "2px solid #d4e3ea",
-            }}
-            id="dashboard"
-          >
-            <h2
-              style={{
-                color: "#42738a",
-                marginBottom: "1rem",
-                fontFamily: "Montserrat, sans-serif",
-                fontSize: "1.5rem",
-              }}
-            >
-              Coming Soon...
-            </h2>
-          </div>
-        )}
-    </div>
+                <Button 
+                  type="text" 
+                  block
+                  style={{
+                    color: colors.text
+                  }}
+                >
+                  James Totaro
+                </Button>
+              </div>
+
+              {/* Right side panels */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  width: "50%",
+                  height: "100%",
+                  gap: "1rem",
+                }}
+              >
+                {/* AI Summary panel */}
+                <div
+                  style={{
+                    ...contentPanelStyle,
+                    width: "100%",
+                    height: "50%",
+                  }}
+                >
+                  <h2
+                    style={{
+                      color: colors.primary,
+                      marginBottom: "1rem",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    AI Summary
+                  </h2>
+                </div>  
+
+                {/* Rules panel */}
+                <div
+                  style={{
+                    ...contentPanelStyle,
+                    width: "100%",
+                    height: "50%",
+                  }}
+                >
+                  <h2
+                    style={{
+                      color: colors.primary,
+                      marginBottom: "1rem",
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    Rules
+                  </h2>
+                </div> 
+              </div>  
+            </div>     
+          )}
+      </div>
+    </ThemeProvider>
   );
 };
 
