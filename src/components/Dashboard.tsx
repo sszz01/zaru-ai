@@ -5,7 +5,7 @@ import { auth } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Menu } from "antd";
-import { AppstoreOutlined, SettingOutlined, LogoutOutlined, ProfileOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, LogoutOutlined, ProfileOutlined, ArrowRightOutlined, RightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import Styles from "./imported/styles/profile";
 import ConfigProvider from "antd/es/config-provider";
@@ -361,7 +361,6 @@ const Dashboard: React.FC<DashProps> = ({
                         darkItemSelectedBg: colors.surfaceAlt,
                         darkItemSelectedColor: colors.text,
                         darkItemHoverColor: colors.text,
-                        
                       },
                     },
                   }}
@@ -494,7 +493,7 @@ const Dashboard: React.FC<DashProps> = ({
               <div
                 style={{
                   ...contentPanelStyle,
-                  width: "50%",
+                  width: "25%",
                   height: "100%",
                 }}
               >
@@ -509,15 +508,37 @@ const Dashboard: React.FC<DashProps> = ({
                     Student List
                 </h2>
 
-                <Button 
-                  type="text" 
-                  block
-                  style={{
-                    color: colors.text
+                <ConfigProvider
+                  theme={{
+                    components: {
+                      Button: {
+                        defaultHoverBg: colors.surface,
+                        defaultHoverColor: colors.text,
+                        defaultBg: colors.surfaceAlt,
+                        defaultColor: colors.text,
+
+                      },
+                    },
                   }}
                 >
-                  James Totaro
-                </Button>
+                  <Button 
+                    type="text" 
+                    block
+                    style={{
+                      color: colors.text,
+                      border: `2px solid ${colors.border}`,
+                      fontFamily: "Montserrat, sans-serif",
+                      fontSize: "1rem",
+                      width: "80%",
+                      height: "3vw",
+                      justifyContent: "space-evenly"
+                    }}
+                  >
+                    James Totaro
+
+                    <RightOutlined />
+                  </Button>
+                </ConfigProvider>
               </div>
 
               {/* Right side panels */}
@@ -567,10 +588,30 @@ const Dashboard: React.FC<DashProps> = ({
                       fontSize: "1.5rem",
                     }}
                   >
-                    Rules
+                    Student Warnings
                   </h2>
                 </div> 
               </div>  
+
+              <div
+                style={{
+                  ...contentPanelStyle,
+                  width: "25%",
+                  height: "100%",
+                }}
+              >
+                <h2
+                  style={{
+                    color: colors.primary,
+                    marginBottom: "1rem",
+                    fontFamily: "Montserrat, sans-serif",
+                    fontSize: "1.5rem",
+                    position: "relative",
+                  }}>
+                    AI Rules
+                </h2>
+              </div>
+
             </div>     
           )}
       </div>
