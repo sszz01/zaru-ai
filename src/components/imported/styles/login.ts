@@ -1,6 +1,5 @@
 import { CSSProperties } from "react";
-import BackgroundImage from "../../../assets/background2.svg";
-import BackgroundImage2 from "../../../assets/background1.svg";
+import BackgroundImage from "../../../assets/expbg.svg";
 
 // const screenWidth = window.innerWidth;
 // const screenHeight = window.innerHeight;
@@ -77,22 +76,6 @@ const styles: { [key: string]: CSSProperties } = {
     textAlign: "center", // Center-align the text
     margin: "10px 0", // Add vertical spacing
   },
-
-  bg: {
-    backgroundImage: `url(${BackgroundImage2})`, // Preload this image in index.html
-    backgroundSize: "cover", // Ensures the image covers the entire container
-    backgroundRepeat: "no-repeat", // Prevents the image from repeating
-    backgroundPosition: "center", // Centers the image
-    height: "100vh", // Use relative units for better responsiveness
-    width: "100vw", // Use relative units for better responsiveness
-    margin: 0, // Removes any default margin
-    padding: 0, // Removes any default padding
-    display: "flex", // Centers content inside
-    justifyContent: "center", // Centers content horizontally
-    alignItems: "center", // Centers content vertically
-    overflow: "hidden", // Prevents overflow
-    boxSizing: "border-box", // Ensures padding and borders are included in dimensions
-  }
 };
 
 export default styles;

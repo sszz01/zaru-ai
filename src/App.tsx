@@ -11,7 +11,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import BackgroundImage from "./assets/light_background.svg"; // Ensure this path is correct and the file exists
+import BackgroundImage from "./assets/expbg1.svg"; // Ensure this path is correct and the file exists
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
