@@ -240,9 +240,9 @@ const App: React.FC = () => {
             flexDirection: "column",
             height: "100vh",
             backgroundImage: `url(${BackgroundImage})`,
-            backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
           }}
         >
           {isLoadingAuth ? (
