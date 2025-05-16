@@ -138,8 +138,8 @@ const Profile: React.FC<ProfileProps> = ({
             position: "relative",
             height: "40vh",
             width: "30%",
-            backgroundColor: "#e0edf3",
-            border: "2px solid #d4e3ea",
+            backgroundColor: "#fbfbfb",
+            border: "2px solid #dddfe2",
           }}
         >
           <img
@@ -157,22 +157,6 @@ const Profile: React.FC<ProfileProps> = ({
               top: "-3rem",
             }}
           />
-          <button
-            style={{
-              height: "4vh",
-              width: "4vh",
-              maxHeight: "2.5rem",
-              maxWidth: "2.5rem",
-              borderRadius: "50%",
-              backgroundColor: "#42738a",
-              position: "absolute",
-              top: "0.9rem",
-              right: "4vw",
-              cursor: "pointer",
-            }}
-          >
-            <EditIcon sx={{ color: "#e0edf3", fontSize: "1.25rem" }} />
-          </button>
           {["Dashboard", "Settings", "Back", "Log Out"].map((label, index) => (
             <button
               key={label}
@@ -195,7 +179,7 @@ const Profile: React.FC<ProfileProps> = ({
                   ...Styles.menuButtonText,
                   color:
                     label === "Log Out"
-                      ? "#F7374F"
+                      ? "#ff0000"
                       : Styles.menuButtonText.color,
                 }}
               >
