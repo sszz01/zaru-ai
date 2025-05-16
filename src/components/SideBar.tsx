@@ -1,7 +1,8 @@
-import { IconButton, Drawer } from "@mui/material";
-import BurgerIcon from "@mui/icons-material/Menu";
+import { Drawer } from "@mui/material";
+import BurgerIcon from "../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import ToolTip from "@mui/material/Tooltip";
+import { Burger } from "./Burger";
 
 interface SideBarProps {
     toggleDrawer: () => void;
@@ -21,52 +22,44 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
             sx={{
               "& .MuiDrawer-paper": {
                 width: "15vw",
-                backgroundColor: "linear-gradient(to bottom, #fafcfd, #e0edf3)",
+                backgroundColor: "#efeff1",
                 borderRight: "none",
                 alignItems: "center",
+                borderTopRightRadius: "30px",
+                borderBottomRightRadius: "30px",
+                border: "2px solid #dddfe2",
               },
             }} 
           >
-            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "#e0edf3", width: "100%", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0)", borderBottom: "2px solid #d4e3ea"}}>
+            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "transparent", width: "100%", borderTopRightRadius: "30px",}}>
                 <ToolTip title="Close Sidebar" placement="bottom" arrow>
-                  <IconButton
-                      onClick={toggleDrawer}
-                      sx={{
-                        backgroundColor: "#fafcfd",
-                        border: "2px solid #d4e3ea",
-                        position: "absolute",
-                        left: "1rem",
-                        width: "2.5vw",
-                        height: "2.5vw",
-                        maxHeight: "2.5rem",
-                        maxWidth: "2.5rem",
-                        transition: "background-color 0.3s ease",
-                        "&:hover": { backgroundColor: "#d4e3ea" },
-                      }}
-                    >
-                      <BurgerIcon sx={{ color: "#a5b2b8" }} />
-                  </IconButton>
+                  <Burger toggleDrawer={toggleDrawer} BurgerIcon={BurgerIcon}  />
                 </ToolTip>
                 <ToolTip title="Add new conversation" placement="bottom" arrow>
-                  <IconButton
-                    onClick={() => {addConversation(); toggleDrawer();}}
-                    sx={{
-                      backgroundColor: "#fafcfd",
-                      border: "2px solid #d4e3ea",
+                  <button style={{cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "none",
+                      backgroundColor: "#fff",
+                      color: "#232629",
                       position: "absolute",
-                      right: "1rem",
-                      height: "2.5vw",
-                      width: "2.5vw",
-                      maxHeight: "2.5rem",
-                      maxWidth: "2.5rem",
+                      width: "3vw",
+                      height: "3vw",
+                      borderRadius: "50%",
+                      padding: '0.75rem',
+                      top: "2vh",
+                      right: "2vh",
                       transition: "background-color 0.3s ease",
-                      "&:hover": { backgroundColor: "#d4e3ea" },
-                    }}
-                  >
-                    <AddIcon sx={{ color: "#a5b2b8" }} />
-                  </IconButton>
+                      zIndex: "1000"
+                    }} onMouseOver={e => e.currentTarget.style.backgroundColor = "lightgray"} onMouseOut={e => e.currentTarget.style.backgroundColor = "#fff"} onClick={addConversation}>
+                    
+                    <AddIcon sx={{color: "#232629"}} />
+                  </button>
                 </ToolTip>
             </div>
+
+            <label style={{ marginTop: "0.75rem", fontSize: "1rem", position: 'relative', left: '-2rem', fontWeight: "bold", color: '#848b95' }}>Conversations</label>
 
             <ul>
             {conversationArray.map((conversation) => (
@@ -76,24 +69,23 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                     onClick={() => loadConversation(conversation.id)} // Use conversation.id directly
                     style={{
                       marginTop: "1rem",
-                      width: "220px",
+                      width: '13vw',
                       height: "3rem",
-                      backgroundColor: "#fafcfd",
+                      backgroundColor: "#fff",
                       borderRadius: 10,
                       transition: "background-color 0.3s ease",
                       cursor: "pointer",
-                      border: "2px solid #d4e3ea",
                     }}
                     onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#d1d1d1")}
-                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fafcfd")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#fff")}
                   >
                     <text
                       style={{
                         fontSize: "1rem",
-                        color: "#397c9b",
+                        color: "#848b95",
                         fontWeight: 600,
                         position: "relative",
-                        left: "-1.8rem",
+                        left: "-1.5rem",
                       }}
                     >
                       {conversation.name}

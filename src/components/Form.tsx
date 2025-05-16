@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Paperclip, Camera, Smile } from "lucide-react";
+//import { Paperclip, Camera, Smile } from "lucide-react";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
-import Button from "./ChatButton";
 
 interface FormProps {
   onSubmit: (input: string) => void;
@@ -40,22 +39,21 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
       alignItems: "center", 
       justifyContent: "center", 
       position: "relative", 
-      bottom: 0, width: "100vw", 
+      bottom: 0, 
       boxSizing: "border-box", 
       overflow: "hidden", 
       transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)", 
-      marginLeft: drawer ? "7.5vw" : "0" 
+      marginLeft: drawer ? "16vw" : "0" 
       }}
     >
     <form
       onSubmit={handleSubmit}
       style={{
         padding: "1.5rem",
-        backgroundColor: "#fafcfd",
+        backgroundColor: "#fbfbfb",
         width: '80%',
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
-        border: "2px solid #d4e3ea",
       }}
     >
       <div className="relative flex">
@@ -65,9 +63,6 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
           ref={inputRef}
         />
         <div className="absolute right-0 items-center inset-y-0 hidden sm:flex space-x-2">
-          <Button Icon={Paperclip} />
-          <Button Icon={Camera} />
-          <Button Icon={Smile} />
           <SubmitButton disabled={!input.trim()} />
         </div>
       </div>

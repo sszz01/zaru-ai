@@ -1,3 +1,4 @@
+import { Burger } from './Burger';
 import React, { useState, useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 import { Divider } from "@mui/material";
@@ -9,6 +10,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
+import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
 import BackgroundImage from "../assets/newbg2.svg";
 import BurgerIcon from "../assets/burgericon.svg";
 
@@ -138,7 +140,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
     });
   };
 
-  const [handleDrawer, setHandleDrawer] = useState(false);
+  const [handleDrawer, setHandleDrawer] = useState(true);
 
   const toggleDrawer = () => {
     setHandleDrawer((prev) => !prev);
@@ -267,61 +269,25 @@ const ChatPage: React.FC<ChatPageProps> = ({
                 left: "0",
               }}
             >
-            <button
-              onClick={toggleDrawer}
-              style={{
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "none",
-              backgroundColor: "#fff",
-              color: "#232629",
-              position: "absolute",
-              width: "3vw",
-              height: "3vw",
-              borderRadius: "50%",
-              padding: '0.75rem',
-              top: "2vh",
-              left: "2vh",
-              transition: "background-color 0.3s ease",
-              zIndex: "1000",
-              }}
-              onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor = "lightgray")
-              }
-              onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor = "#fff")
-              }
-            >
-              <img
-              src={BurgerIcon}
-              alt="Menu"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-              }}
-              />
-            </button>
+
+            <Burger toggleDrawer={toggleDrawer} BurgerIcon={BurgerIcon}  />
 
             <div
               style={{
               display: "flex",
               alignItems: "center",
               gap: "1rem",
-              right: "0vw",
+              right: "-1vw",
               position: "absolute",
               padding: "0.5rem",
               width: "8vw",
               borderTopLeftRadius: 50,
               borderBottomLeftRadius: 50,
-              backgroundColor: "#fafcfd",
-              border: "2px solid #d4e3ea",
+              backgroundColor: "transparent",
               }}
             >
-              <button
+              <DownOutlined style={{ fontSize: "0.8rem", color: "#848b95", marginRight: '-0.25rem', cursor: "pointer"}} onClick={openMenu} />
+              <button 
               style={{
                 cursor: "pointer",
                 display: "flex",
@@ -435,7 +401,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
                 }}
                 onClick={() => {
                 handleLogout();
-                navigate("/");
+                handleTransition(() => navigate("/"));
                 }}
               >
                 <LogoutIcon fontSize="large" />
@@ -450,9 +416,11 @@ const ChatPage: React.FC<ChatPageProps> = ({
               flex: 1,
               overflowY: "auto",
               overflowX: "hidden",
-              padding: "11vw",
-              paddingTop: "10vh",
-              paddingBottom: "15vh",
+              padding: "5vw",
+              paddingRight: "15.5vw",
+              paddingLeft: "15.5vw",
+              paddingTop: "8vh",
+              paddingBottom: "0vh",
               display: "flex",
               flexDirection: "column",
               position: "relative",
@@ -514,20 +482,6 @@ const ChatPage: React.FC<ChatPageProps> = ({
                 dangerouslySetInnerHTML={{ __html: msg.text }}
                 />
               </div>
-              {msg.sender === "user" && (
-                <img
-                src={userPhotoURL || "/img/user.png"}
-                alt="My profile"
-                style={{
-                  width: "4vw",
-                  height: "4vw",
-                  maxWidth: "2.5rem",
-                  maxHeight: "2.5rem",
-                  borderRadius: "50%",
-                  order: 2,
-                }}
-                />
-              )}
               </div>
             ))}
             {loading && (

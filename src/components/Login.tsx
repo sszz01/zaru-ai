@@ -380,7 +380,7 @@ const Login: React.FC<{
               }}
               disabled={loading}
               onMouseOver={(e) =>
-                (e.currentTarget.style.backgroundColor = "#3385ff")
+                (e.currentTarget.style.backgroundColor = "#0052cc")
               }
               onMouseOut={(e) =>
                 (e.currentTarget.style.backgroundColor = "#0066ff")
