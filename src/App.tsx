@@ -11,7 +11,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
-import BackgroundImage from "./assets/expbg1.svg"; // Ensure this path is correct and the file exists
+import BackgroundImage from "./assets/newbg2.svg";
+import NavBlob from "./assets/navblob.svg";
 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -233,12 +234,14 @@ const App: React.FC = () => {
   };
 
   return (
+    
         <div
           style={{
             flex: 1,
             display: "flex",
             flexDirection: "column",
             height: "100vh",
+            backgroundColor: "#f7f7f8",
             backgroundImage: `url(${BackgroundImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -305,8 +308,38 @@ const App: React.FC = () => {
                   alignItems: "center",
                   padding: "0 2vw",
                   overflow: "hidden",
+                  zIndex: 3,
                 }}
               >
+                  <img
+                    src={NavBlob}
+                    alt="Navigation background"
+                    style={{
+                      width: "35%",
+                      height: 'auto',
+                      position: 'absolute',
+                      top: '-35%',
+                      left: '-9%',
+                      // Adjust opacity as needed
+                      zIndex: 1,
+                      }}
+
+                      />
+                      <img
+                        src={NavBlob}
+                        alt="Navigation background"
+                        style={{
+                          position: "absolute",
+                          top: '-11%',
+                          right: 0,
+                          width: "15vw",
+                          height: "auto",
+                          opacity: 1, // Adjust opacity as needed
+                          zIndex: 0, // Lower z-index so profile icon is above
+                          pointerEvents: "none", // Prevents blocking clicks
+                        }}
+                      />
+
                 <IconButton
                   onClick={toggleDrawer}
                   sx={{
@@ -320,6 +353,7 @@ const App: React.FC = () => {
                     maxHeight: "3rem",
                     maxWidth: "3rem",
                     border: "2px solid #d4e3ea",
+                    zIndex: 3,
                   }}
                 >
                   <BurgerIcon sx={{ color: "#4a98bd" }} />
@@ -327,7 +361,7 @@ const App: React.FC = () => {
 
                 <div
                   style={{
-                    backgroundColor: "#fafcfd",
+                    backgroundColor: "transparent",
                     display: "flex",
                     alignItems: "center",
                     gap: "1rem",
@@ -337,10 +371,9 @@ const App: React.FC = () => {
                     zIndex: 1,
                     position: "relative",
                     left: "0vw",
-                    boxShadow: "3px 0px 4px rgba(0, 0, 0, 0)",
-                    border: "2px solid #d4e3ea",
                   }}
                 >
+
                   <div
                     style={{
                       position: "relative",
@@ -423,16 +456,16 @@ const App: React.FC = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: "1rem",
-                    right: "0vw",
+                    right: "1vw",
                     position: "absolute",
                     padding: "0.5rem",
                     width: "8vw",
                     borderTopLeftRadius: 50,
                     borderBottomLeftRadius: 50,
-                    backgroundColor: "#fafcfd",
-                    border: "2px solid #d4e3ea",
+                    backgroundColor: "transparent",
                   }}
                 >
+
                   <button
                     style={{
                       cursor: "pointer",

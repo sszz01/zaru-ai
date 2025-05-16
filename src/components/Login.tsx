@@ -173,7 +173,7 @@ const Login: React.FC<{
               fontSize: "1.875rem",
               marginBottom: "1rem",
               fontWeight: "bold",
-              color: "#192b34",
+              color: "#232629",
               letterSpacing: "-0.01562em",
               fontFamily: "Montserrat, sans-serif",
             }}
@@ -185,7 +185,7 @@ const Login: React.FC<{
               marginTop: "0.5rem",
               marginBottom: "0.5rem",
               fontSize: "0.875rem",
-              color: "#64748b",
+              color: "#848b95",
             }}
           >
             {isLogin ? "Don't have an account? " : "Already have an account? "}
@@ -194,7 +194,7 @@ const Login: React.FC<{
               style={{
                 cursor: "pointer",
                 fontWeight: "500",
-                color: "#649bb4",
+                color: "#5e646e",
                 transition: "color 0.2s ease",
               }}
             >
@@ -218,17 +218,17 @@ const Login: React.FC<{
             width: "100%",
             padding: "0.5rem 1rem",
             borderRadius: "0.5rem",
-            backgroundColor: "#fafcfd",
-            border: "2px solid #d4e3ea",
+            backgroundColor: "#fbfbfb",
+            border: "2px solid #dddfe2",
             color: "gray",
             fontWeight: "500",
             transition: "background-color 0.2s ease",
           }}
           onMouseOver={(e) =>
-            (e.currentTarget.style.backgroundColor = "#d4e3ea")
+            (e.currentTarget.style.backgroundColor = "#dddfe2")
           }
           onMouseOut={(e) =>
-            (e.currentTarget.style.backgroundColor = "#fafcfd")
+            (e.currentTarget.style.backgroundColor = "#ffffff")
           }
           disabled={loading}
         >
@@ -255,7 +255,7 @@ const Login: React.FC<{
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-[#42738a]"
+              className="block text-sm font-medium text-[#848b95]"
             >
               Email address
             </label>
@@ -271,7 +271,7 @@ const Login: React.FC<{
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] rounded-lg bg-[#fafcfd] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
+                className="appearance-none block w-full pl-10 pr-3 py-2 border-1 border-[#dddfe2] rounded-lg bg-[#ffffff] placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a]"
                 placeholder="Enter your email"
               />
             </div>
@@ -280,7 +280,7 @@ const Login: React.FC<{
           <div className="mb-3">
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-[#42738a]"
+              className="block text-sm font-medium text-[#848b95]"
             >
               Password
             </label>
@@ -296,7 +296,7 @@ const Login: React.FC<{
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none block w-full pl-10 pr-3 py-2 border-2 border-[#d4e3ea] bg-[#fafcfd] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
+                className="appearance-none block w-full pl-10 pr-3 py-2 border-1 border-[#dddfe2] bg-[#ffffff] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1"
                 placeholder="Enter your password"
               />
             </div>
@@ -337,7 +337,7 @@ const Login: React.FC<{
                   cursor: "pointer",
                   fontSize: "0.875rem",
                   fontWeight: 500,
-                  color: "#649bb4",
+                  color: "#5e646e",
                   transition: "color 0.2s ease",
                 }}
               >
@@ -367,7 +367,7 @@ const Login: React.FC<{
                 borderRadius: "0.5rem",
                 boxShadow: "0 1px 2px rgba(0, 0, 0, 0.05)",
                 color: "#e0edf3",
-                backgroundColor: "#4a98bd",
+                backgroundColor: "#0066ff",
                 transition: "background-color 0.2s ease",
                 gap: "0.5rem",
                 outline: "none",
@@ -375,6 +375,12 @@ const Login: React.FC<{
                 fontWeight: 700,
               }}
               disabled={loading}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.backgroundColor = "#3385ff")
+              }
+              onMouseOut={(e) =>
+                (e.currentTarget.style.backgroundColor = "#0066ff")
+              }
             >
               {loading ? "Loading..." : isLogin ? "Sign in" : "Create account"}
               <ArrowRight className="h-4 w-4" />
