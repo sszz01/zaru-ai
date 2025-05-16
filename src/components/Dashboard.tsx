@@ -6,10 +6,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import MenuItem from "@mui/material/MenuItem";
 
-
-
 interface DashProps {
-  setLogin: (isLoggedIn: boolean) => void;
   userPhotoURL: string | null;
   onClose: () => void;
 }
@@ -20,9 +17,7 @@ interface UserData {
   photoURL: string | null;
 }
 
-const Dashboard: React.FC<DashProps> = ({
-  userPhotoURL,
-}) => {
+const Dashboard: React.FC<DashProps> = ({ userPhotoURL }) => {
   const [userData, setUserData] = useState<UserData>({
     displayName: null,
     email: null,
@@ -63,48 +58,53 @@ const Dashboard: React.FC<DashProps> = ({
 
     fetchUserData();
   }, [userPhotoURL]);
-  
-  return (
-    <div style={{ 
-        display : "flex", 
-        flexDirection: "row", 
-        alignItems: "center", 
-        justifyContent: "center", 
-    }}>
-        <div style={{ 
-            width: '15vw', 
-            height: '100%', 
-            backgroundColor: '#fafcfd', 
-            borderRight: "2px solid #d4e3ea", 
-            position: "absolute", 
-            bottom: 0, 
-            left: 0,
-            flexDirection: "column",
-            alignItems: "center",
-        }}>
-            <div style={{ 
-                width: '100%',
-                height: '6vw',
-                backgroundColor: '#eaf2f5',
-                borderBottom: "2px solid #d4e3ea",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <img
-                    src={userData.photoURL || ""}
-                    alt="User"
-                    style={{
-                        width: "3.5vw",
-                        height: "3.5vw",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        border: "2px solid #d4e3ea",
-                    }}
-                />  
-            </div>
 
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <div
+        style={{
+          width: "15vw",
+          height: "100%",
+          backgroundColor: "#fafcfd",
+          borderRight: "2px solid #d4e3ea",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            height: "6vw",
+            backgroundColor: "#eaf2f5",
+            borderBottom: "2px solid #d4e3ea",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={userData.photoURL || ""}
+            alt="User"
+            style={{
+              width: "3.5vw",
+              height: "3.5vw",
+              borderRadius: "50%",
+              objectFit: "cover",
+              border: "2px solid #d4e3ea",
+            }}
+          />
         </div>
+      </div>
     </div>
   );
 };

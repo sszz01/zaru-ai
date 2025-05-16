@@ -9,7 +9,6 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 interface ProfileProps {
-  setLogin: (isLoggedIn: boolean) => void;
   userPhotoURL: string | null;
   onClose: () => void;
 }
@@ -20,11 +19,7 @@ interface UserData {
   photoURL: string | null;
 }
 
-const Profile: React.FC<ProfileProps> = ({
-  setLogin,
-  userPhotoURL,
-  onClose,
-}) => {
+const Profile: React.FC<ProfileProps> = ({ userPhotoURL, onClose }) => {
   const [showDashboard, setShowDashboard] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [open, setOpen] = useState(false);
@@ -69,12 +64,10 @@ const Profile: React.FC<ProfileProps> = ({
     fetchUserData();
   }, [userPhotoURL]);
 
-
   const handleOpen = () => {
     setOpen(true);
     setTimeout(() => {
       onClose();
-      setLogin(false);
       setShowDashboard(false);
       setShowSettings(false);
       setOpen(false); // Reset the state
