@@ -5,7 +5,7 @@ import { auth } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { Menu } from "antd";
-import { AppstoreOutlined, SettingOutlined, LogoutOutlined, ProfileOutlined, ArrowRightOutlined, RightOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, LogoutOutlined, ArrowRightOutlined, RightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import Styles from "./imported/styles/profile";
 import ConfigProvider from "antd/es/config-provider";
@@ -18,6 +18,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4'; // Dark mode icon
 import Brightness7Icon from '@mui/icons-material/Brightness7'; // Light mode icon
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
+import { useNavigate } from "react-router-dom";
 
 interface DashProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -122,9 +123,11 @@ const Dashboard: React.FC<DashProps> = ({
       handleTransition(() => {
         auth.signOut();
         onClose();
+        Navigate("/");
       });
     } else if (key === "back") {
       handleTransition(onClose)
+      Navigate("/chat");
     }
     else if (key === "1") {
       handleTransition(() => {
@@ -147,6 +150,8 @@ const Dashboard: React.FC<DashProps> = ({
       });
     }
   };
+
+  const Navigate = useNavigate();
 
   const [showDashboard, setShowDashboard] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
@@ -173,10 +178,6 @@ const Dashboard: React.FC<DashProps> = ({
   // Toggle theme function
   const toggleTheme = () => {
     setDarkMode(!darkMode);
-  };
-
-  const handlePeriodClick = () => {
-    setShowPeriod(!showPeriod);
   };
   
   const items: MenuProps["items"] = [

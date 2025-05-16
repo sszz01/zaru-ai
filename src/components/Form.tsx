@@ -6,9 +6,10 @@ import Button from "./ChatButton";
 
 interface FormProps {
   onSubmit: (input: string) => void;
+  drawer: boolean;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit }) => {
+const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +34,19 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", }}>
+    <div style={{ 
+      display: "flex", 
+      flexDirection: "column", 
+      alignItems: "center", 
+      justifyContent: "center", 
+      position: "relative", 
+      bottom: 0, width: "100vw", 
+      boxSizing: "border-box", 
+      overflow: "hidden", 
+      transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)", 
+      marginLeft: drawer ? "7.5vw" : "0" 
+      }}
+    >
     <form
       onSubmit={handleSubmit}
       style={{
@@ -43,8 +56,6 @@ const Form: React.FC<FormProps> = ({ onSubmit }) => {
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
         border: "2px solid #d4e3ea",
-        position: "absolute",
-        bottom: 0,
       }}
     >
       <div className="relative flex">

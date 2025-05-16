@@ -9,7 +9,8 @@ import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
-import LineDraw from "./imported/linedraw";
+import { useNavigate } from "react-router-dom";
+//import LineDraw from "./imported/linedraw";
 // import Monkey from "../assets/monkeygraphic.jpg";
 
 const Login: React.FC<{
@@ -150,8 +151,11 @@ const Login: React.FC<{
       }
     } finally {
       setLoading(false);
+      Navigate("/chat");
     }
   };
+
+  const Navigate = useNavigate();
 
   return (
     <div style={Styles.container}>

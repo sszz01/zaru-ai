@@ -17,9 +17,10 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
             anchor="left"
             open={handleDrawer}
             onClose={toggleDrawer}
+            variant="persistent"
             sx={{
               "& .MuiDrawer-paper": {
-                width: "250px",
+                width: "15vw",
                 backgroundColor: "linear-gradient(to bottom, #fafcfd, #e0edf3)",
                 borderRight: "none",
                 alignItems: "center",
