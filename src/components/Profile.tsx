@@ -7,6 +7,8 @@ import { RotateLoader } from "react-spinners";
 import { auth } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import BackgroundImage from "../assets/newbg.svg";
 
 interface ProfileProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -78,8 +80,11 @@ const Profile: React.FC<ProfileProps> = ({
       setShowDashboard(false);
       setShowSettings(false);
       setOpen(false); // Reset the state
+      Navigate("/");
     }, 850); // delay
   };
+
+  const Navigate = useNavigate();
 
   const handleBackOpen = () => {
     setOpen(true);
@@ -88,6 +93,7 @@ const Profile: React.FC<ProfileProps> = ({
       setShowDashboard(false);
       setShowSettings(false);
       setOpen(false); // Reset the state
+      Navigate("/chat");
     }, 850); // delay
   };
 
@@ -106,7 +112,7 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div style={{ ...Styles.container, gap: "2.5rem" }}>
+    <div style={{ ...Styles.container, gap: "2.5rem", backgroundImage: `url(${BackgroundImage})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center", }}>
       <Backdrop
         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
         open={open}

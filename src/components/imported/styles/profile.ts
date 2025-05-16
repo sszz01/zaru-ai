@@ -1,4 +1,4 @@
-
+import BackgroundImage from "../../../assets/newbg1.svg";
 
 const Styles = {
     container:{
@@ -7,6 +7,10 @@ const Styles = {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     },
 
     profileContainer:{

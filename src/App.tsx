@@ -5,6 +5,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase/firebase";
 import ChatPage from "./components/ChatPage";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
+import Profile from  "./components/Profile";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,7 +59,7 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route
-          path="/"
+          path="/chat"
           element={
             <ChatPage
               isLoggedIn={isLoggedIn}
@@ -66,6 +69,30 @@ const App: React.FC = () => {
               onLogin={handleLogin}
             />
           }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              userPhotoURL={userPhotoURL}
+              setLogin={setIsLoggedIn}
+              onClose={() => {}}
+            />
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Dashboard
+              userPhotoURL={userPhotoURL}
+              setLogin={setIsLoggedIn}
+              onClose={() => {}}
+            />
+          }
+        />
+        <Route
+          path="/"
+          element={<Login onLogin={handleLogin} />}
         />
       </Routes>
     </Router>
