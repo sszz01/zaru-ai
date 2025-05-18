@@ -10,6 +10,9 @@ import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
 import { useNavigate } from "react-router-dom";
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+
 //import LineDraw from "./imported/linedraw";
 // import Monkey from "../assets/monkeygraphic.jpg";
 
@@ -164,7 +167,7 @@ const Login: React.FC<{
           maxWidth: "28rem",
           width: "100%",
           padding: "2rem",
-          backgroundColor: "#eaf2f5",
+          backgroundColor: "#efeff1",
           borderRadius: "1rem",
           boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
           position: "absolute",
@@ -179,7 +182,7 @@ const Login: React.FC<{
               fontWeight: "bold",
               color: "#232629",
               letterSpacing: "-0.01562em",
-              fontFamily: "Montserrat, sans-serif",
+              fontFamily: '"Poppins", sans-serif',
             }}
           >
             {isLogin ? "Welcome back" : "Create account"}
@@ -189,6 +192,7 @@ const Login: React.FC<{
               marginTop: "0.5rem",
               marginBottom: "0.5rem",
               fontSize: "0.875rem",
+              fontFamily: '"Poppins", sans-serif',
               color: "#848b95",
             }}
           >
@@ -227,6 +231,7 @@ const Login: React.FC<{
             color: "gray",
             fontWeight: "500",
             transition: "background-color 0.2s ease",
+            fontFamily: '"Poppins", sans-serif',
           }}
           onMouseOver={(e) =>
             (e.currentTarget.style.backgroundColor = "#dddfe2")
@@ -249,7 +254,7 @@ const Login: React.FC<{
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[#eaf2f5] text-gray-500">
+            <span className="px-2 bg-[#efeff1] text-gray-500" style={{ fontFamily: '"Poppins", sans-serif' }}>
               Or continue with
             </span>
           </div>
@@ -260,6 +265,7 @@ const Login: React.FC<{
             <label
               htmlFor="email"
               className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
             >
               Email address
             </label>
@@ -269,6 +275,7 @@ const Login: React.FC<{
               </div>
               <input
                 id="email"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -285,6 +292,7 @@ const Login: React.FC<{
             <label
               htmlFor="password"
               className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
             >
               Password
             </label>
@@ -294,6 +302,7 @@ const Login: React.FC<{
               </div>
               <input
                 id="password"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
                 name="password"
                 type="password"
                 autoComplete="current-password"
@@ -343,6 +352,7 @@ const Login: React.FC<{
                   fontWeight: 500,
                   color: "#5e646e",
                   transition: "color 0.2s ease",
+                  fontFamily: '"Poppins", sans-serif',
                 }}
               >
                 Forgot your password?
@@ -375,7 +385,7 @@ const Login: React.FC<{
                 transition: "background-color 0.2s ease",
                 gap: "0.5rem",
                 outline: "none",
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: '"Poppins", sans-serif',
                 fontWeight: 700,
               }}
               disabled={loading}

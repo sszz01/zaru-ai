@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import '@fontsource/poppins/400.css';
 
 interface InputFieldProps {
   value: string;
@@ -24,6 +25,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           position: "relative",
           fontWeight: 600,
           border: "2px solid #dddfe2",
+          fontFamily: '"Poppins", sans-serif',
         }}
       />
     );

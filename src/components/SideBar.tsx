@@ -3,6 +3,7 @@ import BurgerIcon from "../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import ToolTip from "@mui/material/Tooltip";
 import { Burger } from "./Burger";
+import '@fontsource/poppins/400.css';
 
 interface SideBarProps {
     toggleDrawer: () => void;
@@ -22,7 +23,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
             sx={{
               "& .MuiDrawer-paper": {
                 width: "15vw",
-                backgroundColor: "#efeff1",
+                backgroundColor: "fff",
                 borderRight: "none",
                 alignItems: "center",
                 borderTopRightRadius: "30px",
@@ -33,7 +34,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
           >
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", height: "4.5rem", backgroundColor: "transparent", width: "100%", borderTopRightRadius: "30px",}}>
                 <ToolTip title="Close Sidebar" placement="bottom" arrow>
-                  <Burger toggleDrawer={toggleDrawer} BurgerIcon={BurgerIcon}  />
+                  <Burger toggleDrawer={toggleDrawer} BurgerIcon={BurgerIcon} />
                 </ToolTip>
                 <ToolTip title="Add new conversation" placement="bottom" arrow>
                   <button style={{cursor: "pointer",
@@ -59,7 +60,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                 </ToolTip>
             </div>
 
-            <label style={{ marginTop: "0.75rem", fontSize: "1rem", position: 'relative', left: '-2rem', fontWeight: "bold", color: '#848b95' }}>Conversations</label>
+            <label style={{ marginTop: "10%", fontSize: "1rem", position: 'relative', left: '-20%', fontWeight: "bold", color: '#5e646e', fontFamily: '"Poppins", sans-serif', }}>Conversations</label>
 
             <ul>
             {conversationArray.map((conversation) => (

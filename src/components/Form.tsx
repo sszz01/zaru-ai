@@ -43,7 +43,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
       boxSizing: "border-box", 
       overflow: "hidden", 
       transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)", 
-      marginLeft: drawer ? "16vw" : "0" 
+      marginLeft: drawer ? "16vw" : "0", 
       }}
     >
     <form
@@ -54,6 +54,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
         width: '80%',
         borderTopRightRadius: "50px",
         borderTopLeftRadius: "50px",
+        border: "2px solid #dddfe2",
       }}
     >
       <div className="relative flex">

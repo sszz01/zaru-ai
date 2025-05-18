@@ -1,15 +1,9 @@
+import { Dropdown } from './Dropdown';
 import { Burger } from './Burger';
 import React, { useState, useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
-import { Divider } from "@mui/material";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import Backdrop from "@mui/material/Backdrop";
 
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import LogoutIcon from "@mui/icons-material/Logout";
 import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
 import BackgroundImage from "../assets/newbg2.svg";
 import BurgerIcon from "../assets/burgericon.svg";
@@ -23,7 +17,7 @@ import SideBar from "./SideBar";
 import Form from "./Form";
 import LoadingAnimation from "./LoadingAnimation";
 import { RotateLoader } from "react-spinners";
-import Dashboard from "./Dashboard";
+import Dashboard from "./Dashboard/Dashboard";
 import { useNavigate, Navigate } from "react-router-dom";
 
 interface ChatPageProps {
@@ -330,105 +324,16 @@ useEffect(() => {
                 />
               </button>
 
-              <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
+              <Dropdown 
+                anchorEl={anchorEl} 
                 open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                sx={{
-                  "& .MuiPaper-root": {
-                  backgroundColor: "#ffffff",
-                  color: "#5e646e",
-                  borderRadius: "10px",
-                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
-                  },
-                  "& .MuiMenuItem-root": {
-                  "&:hover": {
-                    transition: "background-color 0.3s ease-in-out",
-                    "&:hover": { backgroundColor: "lightgray" },
-                  },
-                  },
-                }}
-              >
-                <MenuItem
-                  id="profile"
-                  sx={{
-                  ...styles.poppins,
-                  fontSize: 15,
-                  borderRadius: 2,
-                  color: "#5e646e",
-                  gap: 0.8,
-                  }}
-                  onClick={() => {
-                  handleMenuClose();
-                  handleTransition(() => navigate("/profile"));
-                  }}
-                >
-                  <PersonIcon fontSize="large" />
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  id="settings"
-                  sx={{
-                  ...styles.poppins,
-                  fontSize: 15,
-                  borderRadius: 2,
-                  color: "#5e646e",
-                  gap: 0.8,
-                  }}
-                  onClick={() => {
-                  handleMenuClose();
-                  handleTransition(() => console.log("Settings clicked"));
-                  }}
-                >
-                <SettingsIcon fontSize="large" />
-                Settings
-                </MenuItem>
-                {userRole === "admin" && (
-                  <MenuItem
-                  sx={{
-                    ...styles.poppins,
-                    fontSize: 15,
-                    borderRadius: 2,
-                    color: "#5e646e",
-                    gap: 0.8,
-                  }}
-                  onClick={() => {
-                    handleMenuClose();
-                    handleTransition(() => navigate("/dashboard"));
-                  }}
-                  >
-                  <DashboardIcon fontSize="large" />
-                  Admin Dashboard
-                  </MenuItem>
-                )}
-                <Divider sx={{ my: 1, bgcolor: "lightgray" }} />
-                <MenuItem
-                  id="logout"
-                  sx={{
-                  ...styles.poppins,
-                  fontSize: 15,
-                  borderRadius: 2,
-                  color: "#ff0000",
-                  gap: 0.8,
-                  }}
-                  onClick={() => {
-                  handleLogout();
-                  handleTransition(() => navigate("/"));
-                  }}
-                >
-                  <LogoutIcon fontSize="large" />
-                  Log Out
-                </MenuItem>
-              </Menu>
+                handleMenuClose={handleMenuClose} 
+                handleTransition={handleTransition} 
+                navigate={navigate} 
+                userRole={userRole} 
+                styles={styles}
+                handleLogout={handleLogout}  
+              />
             </div>
             </div>
 
