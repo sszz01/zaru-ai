@@ -6,9 +6,10 @@ import SubmitButton from "./SubmitButton";
 interface FormProps {
   onSubmit: (input: string) => void;
   drawer: boolean;
+  conversationId: number | null;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
+const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationId }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -33,40 +34,42 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer }) => {
   }, []);
 
   return (
-    <div style={{ 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center", 
-      justifyContent: "center", 
-      position: "relative", 
-      bottom: 0, 
-      boxSizing: "border-box", 
-      overflow: "hidden", 
-      transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)", 
-      marginLeft: drawer ? "16vw" : "0" 
-      }}
-    >
-    <form
-      onSubmit={handleSubmit}
+    <div
       style={{
-        padding: "1.5rem",
-        backgroundColor: "#fbfbfb",
-        width: '80%',
-        borderTopRightRadius: "50px",
-        borderTopLeftRadius: "50px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        bottom: 0,
+        boxSizing: "border-box",
+        overflow: "hidden",
+        transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)",
+        marginLeft: drawer ? "16vw" : "0",
       }}
     >
-      <div className="relative flex">
-        <InputField
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          ref={inputRef}
-        />
-        <div className="absolute right-0 items-center inset-y-0 hidden sm:flex space-x-2">
-          <SubmitButton disabled={!input.trim()} />
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          padding: "1.5rem",
+          backgroundColor: "#fbfbfb",
+          width: "80%",
+          borderTopRightRadius: "50px",
+          borderTopLeftRadius: "50px",
+        }}
+      >
+        <div className="relative flex">
+          <InputField
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            ref={inputRef}
+            conversationId={conversationId}
+          />
+          <div className="absolute right-0 items-center inset-y-0 hidden sm:flex space-x-2">
+            <SubmitButton disabled={!input.trim()} />
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
     </div>
   );
 };
