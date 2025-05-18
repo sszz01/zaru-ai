@@ -1,17 +1,28 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState, useEffect } from "react";
 
 interface InputFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  conversationId: number | null;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ value, onChange }, ref) => {
+  ({ value, onChange, conversationId }, ref) => {
+    const [placeholder, setPlaceholder] = useState("Start a conversation");
+
+    useEffect(() => {
+      if (conversationId !== null) {
+        setPlaceholder("How can I assist you today?");
+      } else {
+        setPlaceholder("Start a conversation");
+      }
+    }, [conversationId]);
+
     return (
       <input
         ref={ref}
         type="text"
-        placeholder="Type a message..."
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         style={{
