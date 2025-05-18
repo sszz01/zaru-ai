@@ -69,6 +69,11 @@ const ChatPage: React.FC<ChatPageProps> = ({
 
   const handleInputSubmit = async (input: string) => {
     setLoading(true);
+
+    if (currentConversationId === null) {
+      const newId = conversationArray.length + 1;
+      setCurrentConversationId(newId);
+    }
     setMessages((prevMessages) => [
       ...prevMessages,
       { text: input, sender: "user" },
@@ -159,22 +164,27 @@ const ChatPage: React.FC<ChatPageProps> = ({
   };
 
   useEffect(() => {
-    if (messages.length === 1 && currentConversationId === null) {
-      const newConversation = {
-        id: conversationArray.length + 1,
-        name: "Conversation " + (conversationArray.length + 1),
-        messages: [...messages],
-      };
-      setConversationArray([...conversationArray, newConversation]);
-      setCurrentConversationId(newConversation.id);
-    } else if (currentConversationId !== null) {
-      setConversationArray((prev) =>
-        prev.map((conv) =>
-          conv.id === currentConversationId
-            ? { ...conv, messages: [...messages] }
-            : conv
-        )
+    if (currentConversationId !== null && messages.length > 0) {
+      const conversationExistsInArray = conversationArray.some(
+        (conv) => conv.id === currentConversationId
       );
+
+      if (!conversationExistsInArray) {
+        const newConversation = {
+          id: currentConversationId,
+          name: `Conversation ${currentConversationId}`,
+          messages: [...messages],
+        };
+        setConversationArray((prevArray) => [...prevArray, newConversation]);
+      } else {
+        setConversationArray((prevArray) =>
+          prevArray.map((conv) =>
+            conv.id === currentConversationId
+              ? { ...conv, messages: [...messages] }
+              : conv
+          )
+        );
+      }
     }
   }, [messages, currentConversationId, conversationArray]);
 
