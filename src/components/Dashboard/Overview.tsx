@@ -184,15 +184,17 @@ const OverviewComponent = ({
             }}>
 
                 <HalfBox colors={colors}>
-                    <span style={{
-                            color: colors.text,
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: "1.25rem",
-                            fontWeight: 600,
-                            marginBottom: "0.5rem",
-                        }}>
-                            Frequently Asked Subjects
-                    </span>
+                    <div style={{
+                        fontSize: "1.5rem",
+                        fontWeight: "bold",
+                        color: colors.text,
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "left",
+                        width: "90%",
+                        marginTop: '-2rem',
+                    }}>
+                        Topic Distribution
+                    </div>
 
                 <Box display="flex" alignItems="center" gap={4}>
                     <PieChart
