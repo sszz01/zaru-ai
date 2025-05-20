@@ -10,6 +10,7 @@ import { auth, db } from "../firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "./imported/styles/login";
 import { useNavigate } from "react-router-dom";
+import PasswordIcon from '@mui/icons-material/Password';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 
@@ -336,6 +337,17 @@ const Login: React.FC<{
             )}
           </div>
 
+          {/* User Role Code Enter */}
+          <div className="mt-1 relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <PasswordIcon className="h-5 w-5 text-gray-400" />
+            </div>
+            <input 
+              placeholder="Enter your code" 
+              style={{ fontFamily: '"Poppins", sans-serif' }}
+              className="appearance-none block w-full pl-10 pr-3 py-2 border-1 border-[#dddfe2] bg-[#ffffff] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1" />
+          </div>
+
           {isLogin && (
             <div
               style={{
@@ -402,27 +414,6 @@ const Login: React.FC<{
           </div>
         </form>
       </div>
-
-      {/* <LineDraw /> */}
-
-      {/*Monkey Graphic*/}
-
-      {/* <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: `url(${Monkey})`,
-        backgroundSize: "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        width: "15rem",
-        height: "15rem",
-        position: "absolute",
-        marginTop: "6vh",
-        zIndex: 0,
-        left: "6vw",
-        transform: "scaleX(-1)",
-      }}/> */}
     </div>
   );
 };
