@@ -60,7 +60,7 @@ const SideBar: React.FC<SideBarProps> = ({ toggleDrawer, handleDrawer, conversat
                 </ToolTip>
             </div>
 
-            <label style={{ marginTop: "10%", fontSize: "1rem", position: 'relative', left: '-20%', fontWeight: "bold", color: '#5e646e', fontFamily: '"Poppins", sans-serif', }}>Conversations</label>
+            <label style={{ marginTop: "10%", fontSize: "1rem", position: 'relative', left: '-10%', fontWeight: "bold", color: '#5e646e', fontFamily: '"Poppins", sans-serif', }}>Conversations</label>
 
             <ul>
             {conversationArray.map((conversation) => (

@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Switch, Slider, Col } from "antd";
 import { useState } from "react";
-import { InputNumberProps } from "antd";
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 interface RestrictionsProps {
     colors: {
@@ -68,7 +70,6 @@ const styles = {
         flexDirection: "column" as const,
         alignItems: "flex-start",
         justifyContent: "center",
-        gap: "0rem",
         padding: "1rem",
         borderRadius: "20px",
         border: `2px solid ${colors.border}`,
@@ -91,17 +92,17 @@ const styles = {
         flexDirection: "column" as const,
         alignItems: "flex-start",
         justifyContent: "center",
-        gap: "2rem",
+        gap: "1.5rem",
         padding: "1rem",
-        marginLeft: "5%",
+        marginLeft: "0%",
     },
     ruleRow: {
         display: "flex",
         flexDirection: "row" as const,
         alignItems: "center",
         justifyContent: "center",
-        gap: "1rem",
-        marginLeft: "2%",
+        gap: "1.5rem",
+        marginLeft: "0%",
     },
     smallHeader: (colors: RestrictionsProps["colors"]) => ({
         fontSize: 18,
@@ -109,7 +110,6 @@ const styles = {
         fontFamily: "Poppins, sans-serif",
         textAlign: "left" as const,
         fontWeight: 600 as const,
-        marginLeft: "-2rem",
     }),
     ruleLabel: (colors: RestrictionsProps["colors"]) => ({
         fontSize: 16,
@@ -124,7 +124,7 @@ const styles = {
         justifyContent: "left",
         gap: "1rem",
         marginLeft: "2%",
-        width: "85%",
+        width: "100%",
     }),
     sliderValue: (colors: RestrictionsProps["colors"]) => ({
         fontSize: 16,
@@ -172,6 +172,18 @@ function Restrictions({ colors }: RestrictionsProps) {
         console.log(`switch to ${checked}`);
     };
 
+    const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+        });
+
     const [inputValueStudent, setInputValueStudent] = useState<number>(100);
     const [inputValueAI, setInputValueAI] = useState<number>(500);
 
@@ -181,16 +193,30 @@ function Restrictions({ colors }: RestrictionsProps) {
                 AI Restrictions and Rules
             </div>
 
-            <div style={styles.section(colors)}></div>
+            <div style={styles.section(colors)}>
+                 <Button
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                    startIcon={<CloudUploadIcon />}
+                    >
+                    Upload files
+                    <VisuallyHiddenInput
+                        type="file"
+                        onChange={(event) => console.log(event.target.files)}
+                        multiple
+                    />
+                </Button>
+            </div>
 
             <div style={styles.main}>
                 <div style={styles.leftCard(colors)}>
                     {/* Basic Rules */}
-                    <div style={{...styles.card(colors), flex: 2, width: "100%"}}>
-                        <div style={styles.cardHeader(colors)}>
+                    <div style={{ ...styles.card(colors), flex: 2, width: "100%", minHeight: 0 }}>
+                        <div style={styles.smallHeader(colors)}>
                             Basic Rules
                         </div>
-
                         {/* Rules Container */}
                         <div style={styles.rulesContainer}>
                             <div style={styles.ruleRow}>
@@ -199,37 +225,33 @@ function Restrictions({ colors }: RestrictionsProps) {
                                     Disable Paste into Chat
                                 </div>
                             </div>
-
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
                                 <div style={styles.ruleLabel(colors)}>
                                     Disable Copy from AI Response
                                 </div>
                             </div>
-
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
                                 <div style={styles.ruleLabel(colors)}>
                                     Disable Providing Direct Solutions
                                 </div>
                             </div>
-
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
                                 <div style={styles.ruleLabel(colors)}>
                                     Flag Potentially Inappropriate Prompts
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                     </div>
 
                     {/* Slider Container */}
-                    <div style={{...styles.card(colors), flex: 1, width: "100%"}}>
-                        <div style={styles.sliderRow(colors)}>
-                            <div style={styles.smallHeader(colors)}>
-                                Word Limits
-                            </div>
-
+                    <div style={{ ...styles.card(colors), flex: 1, width: "100%", minHeight: 0, flexDirection: "column" as const, justifyContent: "flex-start" }}>
+                        <div style={styles.smallHeader(colors)}>
+                            Word Limits
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
                             {/* Student Input Word Limit Slider */}
                             <div style={styles.sliderRow(colors)}>
                                 <Col span={12}>
@@ -244,27 +266,24 @@ function Restrictions({ colors }: RestrictionsProps) {
                                 </Col>
                                 <div style={styles.sliderValue(colors)}>{inputValueStudent}</div>
                                 <div style={styles.sliderLabel(colors)}>
-                                    Student Input Word Limit
+                                    Student Input
                                 </div>
                             </div>
-
-                            <div style={{...styles.sliderRow(colors),}}>
-                                {/* AI Response Word Limit Slider */}
-                                <div style={styles.sliderRow(colors)}>
-                                    <Col span={12}>
-                                        <Slider
-                                            min={100}
-                                            max={1500}
-                                            onChange={(value) => setInputValueAI(value as number)}
-                                            value={typeof inputValueAI === "number" ? inputValueAI : 0}
-                                            step={50}
-                                            tooltip={{ formatter: null }}
-                                        />
-                                    </Col>
-                                    <div style={styles.sliderValue(colors)}>{inputValueAI}</div>
-                                    <div style={styles.sliderLabel(colors)}>
-                                        AI Response Word Limit
-                                    </div>
+                            {/* AI Response Word Limit Slider */}
+                            <div style={styles.sliderRow(colors)}>
+                                <Col span={12}>
+                                    <Slider
+                                        min={100}
+                                        max={1500}
+                                        onChange={(value) => setInputValueAI(value as number)}
+                                        value={typeof inputValueAI === "number" ? inputValueAI : 0}
+                                        step={50}
+                                        tooltip={{ formatter: null }}
+                                    />
+                                </Col>
+                                <div style={styles.sliderValue(colors)}>{inputValueAI}</div>
+                                <div style={styles.sliderLabel(colors)}>
+                                    AI Response
                                 </div>
                             </div>
                         </div>

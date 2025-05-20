@@ -494,7 +494,7 @@ const Dashboard: React.FC<DashProps> = ({
           <Settings contentPanelStyle={contentPanelStyle} colors={colors} />
         )}
 
-        {/* Period content */}
+        {/* Restrictions content */}
         {showRestrictions && (
           <Restrictions colors={colors} />
         )}
