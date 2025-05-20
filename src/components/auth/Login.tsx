@@ -6,9 +6,9 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
-import { auth, db } from "../firebase/firebase.ts";
+import { auth, db } from "../../../backend/db/firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
-import Styles from "./imported/styles/login";
+import Styles from "../styles/login.ts";
 import { useNavigate } from "react-router-dom";
 import PasswordIcon from '@mui/icons-material/Password';
 import '@fontsource/poppins/400.css';

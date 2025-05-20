@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Styles from "./imported/styles/profile";
+import Styles from "../styles/profile";
 import EditIcon from "@mui/icons-material/Edit";
 import Backdrop from "@mui/material/Backdrop";
 // import CircularProgress from "@mui/material/CircularProgress";
 import { RotateLoader } from "react-spinners";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../../backend/db/firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../../../backend/db/firebase/firebase";
 import { useNavigate } from "react-router-dom";
-import BackgroundImage from "../assets/newbg.svg";
+import BackgroundImage from "../../assets/newbg.svg";
 
 interface ProfileProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -71,7 +71,6 @@ const Profile: React.FC<ProfileProps> = ({
     fetchUserData();
   }, [userPhotoURL]);
 
-
   const handleOpen = () => {
     setOpen(true);
     setTimeout(() => {
@@ -112,7 +111,16 @@ const Profile: React.FC<ProfileProps> = ({
   };
 
   return (
-    <div style={{ ...Styles.container, gap: "2.5rem", backgroundImage: `url(${BackgroundImage})`, backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundPosition: "center", }}>
+    <div
+      style={{
+        ...Styles.container,
+        gap: "2.5rem",
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       <Backdrop
         sx={(theme) => ({ color: "#fff", zIndex: theme.zIndex.drawer + 1 })}
         open={open}

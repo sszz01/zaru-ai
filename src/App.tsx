@@ -1,13 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase/firebase";
-import ChatPage from "./components/ChatPage";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Profile from  "./components/Profile";
+import { auth, db } from "../backend/db/firebase/firebase";
+import ChatPage from "./components/chat/ChatPage";
+import Login from "./components/auth/Login";
+import Dashboard from "./components/layout/Dashboard";
+import Profile from "./components/layout/Profile";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -90,10 +89,7 @@ const App: React.FC = () => {
             />
           }
         />
-        <Route
-          path="/"
-          element={<Login onLogin={handleLogin} />}
-        />
+        <Route path="/" element={<Login onLogin={handleLogin} />} />
       </Routes>
     </Router>
   );
