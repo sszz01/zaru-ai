@@ -1,4 +1,4 @@
-import { Burger } from "./Burger";
+import { Burger } from "../layout/Burger";
 import React, { useState, useEffect, useRef } from "react";
 import DOMPurify from "dompurify";
 import { Divider } from "@mui/material";
@@ -11,19 +11,19 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 import DownOutlined from "@ant-design/icons/lib/icons/DownOutlined";
-import BackgroundImage from "../assets/newbg2.svg";
-import BurgerIcon from "../assets/burgericon.svg";
+import BackgroundImage from "../../assets/newbg2.svg";
+import BurgerIcon from "../../assets/burgericon.svg";
 
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase/firebase";
+import { auth } from "../../../backend/db/firebase/firebase";
 
-import styles from "./imported/styles/login";
-import Profile from "./Profile";
-import SideBar from "./SideBar";
+import styles from "../styles/login";
+import Profile from "../layout/Profile";
+import SideBar from "../layout/SideBar";
 import Form from "./Form";
-import LoadingAnimation from "./LoadingAnimation";
+import LoadingAnimation from "../ui/LoadingAnimation";
 import { RotateLoader } from "react-spinners";
-import Dashboard from "./Dashboard";
+import Dashboard from "../layout/Dashboard";
 import { useNavigate, Navigate } from "react-router-dom";
 
 interface ChatPageProps {

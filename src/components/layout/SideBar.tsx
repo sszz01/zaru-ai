@@ -1,5 +1,5 @@
 import { Drawer } from "@mui/material";
-import BurgerIcon from "../assets/burgericon.svg";
+import BurgerIcon from "../../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import ToolTip from "@mui/material/Tooltip";
 import { Burger } from "./Burger";
