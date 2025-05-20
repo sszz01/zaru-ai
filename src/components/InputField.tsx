@@ -12,7 +12,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     useEffect(() => {
       if (conversationId !== null) {
-        setPlaceholder("How can I assist you today?");
+        setPlaceholder("Reply to Zaru");
       } else {
         setPlaceholder("Start a conversation");
       }
