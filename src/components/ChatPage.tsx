@@ -186,7 +186,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
         );
       }
     }
-  }, [messages, currentConversationId, conversationArray]);
+  }, [messages, currentConversationId]);
 
   const loadConversation = (id: number) => {
     const conversation = conversationArray.find((conv) => conv.id === id);
