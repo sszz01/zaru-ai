@@ -26,12 +26,16 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/poppins/900.css';
 
 //Components----------------------------------------------
 import ConfigProvider from "antd/es/config-provider";
 import Tooltip from "@mui/material/Tooltip";
 import { Menu } from "antd";
-import BackgroundImage from "../../assets/newbg2.svg";
+import BackgroundImage from "../../../assets/newbg2.svg";
 import Overview from "./Overview";
 import { RotateLoader } from "react-spinners";
 import Restrictions from "./Restrictions";
@@ -323,9 +327,9 @@ const Dashboard: React.FC<DashProps> = ({
       alignItems: "center",
       justifyContent: "center",
       gap: "0.6rem",
-      fontSize: "16px",
+      fontSize: "18px",
       color: '#ff0000',
-      fontWeight: "bold",
+      fontWeight: 600,
       fontFamily: "Poppins, sans-serif",
       cursor: "pointer",
       transition: "all 0.2s ease-in-out",

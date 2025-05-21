@@ -5,7 +5,11 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
 import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/poppins/900.css';
 
 interface RestrictionsProps {
     colors: {
@@ -107,18 +111,29 @@ const styles = {
         marginLeft: "0%",
     },
     smallHeader: (colors: RestrictionsProps["colors"]) => ({
-        fontSize: 18,
+        fontSize: 20,
         color: colors.text,
         fontFamily: "Poppins, sans-serif",
         textAlign: "left" as const,
-        fontWeight: 600 as const,
+        fontWeight: 700 as const,
     }),
     ruleLabel: (colors: RestrictionsProps["colors"]) => ({
         fontSize: 16,
         color: colors.text,
         fontFamily: "Poppins, sans-serif",
         textAlign: "center" as const,
+        fontWeight: 600,
     }),
+
+    smallRuleLabel : (colors: RestrictionsProps["colors"]) => ({
+        fontSize: 12,
+        color: colors.textSecondary,
+        fontFamily: "Poppins, sans-serif",
+        textAlign: "center" as const,
+        marginLeft: "2%",
+        whiteSpace: 'nowrap'
+    }),
+
     sliderRow: (colors: RestrictionsProps["colors"]) => ({
         display: "flex",
         flexDirection: "row" as const,
@@ -140,6 +155,7 @@ const styles = {
         fontFamily: "Poppins, sans-serif",
         textAlign: "center" as const,
         marginLeft: "2%",
+        fontWeight: 500,
     }),
     rightCard: (colors: RestrictionsProps["colors"]) => ({
         width: "50%",
@@ -240,26 +256,46 @@ function Restrictions({ colors }: RestrictionsProps) {
                         <div style={styles.rulesContainer}>
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
-                                <div style={styles.ruleLabel(colors)}>
-                                    Disable Paste into Chat
+                                <div style={{flexDirection: 'column', alignItems: 'flex-start', display: 'flex',}}>
+                                    <div style={styles.ruleLabel(colors)}>
+                                        Disable Paste into Chat
+                                    </div>
+                                    <div style={styles.smallRuleLabel(colors)}>
+                                        Restricts users from pasting text directly into the chat window.
+                                    </div>
                                 </div>
                             </div>
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
-                                <div style={styles.ruleLabel(colors)}>
-                                    Disable Copy from AI Response
+                                 <div style={{flexDirection: 'column', alignItems: 'flex-start', display: 'flex',}}>
+                                    <div style={styles.ruleLabel(colors)}>
+                                        Disable Copy from AI Response
+                                    </div>
+                                    <div style={styles.smallRuleLabel(colors)}>
+                                        Restricts users from copying text from AI responses.
+                                    </div>
                                 </div>
                             </div>
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
-                                <div style={styles.ruleLabel(colors)}>
-                                    Disable Providing Direct Solutions
+                                <div style={{flexDirection: 'column', alignItems: 'flex-start', display: 'flex',}}>
+                                    <div style={styles.ruleLabel(colors)}>
+                                        Disable providing direct solutions
+                                    </div>
+                                    <div style={styles.smallRuleLabel(colors)}>
+                                        Restricts the AI from providing direct solutions, instead providing guidance and suggestions.
+                                    </div>
                                 </div>
                             </div>
                             <div style={styles.ruleRow}>
                                 <Switch defaultChecked onChange={onChange} />
-                                <div style={styles.ruleLabel(colors)}>
-                                    Flag Potentially Inappropriate Prompts
+                                <div style={{flexDirection: 'column', alignItems: 'flex-start', display: 'flex',}}>
+                                    <div style={styles.ruleLabel(colors)}>
+                                        Flag Potentially Inappropriate Prompts
+                                    </div>
+                                    <div style={styles.smallRuleLabel(colors)}>
+                                        Allows the AI to flag potentially inappropriate prompts.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +320,7 @@ function Restrictions({ colors }: RestrictionsProps) {
                                     />
                                 </Col>
                                 <div style={styles.sliderValue(colors)}>{inputValueStudent}</div>
-                                <div style={styles.sliderLabel(colors)}>
+                                <div style={{...styles.sliderLabel(colors)}}>
                                     Student Input
                                 </div>
                             </div>

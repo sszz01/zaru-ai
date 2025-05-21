@@ -161,6 +161,15 @@ const Login: React.FC<{
 
   const Navigate = useNavigate();
 
+  const [show, setRequireCharacter] = useState(false);
+  const check6Char = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length >= 6) {
+      setRequireCharacter(true);
+    } else {
+      setRequireCharacter(false);
+    }
+  };
   return (
     <div style={Styles.container}>
       <div
@@ -337,6 +346,8 @@ const Login: React.FC<{
             )}
           </div>
 
+          <span className="text-xs text-gray-500"> {show ? "" : "Code must be 6 digits"} </span>
+
           {/* User Role Code Enter */}
           <div className="mt-1 relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -344,6 +355,7 @@ const Login: React.FC<{
             </div>
             <input 
               placeholder="Enter your code" 
+              onChange={check6Char}
               style={{ fontFamily: '"Poppins", sans-serif' }}
               className="appearance-none block w-full pl-10 pr-3 py-2 border-1 border-[#dddfe2] bg-[#ffffff] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1" />
           </div>
