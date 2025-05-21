@@ -51,6 +51,11 @@ const ChatPage: React.FC<ChatPageProps> = ({
     }, 850);
   };
 
+  React.useEffect(() => {
+      console.log('User role:', userRole);
+      // eslint-disable-next-line
+  }, []);
+
   const navigate = useNavigate();
 
   const scrollToBottom = () => {

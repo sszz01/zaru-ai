@@ -116,11 +116,16 @@ const Login: React.FC<{
   };
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
+
+  if(show === true) {
     try {
       setLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      // Determine the role to use
+      const roleToUse = Number(code) === randomCode ? "admin" : selectedRole;
 
       if (user) {
         const userRef = doc(db, "users", user.uid);
@@ -133,7 +138,7 @@ const Login: React.FC<{
             displayName: user.displayName,
             createdAt: new Date(),
             authMethod: "google",
-            role: selectedRole,
+            role: roleToUse,
           });
         } else {
           await setDoc(
@@ -141,23 +146,29 @@ const Login: React.FC<{
             {
               lastLogin: new Date(),
               photoURL: user.photoURL,
-              role: selectedRole,
+              role: roleToUse,
             },
             { merge: true }
           );
         }
       }
-      onLogin(user.photoURL || null, selectedRole);
-    } catch (error: unknown) {
-      setError("Google login failed. Please try again.");
-      if (error instanceof Error) {
-        console.error("Google login error:", error.message);
+      // Use the determined role
+        onLogin(user.photoURL || null, roleToUse);
+      } catch (error: unknown) {
+        setError("Google login failed. Please try again.");
+        if (error instanceof Error) {
+          console.error("Google login error:", error.message);
+        };
+      } finally {
+        setLoading(false);
+        Navigate("/chat");
       }
-    } finally {
-      setLoading(false);
-      Navigate("/chat");
+    } else {
+      console.error("Code must be 6 characters long.");
+      setLoadError(true);
     }
   };
+
 
   const Navigate = useNavigate();
 
@@ -170,6 +181,23 @@ const Login: React.FC<{
       setRequireCharacter(false);
     }
   };
+
+  const randomCode = 123456;
+  // Only log the code once on component mount
+  React.useEffect(() => {
+    console.log(randomCode);
+    // eslint-disable-next-line
+  }, []);
+
+  const [code, setCode] = useState("");
+
+  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newCode = e.target.value;
+    setCode(newCode);
+  };
+
+  const [loadError, setLoadError] = useState(false);
+
   return (
     <div style={Styles.container}>
       <div
@@ -270,7 +298,7 @@ const Login: React.FC<{
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label
               htmlFor="email"
@@ -325,7 +353,7 @@ const Login: React.FC<{
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Select Your Role
             </label>
@@ -344,20 +372,46 @@ const Login: React.FC<{
                 accordance with academic integrity policies.
               </p>
             )}
-          </div>
+          </div> */}
 
           <span className="text-xs text-gray-500"> {show ? "" : "Code must be 6 digits"} </span>
 
           {/* User Role Code Enter */}
           <div className="mt-1 relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <PasswordIcon className="h-5 w-5 text-gray-400" />
+            <div style={{ position: 'absolute', paddingTop: '0.55rem', paddingLeft: '0.75rem', display: 'flex', alignItems: 'center', pointerEvents: 'none', }}>
+              <PasswordIcon style={{ height: '1.25rem', width: '1.25rem', color: '#9CA3AF' }} />
             </div>
             <input 
               placeholder="Enter your code" 
-              onChange={check6Char}
-              style={{ fontFamily: '"Poppins", sans-serif' }}
-              className="appearance-none block w-full pl-10 pr-3 py-2 border-1 border-[#dddfe2] bg-[#ffffff] rounded-lg placeholder-gray-400 focus:outline-none focus:ring-[#42738a] focus:border-[#42738a] mb-1" />
+              onChange={(e) => {
+                check6Char(e);
+                handleCodeChange(e);
+                setLoadError(false);
+              }}
+              value={code}
+              style={{
+                appearance: "none",
+                width: "100%",
+                paddingLeft: "2.5rem",
+                paddingRight: "0.75rem",
+                paddingTop: "0.5rem",
+                paddingBottom: "0.5rem",
+                border: "1px solid #dddfe2",
+                backgroundColor: "#ffffff",
+                borderRadius: "0.5rem",
+                color: "#5e646e",
+                fontSize: "1rem",
+                fontFamily: '"Poppins", sans-serif',
+                outline: "none",
+                transition: "all 0.15s ease-in-out",
+              }}/>
+
+              {loadError && (
+                <span className="text-xs text-gray-500"
+                      style={{ color: "#ff0000"}}> 
+                  Please enter a valid code 
+                </span>
+              )}
           </div>
 
           {isLogin && (
@@ -431,3 +485,5 @@ const Login: React.FC<{
 };
 
 export default Login;
+
+
