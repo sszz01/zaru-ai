@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Styles from "./imported/styles/profile";
-import EditIcon from "@mui/icons-material/Edit";
 import Backdrop from "@mui/material/Backdrop";
 // import CircularProgress from "@mui/material/CircularProgress";
 import { RotateLoader } from "react-spinners";

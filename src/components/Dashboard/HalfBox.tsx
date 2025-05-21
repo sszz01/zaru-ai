@@ -21,12 +21,12 @@ export function HalfBox({colors, children} : HalfBoxProps) {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "flex-start",
             justifyContent: "center",
             borderRadius: "20px",
             border: `2px solid ${colors.border}`,
             gap: "1rem",
-            backgroundColor: colors.surface
+            backgroundColor: colors.surface     
         }}>
             {children}
         </div>

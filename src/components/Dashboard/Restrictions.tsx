@@ -4,6 +4,8 @@ import { useState } from "react";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/700.css';
 
 interface RestrictionsProps {
     colors: {
@@ -184,8 +186,8 @@ function Restrictions({ colors }: RestrictionsProps) {
         width: 1,
         });
 
-    const [inputValueStudent, setInputValueStudent] = useState<number>(100);
-    const [inputValueAI, setInputValueAI] = useState<number>(500);
+    const [inputValueStudent, setInputValueStudent] = useState<number>(500);
+    const [inputValueAI, setInputValueAI] = useState<number>(1000);
 
     return (
         <div style={styles.container} id="dashboard">
@@ -200,8 +202,25 @@ function Restrictions({ colors }: RestrictionsProps) {
                     variant="contained"
                     tabIndex={-1}
                     startIcon={<CloudUploadIcon />}
+                    sx={{
+                        width: "10vw",
+                        height: "5vh",
+                        display: "flex",
+                        flexDirection: "row" as const,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "1rem",
+                        padding: "1rem",
+                        borderRadius: "10px",
+                        fontSize: 16,
+                        backgroundColor: colors.primary,
+                        color: '#fbfbfb',
+                        fontWeight: 500,
+                        fontFamily: "Poppins, sans-serif",
+                        textTransform: "none" as const,
+                    }}
                     >
-                    Upload files
+                    Upload Files
                     <VisuallyHiddenInput
                         type="file"
                         onChange={(event) => console.log(event.target.files)}
@@ -251,7 +270,7 @@ function Restrictions({ colors }: RestrictionsProps) {
                         <div style={styles.smallHeader(colors)}>
                             Word Limits
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%", height: "100%", justifyContent: "center" }}>
                             {/* Student Input Word Limit Slider */}
                             <div style={styles.sliderRow(colors)}>
                                 <Col span={12}>

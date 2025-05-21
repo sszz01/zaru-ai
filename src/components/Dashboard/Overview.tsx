@@ -58,6 +58,7 @@ const OverviewComponent = ({
 
             <div style={{
                 width: "100%",
+                height: '25%',
                 display: "flex",
                 flex: 1,
                 flexDirection: "row",
@@ -184,16 +185,15 @@ const OverviewComponent = ({
             }}>
 
                 <HalfBox colors={colors}>
+
                     <div style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "bold",
+                        fontSize: 18,
                         color: colors.text,
                         fontFamily: "Poppins, sans-serif",
-                        textAlign: "left",
-                        width: "90%",
-                        marginTop: '-2rem',
+                        textAlign: "left" as const,
+                        fontWeight: 600 as const,
                     }}>
-                        Topic Distribution
+                        Basic Rules
                     </div>
 
                 <Box display="flex" alignItems="center" gap={4}>

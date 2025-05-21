@@ -18,7 +18,7 @@ export function ThirdBox({colors, children} : ThirdBoxProps) {
     return (
         <div style={{
             width: window.innerWidth / 3,
-            height: window.innerHeight / 4,
+            height: '100%',
             display: "flex",
             flexDirection: "column",
             borderRadius: "20px",
