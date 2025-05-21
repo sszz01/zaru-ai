@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 //import { Paperclip, Camera, Smile } from "lucide-react";
-import InputField from "./UserInputField";
+import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
 
 interface FormProps {

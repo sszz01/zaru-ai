@@ -1,7 +1,7 @@
 import { Settings } from './Settings';
 import React, { useState, useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
-import { auth, db } from "../../firebase/firebase";
+import { auth, db } from "../../../../backend/db/firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 
 //Styles----------------------------------------------
 import type { MenuProps } from "antd";
-import Styles from "../imported/styles/profile";
+import Styles from "../../imported/styles/profile";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import '@fontsource/poppins/400.css';
