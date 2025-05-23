@@ -35,8 +35,8 @@ const SideBar: React.FC<SideBarProps> = ({
           backgroundColor: "fff",
           borderRight: "none",
           alignItems: "center",
-          borderTopRightRadius: "30px",
-          borderBottomRightRadius: "30px",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
           border: "2px solid #dddfe2",
         },
       }}

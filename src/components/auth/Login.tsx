@@ -10,7 +10,7 @@ import { auth, db } from "../../../backend/db/firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "../styles/login.ts";
 import { useNavigate } from "react-router-dom";
-import PasswordIcon from '@mui/icons-material/Password';
+// import PasswordIcon from '@mui/icons-material/Password';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 
@@ -118,14 +118,13 @@ const Login: React.FC<{
   const handleGoogleLogin = async () => {
   const provider = new GoogleAuthProvider();
 
-  if(show === true) {
     try {
       setLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
       // Determine the role to use
-      const roleToUse = Number(code) === randomCode ? "admin" : selectedRole;
+      // const roleToUse = Number(code) === randomCode ? "admin" : selectedRole;
 
       if (user) {
         const userRef = doc(db, "users", user.uid);
@@ -138,7 +137,7 @@ const Login: React.FC<{
             displayName: user.displayName,
             createdAt: new Date(),
             authMethod: "google",
-            role: roleToUse,
+            role: selectedRole,
           });
         } else {
           await setDoc(
@@ -146,14 +145,14 @@ const Login: React.FC<{
             {
               lastLogin: new Date(),
               photoURL: user.photoURL,
-              role: roleToUse,
+              role: selectedRole,
             },
             { merge: true }
           );
         }
       }
       // Use the determined role
-        onLogin(user.photoURL || null, roleToUse);
+        onLogin(user.photoURL || null, selectedRole);
       } catch (error: unknown) {
         setError("Google login failed. Please try again.");
         if (error instanceof Error) {
@@ -163,40 +162,36 @@ const Login: React.FC<{
         setLoading(false);
         Navigate("/chat");
       }
-    } else {
-      console.error("Code must be 6 characters long.");
-      setLoadError(true);
-    }
   };
 
 
   const Navigate = useNavigate();
 
-  const [show, setRequireCharacter] = useState(false);
-  const check6Char = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.length >= 6) {
-      setRequireCharacter(true);
-    } else {
-      setRequireCharacter(false);
-    }
-  };
+  // const [show, setRequireCharacter] = useState(false);
+  // const check6Char = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   if (value.length >= 6) {
+  //     setRequireCharacter(true);
+  //   } else {
+  //     setRequireCharacter(false);
+  //   }
+  // };
 
-  const randomCode = 123456;
-  // Only log the code once on component mount
-  React.useEffect(() => {
-    console.log(randomCode);
-    // eslint-disable-next-line
-  }, []);
+  // const randomCode = 123456;
+  // // Only log the code once on component mount
+  // React.useEffect(() => {
+  //   console.log(randomCode);
+  //   // eslint-disable-next-line
+  // }, []);
 
-  const [code, setCode] = useState("");
+  // const [code, setCode] = useState("");
 
-  const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newCode = e.target.value;
-    setCode(newCode);
-  };
+  // const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const newCode = e.target.value;
+  //   setCode(newCode);
+  // };
 
-  const [loadError, setLoadError] = useState(false);
+  // const [loadError, setLoadError] = useState(false);
 
   return (
     <div style={Styles.container}>
@@ -353,31 +348,57 @@ const Login: React.FC<{
             </div>
           </div>
 
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Your Role
+          <div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
+            >
+              Role Select
             </label>
             <select
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              style={{
+                width: "100%",
+                padding: "0.5rem",
+                border: "1px solid #dddfe2",
+                borderRadius: "0.5rem",
+                backgroundColor: "#ffffff",
+                color: "#232629",
+                fontSize: "1rem",
+                outline: "none",
+                transition: "border-color 0.2s ease",
+                fontFamily: '"Poppins", sans-serif',
+              }}
             >
               <option value="default">Default User</option>
               <option value="student">Student</option>
               <option value="admin">Administrator</option>
             </select>
             {selectedRole === "student" && (
-              <p className="text-xs text-gray-500 mt-1">
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#848b95",
+                  marginTop: "0.25rem",
+                  fontFamily: '"Poppins", sans-serif',
+                }}
+              >
                 Note: Student accounts have certain content restrictions in
                 accordance with academic integrity policies.
               </p>
             )}
-          </div> */}
+          </div>
 
-          <span className="text-xs text-gray-500"> {show ? "" : "Code must be 6 digits"} </span>
+          {/* <span className="text-xs text-gray-500"
+                style ={{ fontFamily: '"Poppins", sans-serif' }}
+          > 
+            {show ? "" : "Code must be 6 digits"} 
+          </span> */}
 
-          {/* User Role Code Enter */}
-          <div className="mt-1 relative">
+          {/* TENTATIVE CODE INPUT ---------------------------------------------------------------- */}
+          {/* <div className="mt-1 relative">
             <div style={{ position: 'absolute', paddingTop: '0.55rem', paddingLeft: '0.75rem', display: 'flex', alignItems: 'center', pointerEvents: 'none', }}>
               <PasswordIcon style={{ height: '1.25rem', width: '1.25rem', color: '#9CA3AF' }} />
             </div>
@@ -412,7 +433,7 @@ const Login: React.FC<{
                   Please enter a valid code 
                 </span>
               )}
-          </div>
+          </div> --------------------------------------------------------------- */}
 
           {isLogin && (
             <div
@@ -429,6 +450,7 @@ const Login: React.FC<{
                   fontSize: "0.875rem",
                   fontWeight: 500,
                   color: "#5e646e",
+                  marginBottom: "2rem",
                   transition: "color 0.2s ease",
                   fontFamily: '"Poppins", sans-serif',
                 }}

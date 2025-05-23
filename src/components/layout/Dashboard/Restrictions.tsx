@@ -4,6 +4,7 @@ import { useState } from "react";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Typography from '@mui/material/Typography';
 import '@fontsource/poppins/400.css';
 import '@fontsource/poppins/500.css';
 import '@fontsource/poppins/600.css';
@@ -37,6 +38,21 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
+const styles = {
+    primary: {
+        color: '#232629',
+        fontFamily: 'Poppins',
+    },
+    secondary: {
+        color: '#5e646e',
+        fontFamily: 'Poppins',
+    },
+    metric: {
+        color: '#0066ff',
+        fontFamily: 'Poppins',
+    }
+}
+
 function Restrictions({ colors }: RestrictionsProps) {
     const navigate = useNavigate();
     const [inputValueStudent, setInputValueStudent] = useState<number>(500);
@@ -55,7 +71,21 @@ function Restrictions({ colors }: RestrictionsProps) {
             flexDirection: 'column',
             gap: '1rem'
         }}>
-            {/* Top Block */}
+
+            <Typography
+                sx={{
+                    ...styles.primary,
+                    fontWeight: 700,
+                    position: "absolute",
+                    top: "3vh",
+                    left: "40vh",
+                }}
+                variant="h5"
+            >
+                AI Restrictions and Rules
+            </Typography>
+
+        {/* Top Block */}
             <div style={{
                 height: '25%',
                 width: '100%',
@@ -67,6 +97,8 @@ function Restrictions({ colors }: RestrictionsProps) {
                 backgroundColor: colors.surface,
                 padding: '1rem'
             }}>
+
+            {/* Upload Button */}
                 <Button
                     component="label"
                     variant="contained"
@@ -91,13 +123,14 @@ function Restrictions({ colors }: RestrictionsProps) {
                 </Button>
             </div>
 
-            {/* Bottom Row */}
+        {/* Bottom Row */}
             <div style={{
                 height: '75%',
                 display: 'flex',
                 gap: '1rem'
             }}>
-                {/* Left Column */}
+
+            {/* Left Column */}
                 <div style={{
                     width: '50%',
                     display: 'flex',
@@ -105,22 +138,26 @@ function Restrictions({ colors }: RestrictionsProps) {
                     height: '100%',
                     gap: '1rem',
                 }}>
-                    {/* Upper Left Block */}
+                    
+                {/* Upper Left Block */}
                     <div style={{
-                        flex: 2,
+                        flex: 3,
                         border: `2px solid ${colors.border}`,
                         borderRadius: '20px',
                         backgroundColor: colors.surface,
                         padding: '1rem',
-                        overflowY: 'hidden'
+                        overflowY: 'auto'
                     }}>
-                        <h2 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: '1.25rem',
-                            fontWeight: 700,
-                            color: colors.text,
-                            marginBottom: '1rem'
-                        }}>Basic Rules</h2>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                ...styles.primary,
+                                fontWeight: 700,
+                                marginBottom: '1rem',
+                            }}
+                        >
+                            Basic Rules
+                        </Typography>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             {[
                                 {
@@ -135,19 +172,38 @@ function Restrictions({ colors }: RestrictionsProps) {
                                     title: "Disable providing direct solutions",
                                     description: "Restricts the AI from providing direct solutions, instead providing guidance and suggestions."
                                 },
+                                {
+                                    title: "Disable Chat History",
+                                    description: "Restricts the AI from using previous chat history for context."
+                                }
                             ].map((rule, index) => (
-                                <div key={index} style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                                <div key={index} style={{ display: 'flex', gap: '1.5rem', alignItems: 'flex-start' }}>
                                     <Switch defaultChecked onChange={onChange} />
                                     <div>
-                                        <div style={{ fontWeight: 600, color: colors.text, fontFamily: "Poppins, sans-serif" }}>{rule.title}</div>
-                                        <div style={{ fontSize: '0.875rem', color: colors.textSecondary, fontFamily: "Poppins, sans-serif" }}>{rule.description}</div>
+                                        <Typography
+                                            variant="body1"
+                                            sx={{
+                                                ...styles.primary,
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            {rule.title}
+                                        </Typography>
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                ...styles.secondary
+                                            }}
+                                        >
+                                            {rule.description}
+                                        </Typography>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Bottom Left Block */}
+                {/* Bottom Left Block */}
                     <div style={{
                         flex: 1,
                         border: `2px solid ${colors.border}`,
@@ -156,13 +212,18 @@ function Restrictions({ colors }: RestrictionsProps) {
                         padding: '1rem',
                         overflowY: 'hidden',
                     }}>
-                        <h2 style={{
-                            fontFamily: "Poppins, sans-serif",
-                            fontSize: '1.25rem',
-                            fontWeight: 700,
-                            color: colors.text
-                        }}>Word Limits</h2>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontFamily: "Poppins, sans-serif",
+                                fontWeight: 700,
+                                color: colors.text,
+                                fontSize: '1rem'
+                            }}
+                        >
+                            Word Limits
+                        </Typography>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0rem' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 <Col span={12}>
                                     <Slider
@@ -174,8 +235,28 @@ function Restrictions({ colors }: RestrictionsProps) {
                                         tooltip={{ formatter: null }}
                                     />
                                 </Col>
-                                <span style={{ fontFamily: "Poppins, sans-serif", color: colors.text }}>{inputValueStudent}</span>
-                                <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 500, color: colors.text }}>Student Input</span>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontFamily: "Poppins, sans-serif",
+                                        color: colors.primary,
+                                        fontWeight: 700,
+                                        fontSize: '1rem'
+                                    }}
+                                >
+                                    {inputValueStudent}
+                                </Typography>
+                                <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        fontFamily: "Poppins, sans-serif",
+                                        fontWeight: 600,
+                                        color: colors.text,
+                                        fontSize: '0.875rem'
+                                    }}
+                                >
+                                    Student Input
+                                </Typography>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                 <Col span={12}>
@@ -188,14 +269,34 @@ function Restrictions({ colors }: RestrictionsProps) {
                                         tooltip={{ formatter: null }}
                                     />
                                 </Col>
-                                <span style={{ fontFamily: "Poppins, sans-serif", color: colors.text }}>{inputValueAI}</span>
-                                <span style={{ fontFamily: "Poppins, sans-serif", fontWeight: 500, color: colors.text }}>AI Response</span>
+                                <Typography
+                                    variant="h6"
+                                    sx={{
+                                        fontFamily: "Poppins, sans-serif",
+                                        color: colors.primary,
+                                        fontWeight: 700,
+                                        fontSize: '1rem'
+                                    }}
+                                >
+                                    {inputValueAI}
+                                </Typography>
+                                <Typography
+                                    variant="subtitle2"
+                                    sx={{
+                                        fontFamily: "Poppins, sans-serif",
+                                        fontWeight: 600,
+                                        color: colors.text,
+                                        fontSize: '0.875rem'
+                                    }}
+                                >
+                                    AI Response
+                                </Typography>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Right Block */}
+            {/* Right Block */}
                 <div style={{
                     width: '50%',
                     height: '100%',

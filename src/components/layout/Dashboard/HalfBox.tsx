@@ -14,6 +14,7 @@ interface HalfBoxProps {
   };
   children : React.ReactNode;
 }
+
 export function HalfBox({colors, children} : HalfBoxProps) {
     return ( 
         <div style={{
