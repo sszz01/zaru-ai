@@ -152,7 +152,7 @@ function Restrictions({ colors }: RestrictionsProps) {
                             variant="h6"
                             sx={{
                                 ...styles.primary,
-                                fontWeight: 700,
+                                fontWeight: 600,
                                 marginBottom: '1rem',
                             }}
                         >
@@ -192,7 +192,8 @@ function Restrictions({ colors }: RestrictionsProps) {
                                         <Typography
                                             variant="body2"
                                             sx={{
-                                                ...styles.secondary
+                                                ...styles.secondary,
+                                                fontWeight: 400,
                                             }}
                                         >
                                             {rule.description}

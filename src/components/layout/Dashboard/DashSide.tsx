@@ -9,7 +9,6 @@ import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowRightOutlined from '@ant-design/icons/lib/icons/ArrowRightOutlined';
-import styles from "../../styles/login";
 
 interface DashSideProps {
     handleMenuClick: (key: string) => void;
