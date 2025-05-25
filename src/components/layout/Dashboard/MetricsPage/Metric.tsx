@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { ThirdBox } from "../ThirdBox";
+import Grid from '@mui/material/Grid';
 
 interface MetricProps {
   colors: {
@@ -29,16 +29,22 @@ const styles = {
     metric: {
         color: '#0066ff',
         fontFamily: 'Poppins',
+    },
+    card:{
+        backgroundColor: '#fff',
+        borderRadius: '20px',
+        padding: '1.5rem',
+        border: `2px solid #dddfe2`,
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 }
 
-export function Metric({
-  colors,
-  title,
-  metric
-} : MetricProps) {
+export function Metric({colors, title, metric} : MetricProps) {
     return (
-        <ThirdBox colors={colors}>
+        <Grid size={4} sx={styles.card}>
             <Box display="flex" flexDirection="column" alignItems="flex-start" justifyContent="center" height="100%">
             
             {/* Title */}
@@ -63,7 +69,8 @@ export function Metric({
                     {metric}
                 </Typography>
             </Box>
-        </ThirdBox>
+        </Grid>
     );
 }
-  
+
+export default Metric;

@@ -31,6 +31,7 @@ const textStyles = {
     },
     secondary1: {
         fontFamily: 'Poppins, sans-serif',
+        fontWeight: 500,
     },
     metric: {
         color: '#0066ff',
@@ -39,31 +40,31 @@ const textStyles = {
 }
 
 const items: MenuProps["items"] = [
-        { 
-            key: '1', 
-            label: <Typography variant="body1" style={{...textStyles.secondary1}}>Dashboard</Typography>, 
-            icon: <DashboardIcon /> 
-        },
-        {
-            key: 'restrictions',
-            label: <Typography variant="body1" style={{...textStyles.secondary1}}>AI Restrictions</Typography>,
-            icon: <ToggleOnIcon />,
-        },
-        {
-            key: 'studentlist',
-            label: <Typography variant="body1" style={{...textStyles.secondary1}}>Registration</Typography>,
-            icon: <FormatListNumberedIcon />,
-        },
-        { 
-            key: '2', 
-            label: <Typography variant="body1" style={{...textStyles.secondary1}}>Settings</Typography>, 
-            icon: <SettingsIcon /> 
-        },
-        {
-            key: 'back',
-            label: <Typography variant="body1" style={{...textStyles.secondary1}}>Back to ZaruAI</Typography>,
-            icon: <ArrowRightOutlined />,
-        },
+    { 
+        key: '1', 
+        label: <Typography variant="body1" style={{...textStyles.secondary1}}>Dashboard</Typography>, 
+        icon: <DashboardIcon /> 
+    },
+    {
+        key: 'restrictions',
+        label: <Typography variant="body1" style={{...textStyles.secondary1}}>AI Restrictions</Typography>,
+        icon: <ToggleOnIcon />,
+    },
+    {
+        key: 'studentlist',
+        label: <Typography variant="body1" style={{...textStyles.secondary1}}>Registration</Typography>,
+        icon: <FormatListNumberedIcon />,
+    },
+    { 
+        key: '2', 
+        label: <Typography variant="body1" style={{...textStyles.secondary1}}>Settings</Typography>, 
+        icon: <SettingsIcon /> 
+    },
+    {
+        key: 'back',
+        label: <Typography variant="body1" style={{...textStyles.secondary1}}>Back to ZaruAI</Typography>,
+        icon: <ArrowRightOutlined />,
+    },
 ];
 
 export function DashSide({ handleMenuClick, darkMode, handleTransition, onClose, Navigate, styles, menuConfig, } : DashSideProps) {
@@ -87,7 +88,7 @@ export function DashSide({ handleMenuClick, darkMode, handleTransition, onClose,
             </ConfigProvider>
 
         {/* Logout button */}
-            <div style={styles.logoutButton} 
+            <div style={{...styles.logoutButton, fontWeight: 500}} 
                 onClick={() => {
                     handleTransition(() => {
                     auth.signOut();

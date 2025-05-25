@@ -14,10 +14,7 @@ interface SettingsProps {
       textSecondary: string;
     };
 }
-export function Settings({
-  contentPanelStyle,
-  colors
-} : SettingsProps) {
+export function Settings({ contentPanelStyle, colors } : SettingsProps) {
     return ( 
         <div style={{ ...contentPanelStyle,
             width: "80%",

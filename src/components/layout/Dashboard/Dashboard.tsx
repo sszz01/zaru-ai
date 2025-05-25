@@ -25,9 +25,9 @@ import '@fontsource/poppins/900.css';
 
 //Components----------------------------------------------
 import Tooltip from "@mui/material/Tooltip";
-import Overview from "./Overview/Overview";
+import Overview from "./MetricsPage/Overview";
 import { RotateLoader } from "react-spinners";
-import Restrictions from "./Restrictions";
+import Restrictions from "./RestrictionsPage/Restrictions";
 
 interface DashProps {
   setLogin: (isLoggedIn: boolean) => void;
@@ -41,10 +41,8 @@ interface UserData {
   photoURL: string | null;
 }
 
-const Dashboard: React.FC<DashProps> = ({
-  userPhotoURL,
-  onClose,
-}) => {
+const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
+
   const [userData, setUserData] = useState<UserData>({
     displayName: null,
     email: null,
@@ -172,6 +170,7 @@ const Dashboard: React.FC<DashProps> = ({
       <CssBaseline />
         <div style={styles.mainContainer}>
 
+      {/* Transition Backdrop */}
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={open}
