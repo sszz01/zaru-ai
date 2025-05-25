@@ -5,7 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../backend/db/firebase/firebase";
 import ChatPage from "./components/chat/ChatPage";
 import Login from "./components/auth/Login";
-import Dashboard from "./components/layout/Dashboard";
+import Dashboard from "./components/layout/Dashboard/Dashboard";
 import Profile from "./components/layout/Profile";
 
 const App: React.FC = () => {

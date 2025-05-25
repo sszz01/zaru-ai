@@ -10,6 +10,10 @@ import { auth, db } from "../../../backend/db/firebase/firebase.ts";
 import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "../styles/login.ts";
 import { useNavigate } from "react-router-dom";
+// import PasswordIcon from '@mui/icons-material/Password';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+
 //import LineDraw from "./imported/linedraw";
 // import Monkey from "../assets/monkeygraphic.jpg";
 
@@ -112,11 +116,15 @@ const Login: React.FC<{
   };
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
+
     try {
       setLoading(true);
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
+
+      // Determine the role to use
+      // const roleToUse = Number(code) === randomCode ? "admin" : selectedRole;
 
       if (user) {
         const userRef = doc(db, "users", user.uid);
@@ -143,19 +151,47 @@ const Login: React.FC<{
           );
         }
       }
-      onLogin(user.photoURL || null, selectedRole);
-    } catch (error: unknown) {
-      setError("Google login failed. Please try again.");
-      if (error instanceof Error) {
-        console.error("Google login error:", error.message);
+      // Use the determined role
+        onLogin(user.photoURL || null, selectedRole);
+      } catch (error: unknown) {
+        setError("Google login failed. Please try again.");
+        if (error instanceof Error) {
+          console.error("Google login error:", error.message);
+        };
+      } finally {
+        setLoading(false);
+        Navigate("/chat");
       }
-    } finally {
-      setLoading(false);
-      Navigate("/chat");
-    }
   };
 
+
   const Navigate = useNavigate();
+
+  // const [show, setRequireCharacter] = useState(false);
+  // const check6Char = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   if (value.length >= 6) {
+  //     setRequireCharacter(true);
+  //   } else {
+  //     setRequireCharacter(false);
+  //   }
+  // };
+
+  // const randomCode = 123456;
+  // // Only log the code once on component mount
+  // React.useEffect(() => {
+  //   console.log(randomCode);
+  //   // eslint-disable-next-line
+  // }, []);
+
+  // const [code, setCode] = useState("");
+
+  // const handleCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const newCode = e.target.value;
+  //   setCode(newCode);
+  // };
+
+  // const [loadError, setLoadError] = useState(false);
 
   return (
     <div style={Styles.container}>
@@ -164,7 +200,7 @@ const Login: React.FC<{
           maxWidth: "28rem",
           width: "100%",
           padding: "2rem",
-          backgroundColor: "#eaf2f5",
+          backgroundColor: "#efeff1",
           borderRadius: "1rem",
           boxShadow: "0 10px 15px rgba(0, 0, 0, 0.1)",
           position: "absolute",
@@ -179,7 +215,7 @@ const Login: React.FC<{
               fontWeight: "bold",
               color: "#232629",
               letterSpacing: "-0.01562em",
-              fontFamily: "Montserrat, sans-serif",
+              fontFamily: '"Poppins", sans-serif',
             }}
           >
             {isLogin ? "Welcome back" : "Create account"}
@@ -189,6 +225,7 @@ const Login: React.FC<{
               marginTop: "0.5rem",
               marginBottom: "0.5rem",
               fontSize: "0.875rem",
+              fontFamily: '"Poppins", sans-serif',
               color: "#848b95",
             }}
           >
@@ -227,6 +264,7 @@ const Login: React.FC<{
             color: "gray",
             fontWeight: "500",
             transition: "background-color 0.2s ease",
+            fontFamily: '"Poppins", sans-serif',
           }}
           onMouseOver={(e) =>
             (e.currentTarget.style.backgroundColor = "#dddfe2")
@@ -249,17 +287,18 @@ const Login: React.FC<{
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[#eaf2f5] text-gray-500">
+            <span className="px-2 bg-[#efeff1] text-gray-500" style={{ fontFamily: '"Poppins", sans-serif' }}>
               Or continue with
             </span>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-3">
           <div>
             <label
               htmlFor="email"
               className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
             >
               Email address
             </label>
@@ -269,6 +308,7 @@ const Login: React.FC<{
               </div>
               <input
                 id="email"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
                 name="email"
                 type="email"
                 autoComplete="email"
@@ -285,6 +325,7 @@ const Login: React.FC<{
             <label
               htmlFor="password"
               className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
             >
               Password
             </label>
@@ -294,6 +335,7 @@ const Login: React.FC<{
               </div>
               <input
                 id="password"
+                style={{ fontFamily: '"Poppins", sans-serif' }}
                 name="password"
                 type="password"
                 autoComplete="current-password"
@@ -307,25 +349,91 @@ const Login: React.FC<{
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Your Role
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-[#848b95]"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
+            >
+              Role Select
             </label>
             <select
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              style={{
+                width: "100%",
+                padding: "0.5rem",
+                border: "1px solid #dddfe2",
+                borderRadius: "0.5rem",
+                backgroundColor: "#ffffff",
+                color: "#232629",
+                fontSize: "1rem",
+                outline: "none",
+                transition: "border-color 0.2s ease",
+                fontFamily: '"Poppins", sans-serif',
+              }}
             >
               <option value="default">Default User</option>
               <option value="student">Student</option>
               <option value="admin">Administrator</option>
             </select>
             {selectedRole === "student" && (
-              <p className="text-xs text-gray-500 mt-1">
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#848b95",
+                  marginTop: "0.25rem",
+                  fontFamily: '"Poppins", sans-serif',
+                }}
+              >
                 Note: Student accounts have certain content restrictions in
                 accordance with academic integrity policies.
               </p>
             )}
           </div>
+
+          {/* <span className="text-xs text-gray-500"
+                style ={{ fontFamily: '"Poppins", sans-serif' }}
+          > 
+            {show ? "" : "Code must be 6 digits"} 
+          </span> */}
+
+          {/* TENTATIVE CODE INPUT ---------------------------------------------------------------- */}
+          {/* <div className="mt-1 relative">
+            <div style={{ position: 'absolute', paddingTop: '0.55rem', paddingLeft: '0.75rem', display: 'flex', alignItems: 'center', pointerEvents: 'none', }}>
+              <PasswordIcon style={{ height: '1.25rem', width: '1.25rem', color: '#9CA3AF' }} />
+            </div>
+            <input 
+              placeholder="Enter your code" 
+              onChange={(e) => {
+                check6Char(e);
+                handleCodeChange(e);
+                setLoadError(false);
+              }}
+              value={code}
+              style={{
+                appearance: "none",
+                width: "100%",
+                paddingLeft: "2.5rem",
+                paddingRight: "0.75rem",
+                paddingTop: "0.5rem",
+                paddingBottom: "0.5rem",
+                border: "1px solid #dddfe2",
+                backgroundColor: "#ffffff",
+                borderRadius: "0.5rem",
+                color: "#5e646e",
+                fontSize: "1rem",
+                fontFamily: '"Poppins", sans-serif',
+                outline: "none",
+                transition: "all 0.15s ease-in-out",
+              }}/>
+
+              {loadError && (
+                <span className="text-xs text-gray-500"
+                      style={{ color: "#ff0000"}}> 
+                  Please enter a valid code 
+                </span>
+              )}
+          </div> --------------------------------------------------------------- */}
 
           {isLogin && (
             <div
@@ -342,7 +450,9 @@ const Login: React.FC<{
                   fontSize: "0.875rem",
                   fontWeight: 500,
                   color: "#5e646e",
+                  marginBottom: "2rem",
                   transition: "color 0.2s ease",
+                  fontFamily: '"Poppins", sans-serif',
                 }}
               >
                 Forgot your password?
@@ -375,7 +485,7 @@ const Login: React.FC<{
                 transition: "background-color 0.2s ease",
                 gap: "0.5rem",
                 outline: "none",
-                fontFamily: "Montserrat, sans-serif",
+                fontFamily: '"Poppins", sans-serif',
                 fontWeight: 700,
               }}
               disabled={loading}
@@ -392,29 +502,10 @@ const Login: React.FC<{
           </div>
         </form>
       </div>
-
-      {/* <LineDraw /> */}
-
-      {/*Monkey Graphic*/}
-
-      {/* <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundImage: `url(${Monkey})`,
-        backgroundSize: "contain",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        width: "15rem",
-        height: "15rem",
-        position: "absolute",
-        marginTop: "6vh",
-        zIndex: 0,
-        left: "6vw",
-        transform: "scaleX(-1)",
-      }}/> */}
     </div>
   );
 };
 
 export default Login;
+
+

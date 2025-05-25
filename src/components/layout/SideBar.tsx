@@ -3,6 +3,10 @@ import BurgerIcon from "../../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import ToolTip from "@mui/material/Tooltip";
 import { Burger } from "./Burger";
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/700.css';
+
 
 interface SideBarProps {
   toggleDrawer: () => void;
@@ -28,11 +32,11 @@ const SideBar: React.FC<SideBarProps> = ({
       sx={{
         "& .MuiDrawer-paper": {
           width: "14vw",
-          backgroundColor: "#efeff1",
+          backgroundColor: "fff",
           borderRight: "none",
           alignItems: "center",
-          borderTopRightRadius: "30px",
-          borderBottomRightRadius: "30px",
+          borderTopRightRadius: "20px",
+          borderBottomRightRadius: "20px",
           border: "2px solid #dddfe2",
         },
       }}
@@ -83,18 +87,20 @@ const SideBar: React.FC<SideBarProps> = ({
         </ToolTip>
       </div>
 
-      <label
-        style={{
-          marginTop: "0.75rem",
-          fontSize: "1rem",
-          position: "relative",
-          left: "-2rem",
-          fontWeight: "bold",
-          color: "#848b95",
-        }}
-      >
-        Conversations
-      </label>
+      <div style={{ display: "flex", width: "100%", flexDirection: "column", justifyContent: "flex-start" }}>
+        <label
+          style={{
+            marginTop: "0.75rem",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            color: "#5e646e",
+            fontFamily: "Poppins, sans-serif",
+            marginLeft: "10%",
+          }}
+        >
+          Conversations
+        </label>
+      </div>
 
       <ul>
         {conversationArray.map((conversation) => (
@@ -125,6 +131,7 @@ const SideBar: React.FC<SideBarProps> = ({
                     fontWeight: 600,
                     position: "relative",
                     left: "-1.5rem",
+                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
                   {conversation.name}
