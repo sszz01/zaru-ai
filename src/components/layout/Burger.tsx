@@ -20,6 +20,8 @@ export function Burger({
     position: "absolute",
     width: "3vw",
     height: "3vw",
+    maxWidth: "50px",
+    maxHeight: "50px",
     borderRadius: "50%",
     padding: '0.75rem',
     top: "2vh",

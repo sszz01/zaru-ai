@@ -54,6 +54,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationReady }) => {
           padding: "1.5rem",
           backgroundColor: "#fbfbfb",
           width: "80%",
+          border: "2px solid #dddfe2",
           borderTopRightRadius: "50px",
           borderTopLeftRadius: "50px",
         }}

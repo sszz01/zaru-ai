@@ -35,6 +35,7 @@ const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
           position: "relative",
           fontWeight: 600,
           border: "2px solid #dddfe2",
+          fontFamily: "Poppins, sans-serif",
         }}
       />
     );
