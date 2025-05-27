@@ -12,7 +12,6 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import { auth, db } from "./firebase/firebase";
-// import { generateTitle } from "../utils/generateTitle";
 
 export interface Message {
   text: string;
@@ -44,9 +43,6 @@ class ChatService {
       if (!user) {
         throw new Error("User not authenticated");
       }
-
-      // const firstMessage = conversationData.messages[0]?.text;
-      // const title = await generateTitle(firstMessage);
 
       const messagesWithTimestamp: Message[] = conversationData.messages.map(
         (msg) => ({

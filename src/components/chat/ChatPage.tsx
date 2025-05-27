@@ -26,6 +26,7 @@ import LoadingAnimation from "../ui/LoadingAnimation";
 import { RotateLoader } from "react-spinners";
 import Dashboard from "../layout/Dashboard";
 import { chatService, Conversation } from "../../../backend/db/chatService";
+// import { generateTitle } from "../../../backend/utils/generateTitle";
 
 interface ChatPageProps {
   isLoggedIn: boolean;
@@ -188,11 +189,12 @@ const ChatPage: React.FC<ChatPageProps> = ({
       try {
         let conversationId = currentConversationId;
         if (!conversationId) {
-          const firstMessage = messages[0]?.text || "New Chat";
-          const conversationName =
-            firstMessage.length > 50
-              ? firstMessage.substring(0, 50) + "..."
-              : firstMessage;
+          // const firstMessage = messages[0]?.text || "New Chat";
+          // const conversationName = await generateTitle(firstMessage);
+
+          await loadSavedConversations(); // fetch latest first
+          const updatedLength = conversationArray.length + 1;
+          const conversationName = `Conversation #${updatedLength}`;
 
           conversationId = await chatService.saveConversation({
             name: conversationName,

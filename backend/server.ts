@@ -53,6 +53,39 @@ async function processGemini(res, message) {
   }
 }
 
+// app.post("/api/title", async (req, res) => {
+//   const { message } = req.body;
+
+//   if (!message || message.trim().length < 4) {
+//     return res.json({ title: "New Conversation" });
+//   }
+
+//   try {
+//     const completion = await openai.chat.completions.create({
+//       model: "gpt-4o-mini", // or any GPT model
+//       messages: [
+//         {
+//           role: "system",
+//           content:
+//             "You are a title generator. Given the user's first message, reply ONLY with a short title (max 5 words) summarizing the topic. Do NOT include quotes or punctuation. If the message is generic like 'hi' or 'how are you', return 'New Conversation'.",
+//         },
+//         {
+//           role: "user",
+//           content: message,
+//         },
+//       ],
+//     });
+
+//     const title =
+//       completion.choices?.[0]?.message?.content?.trim() ?? "New Conversation";
+
+//     return res.json({ title });
+//   } catch (error) {
+//     console.error("Error generating title:", error);
+//     return res.json({ title: "New Conversation" });
+//   }
+// });
+
 app.post("/api/chat", async (req, res) => {
   try {
     const { message, userRole = "default" } = req.body;
