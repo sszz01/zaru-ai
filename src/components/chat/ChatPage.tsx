@@ -1,5 +1,6 @@
 import { Burger } from "../layout/Burger";
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import DOMPurify from "dompurify";
 import Backdrop from "@mui/material/Backdrop";
 
@@ -16,9 +17,10 @@ import SideBar from "../layout/SideBar";
 import Form from "./Form";
 import LoadingAnimation from "../ui/LoadingAnimation";
 import { RotateLoader } from "react-spinners";
+import { chatService, Conversation } from "../../../backend/db/chatService";
+// import { generateTitle } from "../../../backend/utils/generateTitle";
 import { Dropdown } from "../layout/Dropdown";
 import Dashboard from "../layout/Dashboard/Dashboard";
-import { useNavigate, Navigate } from "react-router-dom";
 
 interface ChatPageProps {
   isLoggedIn: boolean;
@@ -42,6 +44,16 @@ const ChatPage: React.FC<ChatPageProps> = ({
   const [showProfile, setShowProfile] = useState(false);
   const [open, setOpen] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+
+  const [conversationArray, setConversationArray] = useState<Conversation[]>(
+    []
+  );
+  const [currentConversationId, setCurrentConversationId] = useState<
+    string | null
+  >(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [conversationStarted, setConversationStarted] = useState(false);
+  const [lastSavedLength, setLastSavedLength] = useState(0);
 
   const handleTransition = (action: () => void) => {
     setOpen(true);
@@ -68,15 +80,10 @@ const ChatPage: React.FC<ChatPageProps> = ({
 
   const handleInputSubmit = async (input: string) => {
     setLoading(true);
+    setConversationStarted(true);
 
-    if (currentConversationId === null) {
-      const newId = conversationArray.length + 1;
-      setCurrentConversationId(newId);
-    }
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      { text: input, sender: "user" },
-    ]);
+    const userMessage = { text: input, sender: "user" };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
       const res = await fetch("http://localhost:5001/api/chat", {
@@ -150,51 +157,100 @@ const ChatPage: React.FC<ChatPageProps> = ({
     setHandleDrawer((prev) => !prev);
   };
 
-  const [conversationArray, setConversationArray] = useState<
-    { id: number; name: string; messages: { text: string; sender: string }[] }[]
-  >([]);
-  const [currentConversationId, setCurrentConversationId] = useState<
-    number | null
-  >(null);
-
   const addConversation = () => {
     setMessages([]);
     setCurrentConversationId(null);
+    setConversationStarted(false);
+  };
+
+  const loadConversation = async (conversationId: string) => {
+    try {
+      const conversation = await chatService.getConversation(conversationId);
+      if (conversation) {
+        const localMessages = conversation.messages.map((msg) => ({
+          text: msg.text,
+          sender: msg.sender,
+        }));
+        setMessages(localMessages);
+        setCurrentConversationId(conversationId);
+        setConversationStarted(true);
+        console.log("Loaded conversation:", conversation);
+      }
+    } catch (error) {
+      console.error("Error loading conversation:", error);
+    }
   };
 
   useEffect(() => {
-    if (currentConversationId !== null && messages.length > 0) {
-      const conversationExistsInArray = conversationArray.some(
-        (conv) => conv.id === currentConversationId
-      );
+    const autoSave = async () => {
+      if (messages.length === 0 || isSaving) return;
+      if (messages.length === lastSavedLength) return;
 
-      if (!conversationExistsInArray) {
-        const newConversation = {
-          id: currentConversationId,
-          name: `Conversation ${currentConversationId}`,
-          messages: [...messages],
-        };
-        setConversationArray((prevArray) => [...prevArray, newConversation]);
-      } else {
-        setConversationArray((prevArray) =>
-          prevArray.map((conv) =>
-            conv.id === currentConversationId
-              ? { ...conv, messages: [...messages] }
-              : conv
-          )
-        );
+      const lastMessage = messages[messages.length - 1];
+
+      if (lastMessage.sender !== "bot") return;
+      setIsSaving(true);
+      try {
+        let conversationId = currentConversationId;
+        if (!conversationId) {
+          // const firstMessage = messages[0]?.text || "New Chat";
+          // const conversationName = await generateTitle(firstMessage);
+
+          await loadSavedConversations(); // fetch latest first
+          const updatedLength = conversationArray.length + 1;
+          const conversationName = `Conversation #${updatedLength}`;
+
+          conversationId = await chatService.saveConversation({
+            name: conversationName,
+            messages: messages,
+          });
+
+          if (conversationId) {
+            setCurrentConversationId(conversationId);
+            loadSavedConversations();
+          }
+        } else {
+          await chatService.updateConversation(conversationId, messages);
+          setConversationArray((prev) =>
+            prev.map((conv) =>
+              conv.id === conversationId
+                ? {
+                    ...conv,
+                    messages: messages.map((msg) => ({
+                      ...msg,
+                      timestamp: conv.messages[0]?.timestamp,
+                    })),
+                  }
+                : conv
+            )
+          );
+        }
+        setLastSavedLength(messages.length);
+      } catch (error) {
+        console.error("Error auto-saving conversation:", error);
+      } finally {
+        setIsSaving(false);
       }
-    }
-  }, [messages, currentConversationId]);
+    };
 
-  const loadConversation = (id: number) => {
-    const conversation = conversationArray.find((conv) => conv.id === id);
-    if (conversation) {
-      setMessages(conversation.messages);
-      setCurrentConversationId(id);
-      console.log("Loaded conversation:", conversation);
+    const timeoutId = setTimeout(autoSave, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [messages, currentConversationId, isSaving, lastSavedLength]);
+
+  const loadSavedConversations = async () => {
+    try {
+      const savedConversations = await chatService.getUserConversations();
+      setConversationArray(savedConversations);
+    } catch (error) {
+      console.error("Error loading conversations:", error);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      loadSavedConversations();
+    }
+  }, [isLoggedIn]);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -249,8 +305,22 @@ const ChatPage: React.FC<ChatPageProps> = ({
           <SideBar
             toggleDrawer={toggleDrawer}
             handleDrawer={handleDrawer}
-            conversationArray={conversationArray}
-            loadConversation={loadConversation}
+            conversationArray={conversationArray.map((conv, index) => ({
+              id: index + 1, // For backward compatibility with SideBar component
+              name: conv.name,
+              messages: conv.messages.map((msg) => ({
+                text: msg.text,
+                sender: msg.sender,
+              })),
+              firestoreId: conv.id, // Add the actual Firestore ID
+            }))}
+            loadConversation={(id: number) => {
+              // Find the conversation by index and load using Firestore ID
+              const conversation = conversationArray[id - 1];
+              if (conversation) {
+                loadConversation(conversation.id);
+              }
+            }}
             addConversation={addConversation}
           />
 
@@ -354,7 +424,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
               gap: "1rem",
               height: "100%",
               transition: "margin-left 0.3s cubic-bezier(0.4,0,0.2,1)",
-              marginLeft: handleDrawer ? "12vw" : "0", // Adjust 18vw to your drawer width
+              marginLeft: handleDrawer ? "12vw" : "0",
             }}
             id="messages"
           >
@@ -438,7 +508,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
           <Form
             onSubmit={handleInputSubmit}
             drawer={handleDrawer}
-            conversationId={currentConversationId}
+            conversationReady={conversationStarted}
           />
         </>
       )}

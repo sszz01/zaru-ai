@@ -6,10 +6,10 @@ import SubmitButton from "./SubmitButton";
 interface FormProps {
   onSubmit: (input: string) => void;
   drawer: boolean;
-  conversationId: number | null;
+  conversationReady: boolean;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationId }) => {
+const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationReady }) => {
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -64,7 +64,7 @@ const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationId }) => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             ref={inputRef}
-            conversationId={conversationId}
+            conversationReady={conversationReady}
           />
           <div className="absolute right-0 items-center inset-y-0 hidden sm:flex space-x-2">
             <SubmitButton disabled={!input.trim()} />

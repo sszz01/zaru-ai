@@ -1,4 +1,4 @@
-import { openai } from "../keygen";
+import { openai } from "./keygen";
 
 export async function needsWebSearch(message) {
   const completion = await openai.chat.completions.create({
