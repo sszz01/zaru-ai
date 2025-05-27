@@ -6,7 +6,7 @@ import SubmitButton from "./SubmitButton";
 interface FormProps {
   onSubmit: (input: string) => void;
   drawer: boolean;
-  conversationId: number | null;
+  conversationId: string | null;
 }
 
 const Form: React.FC<FormProps> = ({ onSubmit, drawer, conversationId }) => {

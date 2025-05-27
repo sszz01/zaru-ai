@@ -3,7 +3,7 @@ import cors from "cors";
 import axios from "axios";
 import { marked } from "marked";
 import { filterMessage } from "./middleware/contentFilter";
-import { openai, gemini, jinaAI } from "./keygen";
+import { openai, gemini, jinaAI } from "./utils/keygen";
 import { needsWebSearch } from "./utils/websearchCheck";
 
 const app = express();

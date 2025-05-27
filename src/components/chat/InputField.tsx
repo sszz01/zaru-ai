@@ -3,7 +3,7 @@ import React, { forwardRef, useState, useEffect } from "react";
 interface InputFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  conversationId: number | null;
+  conversationId: string | null;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
