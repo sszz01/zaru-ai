@@ -59,6 +59,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
   >(null);
   const [isSaving, setIsSaving] = useState(false);
   const [conversationStarted, setConversationStarted] = useState(false);
+  const [lastSavedLength, setLastSavedLength] = useState(0);
 
   const handleTransition = (action: () => void) => {
     setOpen(true);
@@ -182,9 +183,13 @@ const ChatPage: React.FC<ChatPageProps> = ({
   };
 
   useEffect(() => {
-    if (messages.length === 0 || isSaving) return;
-
     const autoSave = async () => {
+      if (messages.length === 0 || isSaving) return;
+      if (messages.length === lastSavedLength) return;
+
+      const lastMessage = messages[messages.length - 1];
+
+      if (lastMessage.sender !== "bot") return;
       setIsSaving(true);
       try {
         let conversationId = currentConversationId;
@@ -221,6 +226,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
             )
           );
         }
+        setLastSavedLength(messages.length);
       } catch (error) {
         console.error("Error auto-saving conversation:", error);
       } finally {
@@ -230,7 +236,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
 
     const timeoutId = setTimeout(autoSave, 2000);
     return () => clearTimeout(timeoutId);
-  }, [messages, currentConversationId, isSaving]);
+  }, [messages, currentConversationId, isSaving, lastSavedLength]);
 
   const loadSavedConversations = async () => {
     try {
