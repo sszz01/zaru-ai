@@ -3,20 +3,20 @@ import React, { forwardRef, useState, useEffect } from "react";
 interface InputFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  conversationId: string | null;
+  conversationReady: boolean;
 }
 
 const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ value, onChange, conversationId }, ref) => {
+  ({ value, onChange, conversationReady }, ref) => {
     const [placeholder, setPlaceholder] = useState("Start a conversation");
 
     useEffect(() => {
-      if (conversationId !== null) {
+      if (conversationReady) {
         setPlaceholder("Reply to Zaru");
       } else {
         setPlaceholder("Start a conversation");
       }
-    }, [conversationId]);
+    }, [conversationReady]);
 
     return (
       <input

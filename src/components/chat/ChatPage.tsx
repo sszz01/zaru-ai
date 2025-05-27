@@ -57,6 +57,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
     string | null
   >(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [conversationStarted, setConversationStarted] = useState(false);
 
   const handleTransition = (action: () => void) => {
     setOpen(true);
@@ -78,6 +79,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
 
   const handleInputSubmit = async (input: string) => {
     setLoading(true);
+    setConversationStarted(true);
 
     const userMessage = { text: input, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
@@ -157,6 +159,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
   const addConversation = () => {
     setMessages([]);
     setCurrentConversationId(null);
+    setConversationStarted(false);
   };
 
   const loadConversation = async (conversationId: string) => {
@@ -169,6 +172,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
         }));
         setMessages(localMessages);
         setCurrentConversationId(conversationId);
+        setConversationStarted(true);
         console.log("Loaded conversation:", conversation);
       }
     } catch (error) {
@@ -586,7 +590,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
           <Form
             onSubmit={handleInputSubmit}
             drawer={handleDrawer}
-            conversationId={currentConversationId}
+            conversationReady={conversationStarted}
           />
         </>
       )}
