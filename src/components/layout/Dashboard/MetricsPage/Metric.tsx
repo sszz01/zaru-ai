@@ -19,22 +19,21 @@ interface MetricProps {
 
 const styles = {
     primary: {
-        color: '#232629',
+        color: '#c0d8fc',
         fontFamily: 'Poppins',
     },
     secondary: {
-        color: '#5e646e',
+        color: '#c0d8fc',
         fontFamily: 'Poppins',
     },
     metric: {
-        color: '#0066ff',
+        color: '#ffffff',
         fontFamily: 'Poppins',
     },
     card:{
-        backgroundColor: '#fff',
+        backgroundColor: '#0066ff',
         borderRadius: '20px',
         padding: '1.5rem',
-        border: `2px solid #dddfe2`,
         height: '100%',
         display: 'flex',
         alignItems: 'center',
@@ -67,6 +66,28 @@ export function Metric({colors, title, metric} : MetricProps) {
                     variant="h3"
                 >
                     {metric}
+                </Typography>
+
+                {/* Title */}
+                <Typography 
+                    sx={{ 
+                        ...styles.secondary,
+                        fontWeight: 500
+                    }} 
+                    variant="h6"
+                >
+                    Prompts Asked
+                </Typography>
+
+            {/* Metric */}    
+                <Typography 
+                    sx={{ 
+                        ...styles.metric,
+                        fontWeight: 600
+                    }} 
+                    variant="h3"
+                >
+                    5,702
                 </Typography>
             </Box>
         </Grid>

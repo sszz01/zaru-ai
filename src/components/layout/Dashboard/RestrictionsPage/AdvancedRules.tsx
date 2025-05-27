@@ -1,9 +1,20 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import { Switch, List, Typography, Divider } from 'antd';
 
 const { Text } = Typography;
 
-const ruleData = [
+interface Rule {
+  key: string;
+  label: string;
+  description: string;
+}
+
+interface Section {
+  category: string;
+  rules: Rule[];
+}
+
+const sections: Section[] = [
   {
     category: 'Input Restrictions',
     rules: [
@@ -142,48 +153,48 @@ const ruleData = [
 ];
 
 const AdminToggleRulesPanel = () => {
-  const [settings, setSettings] = useState({});
+	const [settings, setSettings] = useState<Record<string, boolean>>({});
 
-interface SettingsState {
-    [key: string]: boolean;
-}
+	const handleToggle = (key: string, checked: boolean) => {
+		setSettings(prev => ({ ...prev, [key]: checked }));
+	};
 
-const handleToggle = (key: string, checked: boolean) => {
-    setSettings((prev: SettingsState) => ({ ...prev, [key]: checked }));
-    // Optional: Send update to backend here
-};
+	const fontFamilyStyle = {
+		fontFamily: 'Poppins',
+	};
 
-const fontFamilyStyle = { fontFamily: 'Poppins, sans-serif' };
-
-  return (
-    <div style={{ padding: '0 24px 0 24px' }}>
-    <Typography.Title level={4} style={fontFamilyStyle}>Advanced Rules</Typography.Title>
-      {ruleData.map(section => (
-        <div key={section.category}>
-          <Divider orientation="left" style={fontFamilyStyle}>{section.category}</Divider>
-          <List
-            itemLayout="horizontal"
-            dataSource={section.rules}
-            renderItem={({ key, label, description }) => (
-              <List.Item
-                actions={[
-                  <Switch
-                    onChange={checked => handleToggle(key, checked)}
-                  />
-                ]}
-              >
-                <List.Item.Meta
-                  title={<Text strong style={fontFamilyStyle}>{label}</Text>}
-                  description={description}
-                  style={fontFamilyStyle}
-                />
-              </List.Item>
-            )}
-          />
-        </div>
-      ))}
-    </div>
-  );
+  	return (
+		<div style={{ padding: '0 24px 0 24px' }}>
+			<Typography.Title level={4} style={fontFamilyStyle}>
+				Advanced Rules
+			</Typography.Title>
+			{sections.map(section => (
+					<div key={section.category}>
+					<Divider orientation="left" style={fontFamilyStyle}>{section.category}</Divider>
+					<List
+						itemLayout="horizontal"
+						dataSource={section.rules}
+						renderItem={({ key, label, description }) => (
+							<List.Item
+								actions={[
+								<Switch
+									onChange={checked => handleToggle(key, checked)}
+								/>
+								]}
+							>
+								<List.Item.Meta
+									title={<Text strong style={fontFamilyStyle}>{label}</Text>}
+									description={description}
+									style={fontFamilyStyle}
+								/>
+							</List.Item>
+						)}
+					/>
+				</div>
+			))}
+		</div>
+  	);
 };
 
 export default AdminToggleRulesPanel;
+
