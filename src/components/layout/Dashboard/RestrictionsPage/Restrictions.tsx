@@ -75,7 +75,7 @@ const theme = {
             lineWidth: 4,
             controlPaddingHorizontal: 36,
             fontFamily: 'Poppins',
-            trackBg: '#dddfe2',
+            trackBg: 'lightgray',
         },
     },
 }

@@ -33,41 +33,44 @@ const basicRules = [
 const fontFamilyStyle = { fontFamily: 'Poppins, sans-serif' };
 
 const BasicRules = () => {
-        const [settings, setSettings] = useState<Record<string, boolean>>({});
+    const [settings, setSettings] = useState<Record<string, boolean>>({});
 
-        interface SettingsState {
-                [key: string]: boolean;
-        }
+    interface SettingsState {
+        [key: string]: boolean;
+    }
 
-        const handleToggle = (key: string, checked: boolean) => {
-                setSettings((prev: SettingsState) => ({ ...prev, [key]: checked }));
-                // Optional: Send update to backend here
-        };
-        return (
-                <div style={{ padding: "0 24px 0 24px", ...fontFamilyStyle }}>
-                        <Typography.Title level={4} style={fontFamilyStyle}>Basic Rules</Typography.Title>
-                        <List
-                                itemLayout="horizontal"
-                                dataSource={basicRules}
-                                renderItem={({ key, label, description }) => (
-                                        <List.Item
-                                                actions={[
-                                                        <Switch
-                                                                checked={!!settings[key]}
-                                                                onChange={checked => handleToggle(key, checked)}
-                                                        />
-                                                ]}
-                                                style={fontFamilyStyle}
-                                        >
-                                                <List.Item.Meta
-                                                        title={<Text strong style={fontFamilyStyle}>{label}</Text>}
-                                                        description={<span style={fontFamilyStyle}>{description}</span>}
-                                                />
-                                        </List.Item>
-                                )}
-                        />
-                </div>
-        );
+    const handleToggle = (key: string, checked: boolean) => {
+        setSettings((prev: SettingsState) => ({ ...prev, [key]: checked }));
+        // Optional: Send update to backend here
+    };
+
+	return (
+        <div style={{ padding: "0 24px 0 24px", ...fontFamilyStyle }}>
+            <Typography.Title level={4} style={fontFamilyStyle}>
+				Basic Rules
+			</Typography.Title>
+            <List
+                itemLayout="horizontal"
+                dataSource={basicRules}
+                renderItem={({ key, label, description }) => (
+					<List.Item
+						actions={[
+							<Switch
+								checked={!!settings[key]}
+								onChange={checked => handleToggle(key, checked)}
+							/>
+						]}
+						style={fontFamilyStyle}
+					>
+						<List.Item.Meta
+							title={<Text strong style={{...fontFamilyStyle, color: '#232629'}}>{label}</Text>}
+							description={<span style={fontFamilyStyle}>{description}</span>}
+						/>
+					</List.Item>
+            	)}
+            />
+        </div>
+    );
 };
 
 export default BasicRules;

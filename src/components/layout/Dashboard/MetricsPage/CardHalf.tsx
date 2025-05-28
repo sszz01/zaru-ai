@@ -2,18 +2,18 @@ import Grid from '@mui/material/Grid';
 import React from "react";
 
 interface HalfBoxProps {
-  colors: {
-    background: string;
-    surface: string;
-    surfaceAlt: string;
-    border: string;
-    primary: string;
-    primaryLight: string;
-    primaryDark: string;
-    text: string;
-    textSecondary: string;
-  };
-  children : React.ReactNode;
+  	colors: {
+		background: string;
+		surface: string;
+		surfaceAlt: string;
+		border: string;
+		primary: string;
+		primaryLight: string;
+		primaryDark: string;
+		text: string;
+		textSecondary: string;
+	};
+	children : React.ReactNode;
 }
 
 const styles = {
@@ -30,13 +30,13 @@ const styles = {
         fontFamily: 'Poppins',
     },
     card: {
-      backgroundColor: '#fff',
-      borderRadius: '20px',
-      padding: '1.5rem',
-      border: `2px solid #dddfe2`,
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column' as const,
+		backgroundColor: '#fff',
+		borderRadius: '20px',
+		padding: '1.5rem',
+		border: `2px solid #dddfe2`,
+		height: '100%',
+		display: 'flex',
+		flexDirection: 'column' as const,
     }
 }
 
