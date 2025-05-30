@@ -29,29 +29,31 @@ async function makeRequest(query) {
   }
 }
 
-async function processGemini(res, message) {
-  // GEMINI IMPLEMENTATION
-  try {
-    const response = await gemini.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: [{ role: "user", text: message }],
-      config: {
-        tools: [{ googleSearch: {} }], // use google search for scraping
-      },
-    });
-    const content = response.text;
-    if (content) {
-      res.json({
-        response: marked.parse(content),
-      });
-    }
-  } catch (error) {
-    console.error("Error with GEMINI request:", error);
-    res.json({
-      response: "I'm unable to process this request.",
-    });
-  }
-}
+// remove gemini for now
+
+// async function processGemini(res, message) {
+//   // GEMINI IMPLEMENTATION
+//   try {
+//     const response = await gemini.models.generateContent({
+//       model: "gemini-2.0-flash",
+//       contents: [{ role: "user", text: message }],
+//       config: {
+//         tools: [{ googleSearch: {} }], // use google search for scraping
+//       },
+//     });
+//     const content = response.text;
+//     if (content) {
+//       res.json({
+//         response: marked.parse(content),
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error with GEMINI request:", error);
+//     res.json({
+//       response: "I'm unable to process this request.",
+//     });
+//   }
+// }
 
 // app.post("/api/title", async (req, res) => {
 //   const { message } = req.body;
@@ -151,9 +153,10 @@ app.post("/api/chat", async (req, res) => {
           });
         }
       }
-    } else {
-      await processGemini(res, message);
     }
+    // else {
+    //   await processGemini(res, message);
+    // }
   } catch (error) {
     console.error("API Error:", error);
     res.status(500).json({ error: "Something went wrong!" });
