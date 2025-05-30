@@ -1,12 +1,13 @@
-import { Drawer } from "@mui/material";
+import { Drawer, Menu, MenuItem } from "@mui/material";
 import BurgerIcon from "../../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ToolTip from "@mui/material/Tooltip";
 import { Burger } from "./Burger";
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/poppins/700.css';
-
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/700.css";
+import { useState } from "react";
 
 interface SideBarProps {
   toggleDrawer: () => void;
@@ -14,6 +15,7 @@ interface SideBarProps {
   conversationArray: { id: number; name: string }[];
   loadConversation: (id: number) => void;
   addConversation: () => void;
+  deleteConversation: (id: number) => void;
 }
 
 const SideBar: React.FC<SideBarProps> = ({
@@ -22,7 +24,34 @@ const SideBar: React.FC<SideBarProps> = ({
   conversationArray,
   loadConversation,
   addConversation,
+  deleteConversation,
 }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedConversationId, setSelectedConversationId] = useState<
+    number | null
+  >(null);
+
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLElement>,
+    conversationId: number
+  ) => {
+    event.stopPropagation();
+    setAnchorEl(event.currentTarget);
+    setSelectedConversationId(conversationId);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedConversationId(null);
+  };
+
+  const handleDelete = () => {
+    if (selectedConversationId !== null) {
+      deleteConversation(selectedConversationId);
+    }
+    handleMenuClose();
+  };
+
   return (
     <Drawer
       anchor="left"
@@ -87,7 +116,14 @@ const SideBar: React.FC<SideBarProps> = ({
         </ToolTip>
       </div>
 
-      <div style={{ display: "flex", width: "100%", flexDirection: "column", justifyContent: "flex-start" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+        }}
+      >
         <label
           style={{
             marginTop: "0.75rem",
@@ -105,9 +141,9 @@ const SideBar: React.FC<SideBarProps> = ({
       <ul>
         {conversationArray.map((conversation) => (
           <li key={conversation.id}>
-            <div>
+            <div style={{ position: "relative" }}>
               <button
-                onClick={() => loadConversation(conversation.id)} // Use conversation.id directly
+                onClick={() => loadConversation(conversation.id)}
                 style={{
                   marginTop: "1rem",
                   width: "13vw",
@@ -116,6 +152,11 @@ const SideBar: React.FC<SideBarProps> = ({
                   borderRadius: 10,
                   transition: "background-color 0.3s ease",
                   cursor: "pointer",
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 0.5rem",
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = "#d1d1d1")
@@ -129,18 +170,76 @@ const SideBar: React.FC<SideBarProps> = ({
                     fontSize: "1rem",
                     color: "#848b95",
                     fontWeight: 600,
-                    position: "relative",
-                    left: "-1.5rem",
                     fontFamily: "Poppins, sans-serif",
+                    flex: 1,
+                    textAlign: "left",
+                    paddingLeft: "0.5rem",
                   }}
                 >
                   {conversation.name}
                 </text>
+
+                <button
+                  onClick={(e) => handleMenuClick(e, conversation.id)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    padding: "4px",
+                    borderRadius: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "background-color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.backgroundColor =
+                      "rgba(0, 0, 0, 0.1)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.backgroundColor = "transparent")
+                  }
+                >
+                  <MoreVertIcon
+                    sx={{
+                      color: "#848b95",
+                      fontSize: "1.2rem",
+                    }}
+                  />
+                </button>
               </button>
             </div>
           </li>
         ))}
       </ul>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <MenuItem
+          onClick={handleDelete}
+          sx={{
+            color: "#d32f2f",
+            fontSize: "0.875rem",
+            fontFamily: "Poppins, sans-serif",
+            "&:hover": {
+              backgroundColor: "#ffebee",
+            },
+          }}
+        >
+          Delete
+        </MenuItem>
+      </Menu>
     </Drawer>
   );
 };
