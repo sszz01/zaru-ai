@@ -64,8 +64,8 @@ const ChatPage: React.FC<ChatPageProps> = ({
   };
 
   React.useEffect(() => {
-      console.log('User role:', userRole);
-      // eslint-disable-next-line
+    console.log("User role:", userRole);
+    // eslint-disable-next-line
   }, []);
 
   const navigate = useNavigate();
@@ -262,6 +262,28 @@ const ChatPage: React.FC<ChatPageProps> = ({
     setAnchorEl(null);
   };
 
+  const deleteConversation = async (id: number) => {
+    const conversation = conversationArray[id - 1];
+    if (conversation) {
+      const success = await chatService.deleteConversation(conversation.id);
+
+      if (success) {
+        setConversationArray((prev) =>
+          prev.filter((conv) => conv.id !== conversation.id)
+        );
+        if (currentConversationId === conversation.id) {
+          setMessages([]);
+          setCurrentConversationId(null);
+          setConversationStarted(false);
+        }
+
+        alert("Conversation deleted successfully from UI");
+      } else {
+        alert("Failed to delete conversation");
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -322,6 +344,7 @@ const ChatPage: React.FC<ChatPageProps> = ({
               }
             }}
             addConversation={addConversation}
+            deleteConversation={deleteConversation}
           />
 
           <Backdrop
@@ -395,15 +418,15 @@ const ChatPage: React.FC<ChatPageProps> = ({
                 />
               </button>
 
-              <Dropdown 
-                anchorEl={anchorEl} 
+              <Dropdown
+                anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
-                handleMenuClose={handleMenuClose} 
-                handleTransition={handleTransition} 
-                navigate={navigate} 
-                userRole={userRole} 
+                handleMenuClose={handleMenuClose}
+                handleTransition={handleTransition}
+                navigate={navigate}
+                userRole={userRole}
                 styles={styles}
-                handleLogout={handleLogout}  
+                handleLogout={handleLogout}
               />
             </div>
           </div>
