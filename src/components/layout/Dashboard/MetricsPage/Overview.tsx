@@ -66,7 +66,7 @@ const OverviewComponent = ({colors}: OverviewProps) => {
                                 color: '#0066ff',
                                 },
                             ]}
-                            height={275}
+                            height={220}
                         />
                     </Grid>
                     <Metric colors={colors} title="Registered Teachers" metric="102" />
