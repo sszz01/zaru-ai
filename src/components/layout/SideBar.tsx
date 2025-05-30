@@ -213,6 +213,22 @@ const SideBar: React.FC<SideBarProps> = ({
         ))}
       </ul>
 
+      {conversationArray.length === 0 && (
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "10rem",
+            color: "#999",
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "clamp(0.8rem, 2vw, 0.9rem)",
+          }}
+        >
+          No conversations yet.
+          <br />
+          Start a new one!
+        </div>
+      )}
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
