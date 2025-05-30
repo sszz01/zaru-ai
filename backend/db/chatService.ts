@@ -202,38 +202,6 @@ class ChatService {
     }
   }
 
-  async addMessageToConversation(
-    conversationId: string,
-    message: { text: string; sender: string }
-  ): Promise<boolean> {
-    try {
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error("User not authenticated");
-      }
-
-      const conversation = await this.getConversation(conversationId);
-      if (!conversation) {
-        throw new Error("Conversation not found");
-      }
-
-      const newMessage: Message = {
-        ...message,
-        timestamp: Timestamp.fromDate(new Date()),
-      };
-
-      const updatedMessages = [...conversation.messages, newMessage];
-
-      return await this.updateConversation(
-        conversationId,
-        updatedMessages.map((msg) => ({ text: msg.text, sender: msg.sender }))
-      );
-    } catch (error) {
-      console.error("Error adding message to conversation:", error);
-      return false;
-    }
-  }
-
   async saveAllConversations(
     conversationArray: ConversationInput[]
   ): Promise<string[]> {
