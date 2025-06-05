@@ -25,7 +25,7 @@ const basicRules = [
     },
     {
         key: 'disableRoleplay',
-        label: 'Disable Roleplay',
+        label: '(TBD) Disable Roleplay',
         description: 'Disallows the AI from engaging in roleplay or fictional personas.',
     },
 ];

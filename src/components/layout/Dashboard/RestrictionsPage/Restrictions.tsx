@@ -66,10 +66,12 @@ const styles = {
     }
 }
 
+const height: number = window.innerHeight;
+
 const theme = {
     theme: {
         token: {
-            controlHeight: 40,
+            controlHeight: height/20,
             lineWidth: 4,
             controlPaddingHorizontal: 36,
             fontFamily: 'Poppins',
@@ -79,8 +81,8 @@ const theme = {
 }
 
 function Restrictions({ colors }: RestrictionsProps) {
-    const [inputValueStudent, setInputValueStudent] = useState<number>(500);
-    const [inputValueAI, setInputValueAI] = useState<number>(1000);
+    const [inputValueStudent, setInputValueStudent] = useState<number>(30);
+    const [inputValueAI, setInputValueAI] = useState<number>(100);
 
     const onChange = (checked: boolean) => {
         console.log(`switch to ${checked}`);

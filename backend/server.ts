@@ -3,7 +3,7 @@ import cors from "cors";
 import axios from "axios";
 import { marked } from "marked";
 import { filterMessage } from "./middleware/contentFilter";
-import { openai, gemini, jinaAI } from "./keygen";
+import { openai, gemini, jinaAI } from "./utils/keygen";
 import { needsWebSearch } from "./utils/websearchCheck";
 
 const app = express();
@@ -29,29 +29,64 @@ async function makeRequest(query) {
   }
 }
 
-async function processGemini(res, message) {
-  // GEMINI IMPLEMENTATION
-  try {
-    const response = await gemini.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: [{ role: "user", text: message }],
-      config: {
-        tools: [{ googleSearch: {} }], // use google search for scraping
-      },
-    });
-    const content = response.text;
-    if (content) {
-      res.json({
-        response: marked.parse(content),
-      });
-    }
-  } catch (error) {
-    console.error("Error with GEMINI request:", error);
-    res.json({
-      response: "I'm unable to process this request.",
-    });
-  }
-}
+// remove gemini for now
+
+// async function processGemini(res, message) {
+//   // GEMINI IMPLEMENTATION
+//   try {
+//     const response = await gemini.models.generateContent({
+//       model: "gemini-2.0-flash",
+//       contents: [{ role: "user", text: message }],
+//       config: {
+//         tools: [{ googleSearch: {} }], // use google search for scraping
+//       },
+//     });
+//     const content = response.text;
+//     if (content) {
+//       res.json({
+//         response: marked.parse(content),
+//       });
+//     }
+//   } catch (error) {
+//     console.error("Error with GEMINI request:", error);
+//     res.json({
+//       response: "I'm unable to process this request.",
+//     });
+//   }
+// }
+
+// app.post("/api/title", async (req, res) => {
+//   const { message } = req.body;
+
+//   if (!message || message.trim().length < 4) {
+//     return res.json({ title: "New Conversation" });
+//   }
+
+//   try {
+//     const completion = await openai.chat.completions.create({
+//       model: "gpt-4o-mini", // or any GPT model
+//       messages: [
+//         {
+//           role: "system",
+//           content:
+//             "You are a title generator. Given the user's first message, reply ONLY with a short title (max 5 words) summarizing the topic. Do NOT include quotes or punctuation. If the message is generic like 'hi' or 'how are you', return 'New Conversation'.",
+//         },
+//         {
+//           role: "user",
+//           content: message,
+//         },
+//       ],
+//     });
+
+//     const title =
+//       completion.choices?.[0]?.message?.content?.trim() ?? "New Conversation";
+
+//     return res.json({ title });
+//   } catch (error) {
+//     console.error("Error generating title:", error);
+//     return res.json({ title: "New Conversation" });
+//   }
+// });
 
 app.post("/api/chat", async (req, res) => {
   try {
@@ -118,9 +153,10 @@ app.post("/api/chat", async (req, res) => {
           });
         }
       }
-    } else {
-      await processGemini(res, message);
     }
+    // else {
+    //   await processGemini(res, message);
+    // }
   } catch (error) {
     console.error("API Error:", error);
     res.status(500).json({ error: "Something went wrong!" });

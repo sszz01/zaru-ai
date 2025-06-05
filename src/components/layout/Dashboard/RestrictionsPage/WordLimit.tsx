@@ -48,7 +48,7 @@ export function WordLimit({inputValueStudent, setInputValueStudent, inputValueAI
                 gap: '1rem'
             }}>
                 <Col span={16}>
-                    <Slider min={100} max={1000} step={50} value={inputValueStudent} onChange={value => setInputValueStudent((value as number))} tooltip={{
+                    <Slider min={1} max={100} step={2} value={inputValueStudent} onChange={value => setInputValueStudent((value as number))} tooltip={{
                     formatter: null
                     }} />
                 </Col>
@@ -77,7 +77,7 @@ export function WordLimit({inputValueStudent, setInputValueStudent, inputValueAI
             gap: '1rem'
         }}>
                                 <Col span={16}>
-                                    <Slider min={100} max={1500} step={50} value={inputValueAI} onChange={value => setInputValueAI((value as number))} tooltip={{
+                                    <Slider min={1} max={200} step={4} value={inputValueAI} onChange={value => setInputValueAI((value as number))} tooltip={{
           formatter: null
         }} />
                                 </Col>

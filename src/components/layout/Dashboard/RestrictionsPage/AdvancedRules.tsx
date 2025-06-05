@@ -33,11 +33,6 @@ const sections: Section[] = [
         label: 'Disable Roleplay',
         description: 'Disallows the AI from engaging in roleplay or fictional personas.'
       },
-      {
-        key: 'disableChatLogging',
-        label: 'Disable Chat Logging',
-        description: 'Prevents storing chat history for student sessions.'
-      },
     ],
   },
   {
@@ -55,18 +50,13 @@ const sections: Section[] = [
       },
       {
         key: 'restrictPersonalQueries',
-        label: 'Restrict Personal Data Queries',
+        label: '(AUTOMATIC)Restrict Personal Data Queries',
         description: 'Prevents asking for personal or identifiable information.'
       },
       {
         key: 'enableProfanityFilter',
         label: 'Enable Profanity Filter',
         description: 'Filters offensive or inappropriate language.'
-      },
-      {
-        key: 'anonymizeLogs',
-        label: 'Anonymize Logs',
-        description: 'Removes identifiable student information from logs.'
       },
     ],
   },
@@ -90,7 +80,7 @@ const sections: Section[] = [
       },
       {
         key: 'lockHomeworkHelp',
-        label: 'Lock Homework Help (School Hours)',
+        label: '(TBD)Lock Homework Help (School Hours)',
         description: 'Disables help features during school hours.'
       },
       {
@@ -119,11 +109,6 @@ const sections: Section[] = [
         description: 'Restricts number of requests per session.'
       },
       {
-        key: 'enableFactOnly',
-        label: 'Enable Fact-Only Mode',
-        description: 'Only allows factual responses from the AI.'
-      },
-      {
         key: 'disableCreativeWriting',
         label: 'Disable Creative Writing',
         description: 'Blocks poetry, storytelling, or fictional content generation.'
@@ -134,19 +119,9 @@ const sections: Section[] = [
     category: 'Teacher/Admin Tools',
     rules: [
       {
-        key: 'enableTranscriptSharing',
-        label: 'Share Transcripts with Teachers',
-        description: 'Automatically shares interactions with teachers for review.'
-      },
-      {
         key: 'enableFlagNotifications',
         label: 'Notify on Flagged Content',
         description: 'Sends alerts when students access restricted topics.'
-      },
-      {
-        key: 'requireApprovalAdvanced',
-        label: 'Require Approval for Advanced Tools',
-        description: 'Restricts access to features like data analysis until approved.'
       },
     ],
   },
