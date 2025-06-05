@@ -1,5 +1,5 @@
 import { Drawer, Menu, MenuItem } from "@mui/material";
-import BurgerIcon from "../../assets/burgericon.svg";
+import BurgerIcon from "../../../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ToolTip from "@mui/material/Tooltip";
@@ -8,6 +8,8 @@ import "@fontsource/poppins/400.css";
 import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/700.css";
 import { useState } from "react";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 
 interface SideBarProps {
   toggleDrawer: () => void;
@@ -16,6 +18,17 @@ interface SideBarProps {
   loadConversation: (id: number) => void;
   addConversation: () => void;
   deleteConversation: (id: number) => void;
+}
+
+const styles = {
+  primary: {
+    color: "#232629",
+    fontFamily: "Poppins, sans-serif",
+  },
+  secondary: {
+    color: "#5e646e",
+    fontFamily: "Poppins, sans-serif",
+  },
 }
 
 const SideBar: React.FC<SideBarProps> = ({
@@ -124,10 +137,10 @@ const SideBar: React.FC<SideBarProps> = ({
           justifyContent: "flex-start",
         }}
       >
-        <label
-          style={{
+        <Typography
+          variant="subtitle1"
+          sx={{
             marginTop: "0.75rem",
-            fontSize: "1rem",
             fontWeight: "bold",
             color: "#5e646e",
             fontFamily: "Poppins, sans-serif",
@@ -135,7 +148,7 @@ const SideBar: React.FC<SideBarProps> = ({
           }}
         >
           Conversations
-        </label>
+        </Typography>
       </div>
 
       <ul>
@@ -165,9 +178,9 @@ const SideBar: React.FC<SideBarProps> = ({
                   (e.currentTarget.style.backgroundColor = "#fff")
                 }
               >
-                <text
-                  style={{
-                    fontSize: "1rem",
+                <Typography
+                  variant="body2"
+                  sx={{
                     color: "#848b95",
                     fontWeight: 600,
                     fontFamily: "Poppins, sans-serif",
@@ -177,7 +190,7 @@ const SideBar: React.FC<SideBarProps> = ({
                   }}
                 >
                   {conversation.name}
-                </text>
+                </Typography>
 
                 <button
                   onClick={(e) => handleMenuClick(e, conversation.id)}
@@ -223,9 +236,18 @@ const SideBar: React.FC<SideBarProps> = ({
             fontSize: "clamp(0.8rem, 2vw, 0.9rem)",
           }}
         >
-          No conversations yet.
-          <br />
-          Start a new one!
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#999",
+              fontFamily: "Poppins, sans-serif",
+              fontSize: "clamp(0.8rem, 2vw, 0.9rem)",
+            }}
+          >
+            No conversations yet.
+            <br />
+            Start a new one!
+          </Typography>
         </div>
       )}
 
@@ -246,14 +268,22 @@ const SideBar: React.FC<SideBarProps> = ({
           onClick={handleDelete}
           sx={{
             color: "#d32f2f",
-            fontSize: "0.875rem",
             fontFamily: "Poppins, sans-serif",
             "&:hover": {
               backgroundColor: "#ffebee",
             },
           }}
         >
-          Delete
+          <Typography
+            variant="body2"
+            sx={{
+              color: "#d32f2f",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: 500,
+            }}
+          >
+            Delete
+          </Typography>
         </MenuItem>
       </Menu>
     </Drawer>
