@@ -52,7 +52,7 @@ export function Dropdown({
             }
             }
         }}>
-            <MenuItem id="profile" sx={{ ...styles.poppins,
+            {/* <MenuItem id="profile" sx={{ ...styles.poppins,
                 fontSize: 15,
                 borderRadius: 2,
                 color: "#5e646e",
@@ -78,7 +78,7 @@ export function Dropdown({
             }}>
                 <SettingsIcon fontSize="large" />
                 Settings
-            </MenuItem>
+            </MenuItem> */}
 
             {userRole === "admin" && 
                 <MenuItem sx={{ ...styles.poppins,
@@ -92,7 +92,7 @@ export function Dropdown({
                     handleTransition(() => navigate("/dashboard"));
                 }}>
                     <DashboardIcon fontSize="large" />
-                    Admin Dashboard
+                    Dashboard
                 </MenuItem>
             }
 

@@ -62,7 +62,7 @@ const styles = {
         backgroundColor: '#fff',
         borderRadius: '20px',
         padding: '1rem',
-        border: `2px solid #dddfe2`,
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
     }
 }
 
@@ -89,7 +89,7 @@ function Restrictions({ colors }: RestrictionsProps) {
     };
 
     return (
-        <Grid container spacing={2} sx={{ width: "80%", height: "80%", }}>
+        <Grid container spacing={2} sx={{ width: "80%", height: "80%" }}>
 
             <Typography
                 sx={{

@@ -1,5 +1,4 @@
 import { Drawer, Menu, MenuItem } from "@mui/material";
-import BurgerIcon from "../../../assets/burgericon.svg";
 import AddIcon from "@mui/icons-material/Add";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ToolTip from "@mui/material/Tooltip";
@@ -79,7 +78,7 @@ const SideBar: React.FC<SideBarProps> = ({
           alignItems: "center",
           borderTopRightRadius: "20px",
           borderBottomRightRadius: "20px",
-          border: "2px solid #dddfe2",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         },
       }}
     >
@@ -96,7 +95,7 @@ const SideBar: React.FC<SideBarProps> = ({
         }}
       >
         <ToolTip title="Close Sidebar" placement="bottom" arrow>
-          <Burger toggleDrawer={toggleDrawer} BurgerIcon={BurgerIcon} />
+          <Burger toggleDrawer={toggleDrawer} />
         </ToolTip>
         <ToolTip title="Add new conversation" placement="bottom" arrow>
           <button

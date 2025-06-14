@@ -50,11 +50,11 @@ const items: MenuProps["items"] = [
         label: <Typography variant="body1" style={{...textStyles.secondary1}}>AI Restrictions</Typography>,
         icon: <ToggleOnIcon />,
     },
-    {
-        key: 'studentlist',
-        label: <Typography variant="body1" style={{...textStyles.secondary1}}>Registration</Typography>,
-        icon: <FormatListNumberedIcon />,
-    },
+    // {
+    //     key: 'studentlist',
+    //     label: <Typography variant="body1" style={{...textStyles.secondary1}}>Registration</Typography>,
+    //     icon: <FormatListNumberedIcon />,
+    // },
     { 
         key: '2', 
         label: <Typography variant="body1" style={{...textStyles.secondary1}}>Settings</Typography>, 

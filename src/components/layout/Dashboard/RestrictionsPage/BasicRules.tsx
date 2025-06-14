@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { Switch, List, Typography, Divider } from 'antd';
+import { Switch, List, Typography } from 'antd';
 const { Text } = Typography;
 
 const basicRules = [

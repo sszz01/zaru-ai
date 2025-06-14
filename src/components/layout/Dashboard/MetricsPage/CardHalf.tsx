@@ -33,7 +33,7 @@ const styles = {
 		backgroundColor: '#fff',
 		borderRadius: '20px',
 		padding: '1.5rem',
-		border: `2px solid #dddfe2`,
+		boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column' as const,

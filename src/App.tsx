@@ -69,7 +69,7 @@ const App: React.FC = () => {
             />
           }
         />
-        <Route
+        {/* <Route
           path="/profile"
           element={
             <Profile
@@ -78,7 +78,7 @@ const App: React.FC = () => {
               onClose={() => {}}
             />
           }
-        />
+        /> */}
         <Route
           path="/dashboard"
           element={
