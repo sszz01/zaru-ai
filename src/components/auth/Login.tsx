@@ -11,8 +11,8 @@ import { Mail, Lock, ArrowRight } from "lucide-react";
 import Styles from "../styles/login.ts";
 import { useNavigate } from "react-router-dom";
 // import PasswordIcon from '@mui/icons-material/Password';
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
 
 //import LineDraw from "./imported/linedraw";
 // import Monkey from "../assets/monkeygraphic.jpg";
@@ -116,7 +116,7 @@ const Login: React.FC<{
   };
 
   const handleGoogleLogin = async () => {
-  const provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
 
     try {
       setLoading(true);
@@ -152,18 +152,17 @@ const Login: React.FC<{
         }
       }
       // Use the determined role
-        onLogin(user.photoURL || null, selectedRole);
-      } catch (error: unknown) {
-        setError("Google login failed. Please try again.");
-        if (error instanceof Error) {
-          console.error("Google login error:", error.message);
-        };
-      } finally {
-        setLoading(false);
-        Navigate("/chat");
+      onLogin(user.photoURL || null, selectedRole);
+    } catch (error: unknown) {
+      setError("Google login failed. Please try again.");
+      if (error instanceof Error) {
+        console.error("Google login error:", error.message);
       }
+    } finally {
+      setLoading(false);
+      Navigate("/chat");
+    }
   };
-
 
   const Navigate = useNavigate();
 
@@ -287,7 +286,10 @@ const Login: React.FC<{
             <div className="w-full border-t border-gray-300"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-[#efeff1] text-gray-500" style={{ fontFamily: '"Poppins", sans-serif' }}>
+            <span
+              className="px-2 bg-[#efeff1] text-gray-500"
+              style={{ fontFamily: '"Poppins", sans-serif' }}
+            >
               Or continue with
             </span>
           </div>
@@ -507,5 +509,3 @@ const Login: React.FC<{
 };
 
 export default Login;
-
-

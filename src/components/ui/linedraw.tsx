@@ -110,7 +110,7 @@ const LineDraw: React.FC = () => {
       viewBox="0 0 600 600"
       initial="hidden"
       animate="visible"
-      style={{ width: "100%", height: "100%", }}
+      style={{ width: "100%", height: "100%" }}
     >
       {/* Render motion paths */}
       {paths.map((path, index) => (

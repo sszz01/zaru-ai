@@ -1,5 +1,5 @@
-import { DashSide } from './DashSide';
-import { Settings } from './Settings';
+import { DashSide } from "./DashSide";
+import { Settings } from "./Settings";
 import React, { useState, useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import { auth, db } from "../../../../backend/db/firebase/firebase";
@@ -13,15 +13,15 @@ import IconButton from "@mui/material/IconButton";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 
 //Styles----------------------------------------------
-import { colorPalette, getBaseStyles, getMenuConfig, } from "./DashStyles";
+import { colorPalette, getBaseStyles, getMenuConfig } from "./DashStyles";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import '@fontsource/poppins/400.css';
-import '@fontsource/poppins/500.css';
-import '@fontsource/poppins/600.css';
-import '@fontsource/poppins/700.css';
-import '@fontsource/poppins/800.css';
-import '@fontsource/poppins/900.css';
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+import "@fontsource/poppins/700.css";
+import "@fontsource/poppins/800.css";
+import "@fontsource/poppins/900.css";
 
 //Components----------------------------------------------
 import Tooltip from "@mui/material/Tooltip";
@@ -42,7 +42,6 @@ interface UserData {
 }
 
 const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
-
   const [userData, setUserData] = useState<UserData>({
     displayName: null,
     email: null,
@@ -101,9 +100,8 @@ const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
         Navigate("/");
       });
     } else if (key === "back") {
-      handleTransition(() =>Navigate("/chat"));
-    }
-    else if (key === "1") {
+      handleTransition(() => Navigate("/chat"));
+    } else if (key === "1") {
       handleTransition(() => {
         setShowDashboard(true);
         setShowSettings(false);
@@ -115,8 +113,7 @@ const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
         setShowSettings(true);
         setShowRestrictions(false);
       });
-    }
-    else if (key === "restrictions") {
+    } else if (key === "restrictions") {
       handleTransition(() => {
         setShowDashboard(false);
         setShowSettings(false);
@@ -150,7 +147,7 @@ const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
   // Dynamic theme and styles
   const theme = createTheme({
     palette: {
-      mode: darkMode ? 'dark' : 'light',
+      mode: darkMode ? "dark" : "light",
       primary: { main: colors.primary },
       background: {
         default: colors.background,
@@ -168,39 +165,39 @@ const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <div style={styles.mainContainer}>
+      <div style={styles.mainContainer}>
+        {/* Transition Backdrop */}
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <RotateLoader color="#FFF8F8" />
+        </Backdrop>
 
-      {/* Transition Backdrop */}
-          <Backdrop
-            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-            open={open}
+        {/* Top Right Nav */}
+        <div style={styles.userInfoBar}>
+          <Tooltip
+            title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           >
-            <RotateLoader color="#FFF8F8" />
-          </Backdrop>
+            <IconButton
+              onClick={toggleTheme}
+              color="inherit"
+              style={{ color: colors.textSecondary }}
+            >
+              {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
+          </Tooltip>
 
-      {/* Top Right Nav */}
-          <div style={styles.userInfoBar}>
+          <NotificationsOutlinedIcon style={styles.icon} />
 
-            <Tooltip title={darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
-              <IconButton 
-                onClick={toggleTheme} 
-                color="inherit" 
-                style={{ color: colors.textSecondary }}
-              >
-                {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-              </IconButton>
-            </Tooltip>
+          <img
+            src={userData.photoURL || ""}
+            alt="User"
+            style={styles.userAvatar}
+          />
+        </div>
 
-            <NotificationsOutlinedIcon style={styles.icon} />
-
-            <img
-              src={userData.photoURL || ""}
-              alt="User"
-              style={styles.userAvatar}
-            />  
-          </div>
-
-    {/* Sidebar */}
+        {/* Sidebar */}
         <DashSide
           handleMenuClick={handleMenuClick}
           darkMode={darkMode}
@@ -211,20 +208,16 @@ const Dashboard: React.FC<DashProps> = ({ userPhotoURL, onClose }) => {
           menuConfig={menuConfig}
         />
 
-    {/* Dashboard content */}
-        {showDashboard && (
-          <Overview colors={colors} />
-        )}
+        {/* Dashboard content */}
+        {showDashboard && <Overview colors={colors} />}
 
-    {/* Settings content */}
+        {/* Settings content */}
         {showSettings && (
           <Settings contentPanelStyle={contentPanelStyle} colors={colors} />
         )}
 
-    {/* Restrictions content */}
-        {showRestrictions && (
-          <Restrictions colors={colors} />
-        )}
+        {/* Restrictions content */}
+        {showRestrictions && <Restrictions colors={colors} />}
       </div>
     </ThemeProvider>
   );
