@@ -31,7 +31,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ disabled }) => {
         e.currentTarget.style.backgroundColor = "#0066ff";
       }}
     >
-      <ArrowUpOutlined style={{ position: "relative", }} />
+      <ArrowUpOutlined style={{ position: "relative" }} />
     </button>
   );
 };

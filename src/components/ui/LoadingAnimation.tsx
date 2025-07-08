@@ -1,6 +1,6 @@
 const LoadingAnimation = () => {
   return (
-    <div className="ml-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-600">
+    <div className="ml-2 px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-100">
       <svg className="pl" width="240" height="240" viewBox="0 0 240 240">
         <circle
           className="pl__ring pl__ring--a"

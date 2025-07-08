@@ -3,31 +3,33 @@ import BackgroundImage from "../../../assets/newbg2.svg";
 // Color palettes only
 const colorPalette = {
   light: {
-    background: '#efeff1',
-    surface: '#ffffff',
-    surfaceAlt: '#fbfbfb',
-    border: '#dddfe2',
-    primary: '#0066ff',
-    primaryLight: '#3385ff',
-    primaryDark: '#0052cc',
-    text: '#232629',
-    textSecondary: '#5e646e',
+    background: "#efeff1",
+    surface: "#ffffff",
+    surfaceAlt: "#fbfbfb",
+    border: "#dddfe2",
+    primary: "#0066ff",
+    primaryLight: "#3385ff",
+    primaryDark: "#0052cc",
+    text: "#232629",
+    textSecondary: "#5e646e",
   },
   dark: {
-    background: '#1e2a32',
-    surface: '#2d3b45',
-    surfaceAlt: '#3d4c57',
-    border: '#3d4c57',
-    primary: '#e0edf3',
-    primaryLight: '#e0edf3',
-    primaryDark: '#a5b2b8',
-    text: '#fbfbfb',
-    textSecondary: '#d6d8dc',
-  }
+    background: "#1e2a32",
+    surface: "#2d3b45",
+    surfaceAlt: "#3d4c57",
+    border: "#3d4c57",
+    primary: "#e0edf3",
+    primaryLight: "#e0edf3",
+    primaryDark: "#a5b2b8",
+    text: "#fbfbfb",
+    textSecondary: "#d6d8dc",
+  },
 };
 
 // Static helpers for style composition
-const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.dark) => ({
+const getBaseStyles = (
+  colors: typeof colorPalette.light | typeof colorPalette.dark
+) => ({
   mainContainer: {
     display: "flex",
     flexDirection: "row" as const,
@@ -46,8 +48,8 @@ const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.d
     flexDirection: "row" as const,
     alignItems: "center",
     justifyContent: "center",
-    width: '12vw',
-    height: '7vh',
+    width: "12vw",
+    height: "7vh",
     padding: "0.75rem",
     gap: "1rem",
     position: "absolute" as const,
@@ -55,7 +57,7 @@ const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.d
     right: "1rem",
     backgroundColor: colors.surface,
     border: `2px solid ${colors.border}`,
-    borderRadius: '20px',
+    borderRadius: "20px",
   },
   userAvatar: {
     width: "2.5vw",
@@ -63,19 +65,19 @@ const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.d
     borderRadius: "50%",
   },
   icon: {
-    fontSize: '1.5rem',
+    fontSize: "1.5rem",
     color: colors.textSecondary,
   },
   sidebar: {
     display: "flex",
     flexDirection: "column" as const,
     alignItems: "center",
-    width: '15%',
-    height: '100%',
+    width: "15%",
+    height: "100%",
     position: "relative" as const,
     overflowY: "auto" as const,
     fontFamily: "Poppins, sans-serif",
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderTop: `2px solid ${colors.border}`,
     borderRight: `2px solid ${colors.border}`,
     borderBottom: `2px solid ${colors.border}`,
@@ -86,37 +88,37 @@ const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.d
     display: "flex",
     alignItems: "center",
     justifyContent: "left",
-    width: '100%',
+    width: "100%",
     padding: "1.5rem",
     fontSize: "22px",
     fontWeight: "bold",
     fontFamily: "Poppins, sans-serif",
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     color: colors.text,
   },
   menu: {
-    width: '92%',
+    width: "92%",
     height: "90%",
     marginTop: "1.25rem",
     fontFamily: "Poppins, sans-serif",
     fontSize: "16",
     fontWeight: "500",
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
     color: colors.textSecondary,
     borderBottomRightRadius: "20px",
-    borderRight: 'none',
+    borderRight: "none",
   },
   logoutButton: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     gap: "0.6rem",
-    width: '90%',
+    width: "90%",
     height: 56,
     position: "absolute" as const,
     bottom: "2vh",
-    backgroundColor: '#fff',
-    color: '#ff0000',
+    backgroundColor: "#fff",
+    color: "#ff0000",
     fontWeight: 600,
     fontFamily: "Poppins, sans-serif",
     borderRadius: "15px",
@@ -179,21 +181,23 @@ const getBaseStyles = (colors: typeof colorPalette.light | typeof colorPalette.d
     height: "3vw",
     border: `2px solid ${colors.border}`,
     justifyContent: "space-evenly",
-  }
+  },
 });
 
 // Helper for menu config
-const getMenuConfig = (colors: typeof colorPalette.light | typeof colorPalette.dark) => ({
+const getMenuConfig = (
+  colors: typeof colorPalette.light | typeof colorPalette.dark
+) => ({
   theme: {
     components: {
       Menu: {
         itemSelectedBg: colors.primary,
-        itemSelectedColor: '#fbfbfb',
+        itemSelectedColor: "#fbfbfb",
         colorText: colors.textSecondary,
-        itemHoverColor: '#fbfbfb',
+        itemHoverColor: "#fbfbfb",
         itemHoverBg: colors.primary,
         colorBgElevated: colors.surface,
-        darkSubMenuItemBg: '#36434d',
+        darkSubMenuItemBg: "#36434d",
         darkItemHoverBg: colors.surfaceAlt,
         darkItemSelectedBg: colors.surfaceAlt,
         darkItemSelectedColor: colors.text,
