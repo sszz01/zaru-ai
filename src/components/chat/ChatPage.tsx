@@ -1,4 +1,4 @@
-import { Burger } from "../layout/Burger";
+import { Burger } from "../layout/SideBar/Burger";
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import DOMPurify from "dompurify";
@@ -13,7 +13,7 @@ import { auth } from "../../../backend/db/firebase/firebase";
 
 import styles from "../styles/login";
 import Profile from "../layout/Profile";
-import SideBar from "../layout/SideBar";
+import SideBar from "../layout/SideBar/SideBar";
 import Form from "./Form";
 import LoadingAnimation from "../ui/LoadingAnimation";
 import { RotateLoader } from "react-spinners";
